@@ -12,4 +12,8 @@
     <string name="greeting_good_afternoon">Good afternoon!</string>
     <string name="greeting_good_evening">Good evening!</string>
 
+    <!-- Main Screen Layout -->
+    <string name="main_screen_option_pick_location">Current location</string>
+    <string name="main_screen_option_pick_from_list">Pick from list</string>
+
 </resources>

@@ -1,9 +1,10 @@
 package com.hristiyantodorov.weatherapp.views.login;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +12,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.hristiyantodorov.weatherapp.views.main.MainActivity;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.utils.TimeCalculatorUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.support.constraint.Constraints.TAG;
 
 
 public class LoginFragment extends Fragment implements LoginContracts.View {
@@ -31,6 +31,9 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
 
     @BindView(R.id.edt_password)
     EditText edtPassword;
+
+    @BindView(R.id.background)
+    ConstraintLayout constraintLayout;
 
     private LoginContracts.Presenter loginPresenter;
     private TimeCalculatorUtil timeCalculatorUtil;
@@ -46,6 +49,7 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
         timeCalculatorUtil = new TimeCalculatorUtil();
+
         ButterKnife.bind(this, view);
 
         return view;
@@ -55,8 +59,8 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
     public void onSignInButtonClick() {
 
         // TODO: 1/18/2019  Login from presenter mPresenter.loginUser(userName, password);
-
-        Log.d(TAG, timeCalculatorUtil.getGreetingBasedOnCurrentTime());
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -66,7 +70,7 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
 
     @Override
     public void showLoader(boolean isShowing) {
-        progressBar.setVisibility(isShowing ? View.GONE : View.VISIBLE);
+        progressBar.setVisibility(isShowing ? View.VISIBLE : View.GONE);
     }
 
     @Override
