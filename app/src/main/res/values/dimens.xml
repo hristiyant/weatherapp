@@ -2,9 +2,8 @@
 <resources>
 
     <!-- Common dimensions -->
-    <dimen name="padding_8dp">8dp</dimen>
-    <dimen name="padding_16dp">16dp</dimen>
-    <dimen name="padding_32dp">32dp</dimen>
+    <dimen name="margin_between_elements_default">8dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
 
     <!-- Login Screen Layout -->
     <dimen name="login_screen_icon_padding">10dp</dimen>
