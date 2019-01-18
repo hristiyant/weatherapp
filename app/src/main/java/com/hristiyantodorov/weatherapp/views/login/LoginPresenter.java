@@ -4,9 +4,6 @@ public class LoginPresenter {
 
     private LoginContracts.View mView;
 
-
-    //Inject
-
-    //Override logingUser
+    // TODO: 1/18/2019 Dependency inj. Override logInUser
 
 }

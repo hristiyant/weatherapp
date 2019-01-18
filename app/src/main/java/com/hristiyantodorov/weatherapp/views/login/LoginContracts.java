@@ -5,10 +5,9 @@ public interface LoginContracts {
         void setPresenter(LoginContracts.Presenter presenter);
         void showLoading();
         void hideLoading();
-        void showLoader(boolean isShowing)
+        void showLoader(boolean isShowing);
         void showError(Throwable e);
-        //void showNoUser();
-        //void showLoggedUswe(User user);
+        // TODO: 1/18/2019 Add showNoUser(), showLoggedUser() (eventually)
     }
 
     interface Presenter {

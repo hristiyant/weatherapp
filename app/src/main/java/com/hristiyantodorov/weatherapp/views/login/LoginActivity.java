@@ -7,8 +7,6 @@ import android.view.Window;
 
 import com.hristiyantodorov.weatherapp.R;
 
-import java.util.Calendar;
-
 public class LoginActivity extends AppCompatActivity {
 
     @Override
@@ -18,12 +16,11 @@ public class LoginActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
 
-        //Hide status bar for cleaner look.
         getSupportActionBar().hide();
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction()
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content, LoginFragment.newInstance());
-        ft.commit();
+        fragmentTransaction.commit();
 
     }
 }

@@ -3,6 +3,7 @@ package com.hristiyantodorov.weatherapp.views.login;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,32 +12,28 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.utils.TimeCalculator;
-
-import java.util.Calendar;
-import java.util.Date;
+import com.hristiyantodorov.weatherapp.utils.TimeCalculatorUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.support.constraint.Constraints.TAG;
+
 
 public class LoginFragment extends Fragment implements LoginContracts.View {
 
-    TimeCalculator tc;
-
     @BindView(R.id.progressbar)
-    ProgressBar mProgressBar;
+    ProgressBar progressBar;
 
-    @BindView(R.id.et_username)
-    EditText mUserNameEditText;
+    @BindView(R.id.edt_username)
+    EditText userNameEditText;
 
-    @BindView(R.id.et_password)
-    EditText mPasswordEditText;
+    @BindView(R.id.edt_password)
+    EditText passwordEditText;
 
-    //more binding
-
-    private LoginContracts.Presenter mLoginPresenter;
+    private LoginContracts.Presenter loginPresenter;
+    private TimeCalculatorUtil timeCalculator;
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
@@ -45,47 +42,42 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        tc = new TimeCalculator();
+        timeCalculator = new TimeCalculatorUtil();
         ButterKnife.bind(this, view);
-        Toast.makeText(getContext(), tc.getCurrentTime(), Toast.LENGTH_LONG).show();
-        Toast.makeText(getContext(), tc.getCurrentHours(), Toast.LENGTH_LONG).show();
 
         return view;
     }
 
     @OnClick(R.id.btn_sign_in)
     public void onSignInButtonClick() {
-        String userName = mUserNameEditText.getText().toString();
-        Toast.makeText(getContext(), userName, Toast.LENGTH_LONG).show();
 
-        String password = mPasswordEditText.getText().toString();
-        Toast.makeText(getContext(), password, Toast.LENGTH_LONG).show();
+        // TODO: 1/18/2019  Login from presenter mPresenter.loginUser(userName, password);
 
-        //Login from presenter mPresenter.loginUser(userName, password);
+        Log.d(TAG, timeCalculator.getGreetingBasedOnCurrentTime());
     }
 
     @Override
     public void setPresenter(LoginContracts.Presenter presenter) {
-        mLoginPresenter = presenter;
+        loginPresenter = presenter;
     }
 
     @Override
     public void showLoading() {
-        mProgressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
         boolean isTrue = true;
-        mProgressBar.setVisibility(isTrue ? View.GONE : View.VISIBLE);
+        progressBar.setVisibility(isTrue ? View.GONE : View.VISIBLE);
     }
 
     @Override
     public void showLoader(boolean isShowing) {
-        mProgressBar.setVisibility(isShowing ? View.VISIBLE : View.GONE);
+        progressBar.setVisibility(isShowing ? View.VISIBLE : View.GONE);
     }
 
     @Override

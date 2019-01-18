@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Common dimensions -->
+    <dimen name="padding_default">8dp</dimen>
+    <dimen name="padding_default_x2">16dp</dimen>
+    <dimen name="padding_largest">32dp</dimen>
+
+    <!-- Login Screen Layout -->
+    <dimen name="edt_icon_padding">10dp</dimen>
+
+</resources>
