@@ -3,6 +3,7 @@ package com.hristiyantodorov.weatherapp.utils;
 import android.content.res.Resources;
 import android.util.Log;
 
+import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 
 import java.util.Calendar;
@@ -18,22 +19,18 @@ public class TimeCalculatorUtil {
 
     private static final int MORNING_START = 4;
     private static final int AFTERNOON_START = 11;
-    private static final int EVENING_START = 11;
-
-    String goodMorning = Resources.getSystem().getString(R.string.greeting_good_morning);
-    String goodAfternoon = Resources.getSystem().getString(R.string.greeting_good_morning);
-    String goodEvening = Resources.getSystem().getString(R.string.greeting_good_morning);
+    private static final int EVENING_START = 18;
 
     Calendar calendar = Calendar.getInstance();
     private int currentTime = calendar.get(Calendar.HOUR_OF_DAY);
 
     public String getGreetingBasedOnCurrentTime() {
         if (currentTime >= MORNING_START && currentTime < AFTERNOON_START) {
-            return goodMorning;
+            return App.getInstance().getString(R.string.greeting_good_morning);
         } else if (currentTime >= AFTERNOON_START && currentTime < EVENING_START) {
-            return goodAfternoon;
+            return App.getInstance().getString(R.string.greeting_good_afternoon);
         } else {
-            return goodEvening;
+            return App.getInstance().getString(R.string.greeting_good_evening);
         }
     }
 

@@ -2,7 +2,7 @@
     <string name="app_name">WeatherApp</string>
 
     <!-- Login Screen Layout -->
-    <string name="button_sign_in_text">Sign in</string>
+    <string name="login_screen_btn_sign_in">Sign in</string>
     <string name="login_screen_username_hint">Username: </string>
     <string name="login_screen_password_hint">Password: </string>
 
