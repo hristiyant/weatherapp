@@ -10,7 +10,7 @@
         android:id="@+id/image_login_screen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/padding_default"
+        android:layout_margin="@dimen/padding_8dp"
         android:background="@drawable/login_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,9 +20,9 @@
         android:id="@+id/til_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/padding_default"
+        android:layout_margin="@dimen/padding_8dp"
         android:background="@drawable/background_edittext"
-        android:hint="@string/edt_username_hint"
+        android:hint="@string/login_screen_username_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_login_screen">
@@ -32,8 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_avatar"
-            android:drawablePadding="@dimen/edt_icon_padding"
-            android:paddingLeft="@dimen/edt_icon_padding" />
+            android:drawablePadding="@dimen/login_screen_icon_padding"
+            android:paddingLeft="@dimen/login_screen_icon_padding" />
 
 
     </android.support.design.widget.TextInputLayout>
@@ -42,9 +42,9 @@
         android:id="@+id/til_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/padding_default"
+        android:layout_margin="@dimen/padding_8dp"
         android:background="@drawable/background_edittext"
-        android:hint="@string/edt_password_hint"
+        android:hint="@string/login_screen_password_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_username">
@@ -55,8 +55,8 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:drawableLeft="@drawable/ic_padlock"
-            android:drawablePadding="@dimen/edt_icon_padding"
-            android:paddingLeft="@dimen/edt_icon_padding"/>
+            android:drawablePadding="@dimen/login_screen_icon_padding"
+            android:paddingLeft="@dimen/login_screen_icon_padding"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -65,7 +65,7 @@
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/padding_default_x2"
+        android:layout_marginBottom="@dimen/padding_16dp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/til_username"
         app:layout_constraintEnd_toEndOf="@+id/image_login_screen"
@@ -75,7 +75,7 @@
         android:id="@+id/btn_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/padding_default_x2"
+        android:layout_marginTop="@dimen/padding_16dp"
         android:text="@string/button_sign_in_text"
         android:textColor="@color/white"
         android:background="@drawable/animated_button"

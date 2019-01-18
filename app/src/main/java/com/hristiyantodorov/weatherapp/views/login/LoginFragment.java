@@ -27,13 +27,13 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
     ProgressBar progressBar;
 
     @BindView(R.id.edt_username)
-    EditText userNameEditText;
+    EditText edtUserName;
 
     @BindView(R.id.edt_password)
-    EditText passwordEditText;
+    EditText edtPassword;
 
     private LoginContracts.Presenter loginPresenter;
-    private TimeCalculatorUtil timeCalculator;
+    private TimeCalculatorUtil timeCalculatorUtil;
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
@@ -45,7 +45,7 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
 
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        timeCalculator = new TimeCalculatorUtil();
+        timeCalculatorUtil = new TimeCalculatorUtil();
         ButterKnife.bind(this, view);
 
         return view;
@@ -56,7 +56,7 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
 
         // TODO: 1/18/2019  Login from presenter mPresenter.loginUser(userName, password);
 
-        Log.d(TAG, timeCalculator.getGreetingBasedOnCurrentTime());
+        Log.d(TAG, timeCalculatorUtil.getGreetingBasedOnCurrentTime());
     }
 
     @Override
@@ -65,19 +65,8 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
     }
 
     @Override
-    public void showLoading() {
-        progressBar.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideLoading() {
-        boolean isTrue = true;
-        progressBar.setVisibility(isTrue ? View.GONE : View.VISIBLE);
-    }
-
-    @Override
     public void showLoader(boolean isShowing) {
-        progressBar.setVisibility(isShowing ? View.VISIBLE : View.GONE);
+        progressBar.setVisibility(isShowing ? View.GONE : View.VISIBLE);
     }
 
     @Override

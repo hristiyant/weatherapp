@@ -3,8 +3,13 @@
 
     <!-- Login Screen Layout -->
     <string name="button_sign_in_text">Sign in</string>
-    <string name="edt_username_hint">Username: </string>
-    <string name="edt_password_hint">Password: </string>
+    <string name="login_screen_username_hint">Username: </string>
+    <string name="login_screen_password_hint">Password: </string>
 
+    <!-- TimeCalculatorUtil -->
+
+    <string name="greeting_good_morning">Good morning!</string>
+    <string name="greeting_good_afternoon">Good afternoon!</string>
+    <string name="greeting_good_evening">Good evening!</string>
 
 </resources>

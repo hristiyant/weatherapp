@@ -2,11 +2,11 @@
 <resources>
 
     <!-- Common dimensions -->
-    <dimen name="padding_default">8dp</dimen>
-    <dimen name="padding_default_x2">16dp</dimen>
-    <dimen name="padding_largest">32dp</dimen>
+    <dimen name="padding_8dp">8dp</dimen>
+    <dimen name="padding_16dp">16dp</dimen>
+    <dimen name="padding_32dp">32dp</dimen>
 
     <!-- Login Screen Layout -->
-    <dimen name="edt_icon_padding">10dp</dimen>
+    <dimen name="login_screen_icon_padding">10dp</dimen>
 
 </resources>
