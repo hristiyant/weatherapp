@@ -33,6 +33,9 @@ dependencies {
 
     implementation 'com.android.support:design:28.0.0'
 
+    //AndroidLocationAPI
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+
     //ButterKnife
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'

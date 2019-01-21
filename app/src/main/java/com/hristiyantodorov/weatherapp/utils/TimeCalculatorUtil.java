@@ -1,6 +1,5 @@
 package com.hristiyantodorov.weatherapp.utils;
 
-import android.content.res.Resources;
 import android.util.Log;
 
 import com.hristiyantodorov.weatherapp.App;
@@ -26,10 +25,13 @@ public class TimeCalculatorUtil {
 
     public String getGreetingBasedOnCurrentTime() {
         if (currentTime >= MORNING_START && currentTime < AFTERNOON_START) {
+            Log.d(TAG, "morning");
             return App.getInstance().getString(R.string.greeting_good_morning);
         } else if (currentTime >= AFTERNOON_START && currentTime < EVENING_START) {
+            Log.d(TAG, "afternoon ");
             return App.getInstance().getString(R.string.greeting_good_afternoon);
         } else {
+            Log.d(TAG, "evening");
             return App.getInstance().getString(R.string.greeting_good_evening);
         }
     }
