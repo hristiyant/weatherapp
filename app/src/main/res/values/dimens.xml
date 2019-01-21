@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Common dimensions -->
+    <dimen name="margin_between_elements_default">8dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+
+    <!-- Login Screen Layout -->
+    <dimen name="login_screen_icon_padding">10dp</dimen>
+    <dimen name="no_dimens">0dp</dimen>
+
+</resources>

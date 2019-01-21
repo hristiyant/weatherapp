@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    tools:context=".views.login.LoginFragment">
+
+    <ImageView
+        android:id="@+id/image_login_screen"
+        android:layout_width="@dimen/no_dimens"
+        android:layout_height="@dimen/no_dimens"
+        android:layout_margin="@dimen/margin_between_elements_default"
+        android:layout_marginBottom="@dimen/margin_between_elements_default"
+        android:contentDescription="@null"
+        android:src="@drawable/login_image"
+        app:layout_constraintBottom_toTopOf="@+id/progressbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_username"
+        android:layout_width="@dimen/no_dimens"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_between_elements_default"
+        android:layout_marginBottom="@dimen/margin_between_elements_default"
+        android:background="@drawable/background_edittext"
+        android:hint="@string/login_screen_username_hint"
+        app:layout_constraintBottom_toTopOf="@+id/til_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edt_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:layout_margin="@dimen/margin_between_elements_default"
+            android:drawableLeft="@drawable/ic_avatar"
+            android:drawablePadding="@dimen/login_screen_icon_padding"
+            android:paddingLeft="@dimen/login_screen_icon_padding" />
+
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_password"
+        android:layout_width="@dimen/no_dimens"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_between_elements_default"
+        android:layout_marginBottom="@dimen/margin_between_elements_default"
+        android:background="@drawable/background_edittext"
+        android:hint="@string/login_screen_password_hint"
+        app:layout_constraintBottom_toTopOf="@+id/btn_sign_in"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edt_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:layout_margin="@dimen/margin_between_elements_default"
+            android:drawableLeft="@drawable/ic_padlock"
+            android:drawablePadding="@dimen/login_screen_icon_padding"
+            android:inputType="textPassword"
+            android:paddingLeft="@dimen/login_screen_icon_padding" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/til_username"
+        app:layout_constraintEnd_toEndOf="@+id/image_login_screen"
+        app:layout_constraintStart_toStartOf="@+id/image_login_screen" />
+
+    <Button
+        android:id="@+id/btn_sign_in"
+        android:layout_width="@dimen/no_dimens"
+        android:layout_height="wrap_content"
+        android:background="@drawable/animated_button"
+        android:text="@string/login_screen_btn_sign_in"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

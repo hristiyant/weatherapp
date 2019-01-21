@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+
+    <!-- Login Screen Layout -->
+    <string name="login_screen_btn_sign_in">Sign in</string>
+    <string name="login_screen_username_hint">Username: </string>
+    <string name="login_screen_password_hint">Password: </string>
+
+    <!-- TimeCalculatorUtil -->
+
+    <string name="greeting_good_morning">Good morning!</string>
+    <string name="greeting_good_afternoon">Good afternoon!</string>
+    <string name="greeting_good_evening">Good evening!</string>
+
 </resources>
