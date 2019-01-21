@@ -7,6 +7,7 @@
 
     <!-- Login Screen Layout -->
     <dimen name="login_screen_icon_padding">10dp</dimen>
+    <dimen name="no_dimens">0dp</dimen>
 
     <!-- Main Screen Layout -->
     <dimen name="main_screen_labels_size">30sp</dimen>
