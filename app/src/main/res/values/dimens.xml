@@ -12,5 +12,7 @@
     <!-- Main Screen Layout -->
     <dimen name="main_screen_labels_size">30sp</dimen>
 
+    <!--Locations List Screen Layout-->
+    <dimen name="locations_list_image_labels_size">50sp</dimen>
 
 </resources>
