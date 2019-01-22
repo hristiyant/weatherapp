@@ -10,7 +10,7 @@
         android:id="@+id/progressbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <EditText
         android:id="@+id/edt_filter"
@@ -18,12 +18,15 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@android:drawable/ic_menu_search"
         android:hint="Enter to search:"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_locations"
         android:layout_width="match_parent"
         android:layout_height="@dimen/no_dimens"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edt_filter" />
+        app:layout_constraintTop_toBottomOf="@id/edt_filter"
+        app:spanCount="2"
+        tools:listItem="@layout/locations_list_item"/>
+
 </android.support.constraint.ConstraintLayout>
