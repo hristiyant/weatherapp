@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.views.locations_list;
+package com.hristiyantodorov.weatherapp.ui.fragment.locations;
 
 
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.hristiyantodorov.weatherapp.R;
+import com.hristiyantodorov.weatherapp.adapters.locations.LocationsListAdapter;
+import com.hristiyantodorov.weatherapp.presenter.locations.LocationsListContracts;
 
 import java.util.List;
 

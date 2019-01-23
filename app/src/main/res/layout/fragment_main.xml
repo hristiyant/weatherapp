@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/margin_between_elements_default"
-    tools:context=".views.main.MainFragment">
+    tools:context=".ui.fragment.main.MainFragment">
 
     <android.support.constraint.Guideline
         android:id="@+id/half_screen_guideline"

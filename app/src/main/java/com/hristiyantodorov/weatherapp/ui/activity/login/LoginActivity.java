@@ -1,14 +1,13 @@
-package com.hristiyantodorov.weatherapp.views.login;
+package com.hristiyantodorov.weatherapp.ui.activity.login;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 
-import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.models.BaseActivity;
 import com.hristiyantodorov.weatherapp.utils.TimeCalculatorUtil;
+import com.hristiyantodorov.weatherapp.ui.fragment.login.LoginFragment;
 
 public class LoginActivity extends AppCompatActivity {
 

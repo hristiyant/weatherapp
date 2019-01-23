@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.views.main;
+package com.hristiyantodorov.weatherapp.ui.fragment.main;
 
 
 import android.Manifest;
@@ -14,9 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.hristiyantodorov.weatherapp.ApiTestActivity;
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.views.weather_details.WeatherDetailsActivity;
+import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,7 +60,7 @@ public class MainFragment extends Fragment {
     void openWeatherDetails() {
         Log.d(TAG, "openWeatherDetails: Opening new fragment based on location");
 
-        Intent intent = new Intent(getActivity(), ApiTestActivity.class);
+        Intent intent = new Intent(getActivity(), WeatherDetailsActivity.class);
         startActivity(intent);
     }
 

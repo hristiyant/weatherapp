@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.views.weather_details;
+package com.hristiyantodorov.weatherapp.ui.activity.weatherdetails;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.R;
+import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.WeatherDetailsFragment;
 
 public class WeatherDetailsActivity extends AppCompatActivity {
 

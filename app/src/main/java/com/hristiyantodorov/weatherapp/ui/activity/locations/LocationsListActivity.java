@@ -1,10 +1,11 @@
-package com.hristiyantodorov.weatherapp.views.locations_list;
+package com.hristiyantodorov.weatherapp.ui.activity.locations;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.hristiyantodorov.weatherapp.R;
+import com.hristiyantodorov.weatherapp.ui.fragment.locations.LocationsListFragment;
 
 public class LocationsListActivity extends AppCompatActivity {
 
