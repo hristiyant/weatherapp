@@ -12,9 +12,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.hristiyantodorov.weatherapp.views.main.MainActivity;
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.utils.TimeCalculatorUtil;
+import com.hristiyantodorov.weatherapp.views.main.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +35,6 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
     ConstraintLayout constraintLayout;
 
     private LoginContracts.Presenter loginPresenter;
-    private TimeCalculatorUtil timeCalculatorUtil;
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
@@ -47,8 +45,6 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-
-        timeCalculatorUtil = new TimeCalculatorUtil();
 
         ButterKnife.bind(this, view);
 
