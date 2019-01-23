@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: 1/22/2019 Implement methods.
+// TODO: 1/22/2019 This is not implemented.
 public class LocationsListAdapter extends RecyclerView.Adapter {
 
     List<String> locationsList;
