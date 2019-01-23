@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.hristiyantodorov.weatherapp.R;
+import com.hristiyantodorov.weatherapp.views.locations_list.LocationsListActivity;
 import com.hristiyantodorov.weatherapp.views.weather_details.WeatherDetailsActivity;
 
 import butterknife.BindView;
@@ -94,7 +95,7 @@ public class MainFragment extends Fragment {
 
     @OnClick(R.id.image_btn_pick_from_list)
     public void onButtonPickFromListClick() {
-        Intent intent = new Intent(getActivity(), WeatherDetailsActivity.class);
+        Intent intent = new Intent(getActivity(), LocationsListActivity.class);
         startActivity(intent);
     }
 }

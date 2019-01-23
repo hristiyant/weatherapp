@@ -15,5 +15,8 @@
     <!-- Main Screen Layout -->
     <string name="main_screen_option_pick_location">Current location</string>
     <string name="main_screen_option_pick_from_list">Pick from list</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
 </resources>

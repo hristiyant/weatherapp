@@ -15,6 +15,7 @@
     <color name="darkPurple">#2B1F3A</color>
     <color name="lightBlue">#6011454D</color>
     <color name="transparentBlack">#80000000</color>
+    <color name="transparentBlackLight">#33000000</color>
     <color name="transparentDarkGray">#B3000000</color>
 
 
