@@ -9,7 +9,7 @@
 
     <android.support.constraint.Guideline
         android:id="@+id/half_screen_guideline"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
@@ -19,7 +19,7 @@
         android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toTopOf="@+id/tv_pick_from_location"
+        app:layout_constraintBottom_toTopOf="@+id/txt_pick_location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,10 +28,10 @@
         app:srcCompat="@drawable/ic_placeholder" />
 
     <TextView
-        android:id="@+id/tv_pick_from_location"
-        android:layout_width="wrap_content"
+        android:id="@+id/txt_pick_location"
+        android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="@dimen/main_screen_margin_between_items"
         android:text="@string/main_screen_option_pick_location"
         android:textSize="@dimen/main_screen_labels_size"
         app:layout_constraintBottom_toTopOf="@+id/image_btn_pick_from_list"
@@ -45,16 +45,16 @@
         android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toTopOf="@+id/tv_pick_from_list"
+        app:layout_constraintBottom_toTopOf="@+id/txt_pick_from_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_pick_from_location"
+        app:layout_constraintTop_toBottomOf="@+id/txt_pick_location"
         app:srcCompat="@drawable/ic_book" />
 
     <TextView
-        android:id="@+id/tv_pick_from_list"
-        android:layout_width="wrap_content"
+        android:id="@+id/txt_pick_from_list"
+        android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
         android:text="@string/main_screen_option_pick_from_list"
         android:textSize="@dimen/main_screen_labels_size"

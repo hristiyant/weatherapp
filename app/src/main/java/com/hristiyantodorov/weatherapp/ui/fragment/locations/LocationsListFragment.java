@@ -21,19 +21,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
 
+import static com.hristiyantodorov.weatherapp.utils.Constants.GRID_LAYOUT_MANAGER_SPAN_COUNT;
+
 
 public class LocationsListFragment extends Fragment implements LocationsListContracts.View {
 
     @BindView(R.id.edt_filter)
-    EditText filter;
+    EditText edtFilter;
 
     @BindView(R.id.progressbar)
     ProgressBar progressBar;
 
     @BindView(R.id.rv_locations)
-    RecyclerView locationsList;
+    RecyclerView recyclerViewLocations;
 
-    private LocationsListAdapter adapter;
+    private LocationsListAdapter locationsAdapter;
     private GridLayoutManager gridLayoutManager;
     private LocationsListContracts.Presenter presenter;
 
@@ -54,9 +56,9 @@ public class LocationsListFragment extends Fragment implements LocationsListCont
 
         ButterKnife.bind(this, view);
 
-        locationsList.setAdapter(adapter);
-        gridLayoutManager = new GridLayoutManager(getContext(), 2);
-        locationsList.setLayoutManager(gridLayoutManager);
+        recyclerViewLocations.setAdapter(locationsAdapter);
+        gridLayoutManager = new GridLayoutManager(getContext(), GRID_LAYOUT_MANAGER_SPAN_COUNT);
+        recyclerViewLocations.setLayoutManager(gridLayoutManager);
 
 
         return view;
@@ -65,8 +67,8 @@ public class LocationsListFragment extends Fragment implements LocationsListCont
 
     @OnTextChanged(R.id.edt_filter)
     public void onTextChanged() {
-        String pattern = filter.getText().toString();
-        //TODO presenter - add filter method and call here
+        String pattern = edtFilter.getText().toString();
+        //TODO presenter - add edtFilter method and call here
     }
 
     @Override

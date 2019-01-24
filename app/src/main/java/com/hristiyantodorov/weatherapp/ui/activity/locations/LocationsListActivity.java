@@ -12,7 +12,7 @@ public class LocationsListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_locations_list);
+        setContentView(R.layout.activity_locations);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content, LocationsListFragment.newInstance());

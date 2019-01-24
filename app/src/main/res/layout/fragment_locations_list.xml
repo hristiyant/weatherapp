@@ -14,10 +14,13 @@
 
     <EditText
         android:id="@+id/edt_filter"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_between_elements_default"
         android:drawableLeft="@android:drawable/ic_menu_search"
-        android:hint="Enter to search:"
+        android:hint="@string/locations_list_fragment_edit_text_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
