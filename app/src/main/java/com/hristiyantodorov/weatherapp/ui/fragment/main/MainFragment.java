@@ -30,7 +30,7 @@ import permissions.dispatcher.RuntimePermissions;
 @RuntimePermissions
 public class MainFragment extends Fragment {
 
-    @BindView(R.id.image_btn_pick_from_location)
+    @BindView(R.id.img_btn_pick_location)
     ImageButton imgBtnPickLocation;
 
     public static MainFragment newInstance() {
@@ -39,7 +39,7 @@ public class MainFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
@@ -49,7 +49,7 @@ public class MainFragment extends Fragment {
         return view;
     }
 
-    @OnClick(R.id.image_btn_pick_from_location)
+    @OnClick(R.id.img_btn_pick_location)
     public void onButtonPickFromLocationClick() {
         MainFragmentPermissionsDispatcher.openWeatherDetailsWithPermissionCheck(MainFragment.this);
     }
@@ -86,7 +86,7 @@ public class MainFragment extends Fragment {
         Toast.makeText(getContext(), R.string.never_ask_again, Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick(R.id.image_btn_pick_from_list)
+    @OnClick(R.id.img_btn_pick_from_list)
     public void onButtonPickFromListClick() {
         Intent intent = new Intent(getActivity(), LocationsListActivity.class);
         startActivity(intent);

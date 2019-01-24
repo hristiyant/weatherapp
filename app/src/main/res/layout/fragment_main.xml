@@ -8,7 +8,7 @@
     tools:context=".ui.fragment.main.MainFragment">
 
     <android.support.constraint.Guideline
-        android:id="@+id/half_screen_guideline"
+        android:id="@+id/guideline_half_screen"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -16,7 +16,7 @@
 
 
     <ImageButton
-        android:id="@+id/image_btn_pick_from_location"
+        android:id="@+id/img_btn_pick_location"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
         android:background="@drawable/animated_button"
@@ -35,14 +35,14 @@
         android:layout_marginBottom="@dimen/main_screen_margin_between_elements"
         android:text="@string/main_screen_option_pick_location"
         android:textSize="@dimen/main_screen_labels_size"
-        app:layout_constraintBottom_toTopOf="@+id/image_btn_pick_from_list"
+        app:layout_constraintBottom_toTopOf="@+id/img_btn_pick_from_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_btn_pick_from_location" />
+        app:layout_constraintTop_toBottomOf="@+id/img_btn_pick_location" />
 
     <ImageButton
-        android:id="@+id/image_btn_pick_from_list"
+        android:id="@+id/img_btn_pick_from_list"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
         android:background="@drawable/animated_button"
@@ -63,6 +63,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_btn_pick_from_list" />
+        app:layout_constraintTop_toBottomOf="@+id/img_btn_pick_from_list" />
 
 </android.support.constraint.ConstraintLayout>

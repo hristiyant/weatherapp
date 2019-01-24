@@ -15,38 +15,10 @@ import butterknife.BindView;
 
 public class WeatherDetailsActivity extends AppCompatActivity {
 
-    @BindView(R.id.txt_message)
-    private TextView textView;
-
-    @BindView(R.id.navigation)
-    BottomNavigationView navigation;
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    textView.setText(R.string.title_home);
-                    return true;
-                case R.id.navigation_dashboard:
-                    textView.setText(R.string.title_dashboard);
-                    return true;
-                case R.id.navigation_notifications:
-                    textView.setText(R.string.title_notifications);
-                    return true;
-            }
-            return false;
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather_details);
-
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content, WeatherDetailsFragment.newInstance());
