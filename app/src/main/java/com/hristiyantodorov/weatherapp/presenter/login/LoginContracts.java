@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.views.login;
+package com.hristiyantodorov.weatherapp.presenter.login;
 
 public interface LoginContracts {
     interface View {

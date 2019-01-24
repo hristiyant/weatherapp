@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.views.weather_details;
+package com.hristiyantodorov.weatherapp.ui.activity.weatherdetails;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,10 +9,17 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.R;
+import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.WeatherDetailsFragment;
+
+import butterknife.BindView;
 
 public class WeatherDetailsActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
+    @BindView(R.id.txt_message)
+    private TextView textView;
+
+    @BindView(R.id.navigation)
+    BottomNavigationView navigation;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -21,13 +28,13 @@ public class WeatherDetailsActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    textView.setText(R.string.title_home);
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                    textView.setText(R.string.title_dashboard);
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                    textView.setText(R.string.title_notifications);
                     return true;
             }
             return false;
@@ -39,13 +46,10 @@ public class WeatherDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather_details);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content, WeatherDetailsFragment.newInstance());
         fragmentTransaction.commit();
     }
-
 }

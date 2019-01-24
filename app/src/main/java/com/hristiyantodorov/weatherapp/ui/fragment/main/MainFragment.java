@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.views.main;
+package com.hristiyantodorov.weatherapp.ui.fragment.main;
 
 
 import android.Manifest;
@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,8 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.views.locations_list.LocationsListActivity;
-import com.hristiyantodorov.weatherapp.views.weather_details.WeatherDetailsActivity;
+import com.hristiyantodorov.weatherapp.ui.activity.locations.LocationsListActivity;
+import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,13 +27,11 @@ import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
-import static android.content.ContentValues.TAG;
-
 @RuntimePermissions
 public class MainFragment extends Fragment {
 
     @BindView(R.id.image_btn_pick_from_location)
-    ImageButton pickFromLocation;
+    ImageButton imgBtnPickLocation;
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -59,8 +56,6 @@ public class MainFragment extends Fragment {
 
     @NeedsPermission(Manifest.permission.ACCESS_FINE_LOCATION)
     void openWeatherDetails() {
-        Log.d(TAG, "openWeatherDetails: Opening new fragment based on location");
-
         Intent intent = new Intent(getActivity(), WeatherDetailsActivity.class);
         startActivity(intent);
     }
@@ -74,23 +69,21 @@ public class MainFragment extends Fragment {
     @OnShowRationale(Manifest.permission.ACCESS_FINE_LOCATION)
     void showRationaleForLocation(final PermissionRequest request) {
         new AlertDialog.Builder(getContext())
-                .setTitle("Permission needed")
-                .setMessage("This permission is needed because weather details " +
-                        "cannot be displayed if the app is not able to detect your current location")
-                .setPositiveButton("Ok", (dialog, which) -> request.proceed())
-                .setNegativeButton("Cancel", (dialog, which) -> request.cancel())
+                .setTitle(R.string.alert_dialog_title)
+                .setMessage(R.string.rationale_message)
+                .setPositiveButton(R.string.positive_button_text, (dialog, which) -> request.proceed())
+                .setNegativeButton(R.string.negative_button_text, (dialog, which) -> request.cancel())
                 .show();
     }
 
     @OnPermissionDenied(Manifest.permission.ACCESS_FINE_LOCATION)
     void onLocationDenied() {
-        Toast.makeText(getContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.permission_denied, Toast.LENGTH_SHORT).show();
     }
 
     @OnNeverAskAgain(Manifest.permission.ACCESS_FINE_LOCATION)
     void onNeverAskAgain() {
-        Toast.makeText(getContext(), "Never asking again", Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(getContext(), R.string.never_ask_again, Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.image_btn_pick_from_list)

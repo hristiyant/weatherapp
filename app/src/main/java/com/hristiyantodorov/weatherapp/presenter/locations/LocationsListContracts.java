@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.views.locations_list;
+package com.hristiyantodorov.weatherapp.presenter.locations;
 
 import java.util.List;
 

@@ -1,10 +1,12 @@
-package com.hristiyantodorov.weatherapp.views.main;
+package com.hristiyantodorov.weatherapp.ui.activity.main;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.hristiyantodorov.weatherapp.R;
+import com.hristiyantodorov.weatherapp.ui.fragment.main.MainFragment;
+
 
 public class MainActivity extends AppCompatActivity {
 
