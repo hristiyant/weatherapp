@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.views.weather_details;
+package com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;

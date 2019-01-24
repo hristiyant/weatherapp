@@ -25,5 +25,5 @@
     <!--Weather Details Fragment-->
     <string name="txt_city_name_text">City Name</string>
     <string name="txt_area_name_text">Area Name</string>
-    
+
 </resources>

@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.views.weather_details;
+package com.hristiyantodorov.weatherapp.ui.activity.weatherdetails;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -6,11 +6,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.ViewPagerAdapter;
+import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.ForecastFragment;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
