@@ -1,51 +1,61 @@
 package com.hristiyantodorov.weatherapp.views.weather_details;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.FragmentTransaction;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
-import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.hristiyantodorov.weatherapp.R;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.ViewPagerAdapter;
+import com.squareup.picasso.Picasso;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class WeatherDetailsActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
-                    return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
-                    return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
-                    return true;
-            }
-            return false;
-        }
-    };
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
+
+    @BindView(R.id.tabs)
+    TabLayout tabLayout;
+
+    @BindView(R.id.image_view_thumbnail)
+    ImageView imageViewThumbnail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather_details);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        ButterKnife.bind(this);
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content, WeatherDetailsFragment.newInstance());
-        fragmentTransaction.commit();
+        setSupportActionBar(toolbar);
+
+        fab.setOnClickListener(view -> {
+            // TODO: 1/24/2019 Add implementation.
+        });
+
+        ViewPagerAdapter mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        // TODO: 1/24/2019 Change tab names.
+        mViewPagerAdapter.addFragment(ForecastFragment.newInstance(), "Tab 1");
+        mViewPagerAdapter.addFragment(ForecastFragment.newInstance(), "Tab 2");
+        mViewPagerAdapter.addFragment(ForecastFragment.newInstance(), "Tab 3");
+        viewPager.setAdapter(mViewPagerAdapter);
+
+        tabLayout.setupWithViewPager(viewPager);
+
+        Picasso.get().load(R.drawable.ic_avatar).fit().into(imageViewThumbnail);
     }
 
 }

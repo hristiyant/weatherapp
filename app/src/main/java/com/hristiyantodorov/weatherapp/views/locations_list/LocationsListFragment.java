@@ -2,6 +2,7 @@ package com.hristiyantodorov.weatherapp.views.locations_list;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,13 +24,13 @@ import butterknife.OnTextChanged;
 public class LocationsListFragment extends Fragment implements LocationsListContracts.View {
 
     @BindView(R.id.edt_filter)
-    EditText filter;
+    EditText edtFilter;
 
     @BindView(R.id.progressbar)
     ProgressBar progressBar;
 
     @BindView(R.id.rv_locations)
-    RecyclerView locationsList;
+    RecyclerView recyclerViewLocations;
 
     private LocationsListAdapter adapter;
     private GridLayoutManager gridLayoutManager;
@@ -45,16 +46,16 @@ public class LocationsListFragment extends Fragment implements LocationsListCont
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_locations_list, container, false);
 
         ButterKnife.bind(this, view);
 
-        locationsList.setAdapter(adapter);
+        recyclerViewLocations.setAdapter(adapter);
         gridLayoutManager = new GridLayoutManager(getContext(), 2);
-        locationsList.setLayoutManager(gridLayoutManager);
+        recyclerViewLocations.setLayoutManager(gridLayoutManager);
 
 
         return view;
@@ -63,8 +64,8 @@ public class LocationsListFragment extends Fragment implements LocationsListCont
 
     @OnTextChanged(R.id.edt_filter)
     public void onTextChanged() {
-        String pattern = filter.getText().toString();
-        //TODO presenter - add filter method and call here
+        String pattern = edtFilter.getText().toString();
+        //TODO presenter - add edtFilter method and call here
     }
 
     @Override
