@@ -1,12 +1,39 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hristiyantodorov.weatherapp.views.weather_details.ForecastFragment">
+    tools:context=".ui.fragment.weatherdetails.WeatherDetailsFragment">
+
+    <TextView
+        android:id="@+id/txt_city_name"
+        android:layout_width="@dimen/no_dimens"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_between_elements_default"
+        android:text="@string/txt_city_name_text"
+        android:textSize="@dimen/locations_list_image_labels_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_area_name"
+        android:layout_width="@dimen/no_dimens"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_between_elements_default"
+        android:text="@string/txt_area_name_text"
+        android:textSize="@dimen/main_screen_labels_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_city_name" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_forecast"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="@dimen/no_dimens"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_between_elements_default"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:listItem="@layout/locations_list_item" />
 
 </FrameLayout>

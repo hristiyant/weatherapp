@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.views.locations_list;
+package com.hristiyantodorov.weatherapp.ui.fragment.locations;
 
 
 import android.os.Bundle;
@@ -13,12 +13,16 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.hristiyantodorov.weatherapp.R;
+import com.hristiyantodorov.weatherapp.adapters.locations.LocationsListAdapter;
+import com.hristiyantodorov.weatherapp.presenter.locations.LocationsListContracts;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
+
+import static com.hristiyantodorov.weatherapp.utils.Constants.LOCATIONS_LIST_GRID_LAYOUT_MANAGER_SPAN_COUNT;
 
 
 public class LocationsListFragment extends Fragment implements LocationsListContracts.View {
@@ -32,7 +36,7 @@ public class LocationsListFragment extends Fragment implements LocationsListCont
     @BindView(R.id.rv_locations)
     RecyclerView recyclerViewLocations;
 
-    private LocationsListAdapter adapter;
+    private LocationsListAdapter locationsAdapter;
     private GridLayoutManager gridLayoutManager;
     private LocationsListContracts.Presenter presenter;
 
@@ -53,8 +57,9 @@ public class LocationsListFragment extends Fragment implements LocationsListCont
 
         ButterKnife.bind(this, view);
 
-        recyclerViewLocations.setAdapter(adapter);
-        gridLayoutManager = new GridLayoutManager(getContext(), 2);
+
+        recyclerViewLocations.setAdapter(locationsAdapter);
+        gridLayoutManager = new GridLayoutManager(getContext(), LOCATIONS_LIST_GRID_LAYOUT_MANAGER_SPAN_COUNT);
         recyclerViewLocations.setLayoutManager(gridLayoutManager);
 
 

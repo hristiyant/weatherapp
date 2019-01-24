@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.views.login;
+package com.hristiyantodorov.weatherapp.ui.fragment.login;
 
 
 import android.content.Intent;
@@ -13,7 +13,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.views.main.MainActivity;
+import com.hristiyantodorov.weatherapp.ui.activity.main.MainActivity;
+import com.hristiyantodorov.weatherapp.presenter.login.LoginContracts;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

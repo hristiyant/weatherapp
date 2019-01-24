@@ -14,19 +14,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.weather_details.WeatherDetailsActivity"/>
-        <activity android:name=".views.locations_list.LocationsListActivity" />
+        <activity android:name=".ui.activity.weatherdetails.WeatherDetailsActivity" />
+        <activity android:name=".ui.activity.locations.LocationsListActivity" />
         <activity
-            android:name=".views.login.LoginActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"
-            android:theme="@style/SplashTheme">
+            android:name=".ui.activity.login.LoginActivity"
+            android:theme="@style/SplashTheme"
+            android:windowSoftInputMode="stateVisible|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.main.MainActivity" />
+        <activity android:name=".ui.activity.main.MainActivity" />
     </application>
 
 </manifest>

@@ -6,14 +6,24 @@
     <string name="login_screen_username_hint">Username: </string>
     <string name="login_screen_password_hint">Password: </string>
 
-    <!-- TimeCalculatorUtil -->
-
-    <string name="greeting_good_morning">Good morning!</string>
-    <string name="greeting_good_afternoon">Good afternoon!</string>
-    <string name="greeting_good_evening">Good evening!</string>
-
     <!-- Main Screen Layout -->
     <string name="main_screen_option_pick_location">Current location</string>
     <string name="main_screen_option_pick_from_list">Pick from list</string>
 
+    <!--Main Fragment-->
+    <string name="alert_dialog_title">This permission is needed because weather details cannot be
+    displayed if the app is not able to detect your current location.</string>
+    <string name="rationale_message">Permission needed</string>
+    <string name="positive_button_text">Ok</string>
+    <string name="negative_button_text">Cancel</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="never_ask_again">Never ask again</string>
+
+    <!--Locations List Fragment-->
+    <string name="locations_list_fragment_edit_text_hint">Enter to search:</string>
+
+    <!--Weather Details Fragment-->
+    <string name="txt_city_name_text">City Name</string>
+    <string name="txt_area_name_text">Area Name</string>
+    
 </resources>
