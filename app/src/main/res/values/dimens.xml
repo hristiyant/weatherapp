@@ -11,9 +11,10 @@
 
     <!-- Main Screen Layout -->
     <dimen name="main_screen_labels_size">30sp</dimen>
-    <dimen name="main_screen_margin_between_items">32dp</dimen>
+    <dimen name="main_screen_margin_between_elements">32dp</dimen>
 
     <!--Locations List Screen Layout-->
     <dimen name="locations_list_image_labels_size">50sp</dimen>
+    <dimen name="button_sign_in_text_size">20sp</dimen>
 
 </resources>

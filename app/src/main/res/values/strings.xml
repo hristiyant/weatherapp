@@ -9,10 +9,6 @@
     <!-- Main Screen Layout -->
     <string name="main_screen_option_pick_location">Current location</string>
     <string name="main_screen_option_pick_from_list">Pick from list</string>
-    <string name="title_activity_weather_details">WeatherDetailsActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
 
     <!--Main Fragment-->
     <string name="alert_dialog_title">This permission is needed because weather details cannot be
@@ -30,7 +26,5 @@
     <string name="txt_city_name_text">City Name</string>
     <string name="txt_area_name_text">Area Name</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
