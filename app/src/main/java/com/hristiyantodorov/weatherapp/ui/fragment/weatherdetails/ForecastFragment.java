@@ -1,9 +1,9 @@
 package com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,9 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hristiyantodorov.weatherapp.R;
+import com.hristiyantodorov.weatherapp.adapters.weatherdetails.WeatherDetailsAdapter;
 import com.hristiyantodorov.weatherapp.models.WeatherDetailsData;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.WeatherDetailsAdapter;
-import com.hristiyantodorov.weatherapp.utils.ItemOffsetsGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,29 +36,26 @@ public class ForecastFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_weather_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_forecast, container, false);
 
         ButterKnife.bind(this, view);
 
         recyclerViewForecast.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerViewForecast.addItemDecoration(new ItemOffsetsGenerator(20, 1));
         recyclerViewForecast.setAdapter(new WeatherDetailsAdapter(feedItems(), getContext()));
+        recyclerViewForecast.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         return view;
     }
 
     private List<WeatherDetailsData> feedItems() {
-        // TODO: 1/24/2019 Add test data to arrays.
-        String[] conditions = {};
-        String[] temperatures = {};
-        Drawable[] images = {};
+        String[] conditions = {"sunny", "foggy", "cloudy", "rainy"};
+        String[] temperatures = {"22\u2103", "5\u2103", "18\u2103", "33\u2103"};
+        int[] images = {R.drawable.ic_weather_cloudy,
+                R.drawable.login_image,
+                R.drawable.ic_weather_cloudy,
+                R.drawable.login_image};
+
         List<WeatherDetailsData> demoItems = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < conditions.length; j++) {

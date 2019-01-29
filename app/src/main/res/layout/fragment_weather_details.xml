@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_between_elements_default"
         android:text="@string/txt_city_name_text"
-        android:textSize="@dimen/locations_list_image_labels_size"
+        android:textSize="@dimen/fragment_locations_list_image_labels_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -13,8 +13,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.ui.activity.main.MainActivity;
 import com.hristiyantodorov.weatherapp.presenter.login.LoginContracts;
+import com.hristiyantodorov.weatherapp.ui.activity.main.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +38,10 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
     private LoginContracts.Presenter loginPresenter;
 
     public static LoginFragment newInstance() {
-        return new LoginFragment();
+        LoginFragment fragment = new LoginFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override

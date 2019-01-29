@@ -1,7 +1,6 @@
 package com.hristiyantodorov.weatherapp.ui.activity.weatherdetails;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -9,29 +8,25 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.ViewPagerAdapter;
-import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.ForecastFragment;
-import com.squareup.picasso.Picasso;
+import com.hristiyantodorov.weatherapp.adapters.WeatherDetailsPagerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class WeatherDetailsActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar)
+    @BindView(R.id.toolbar_weather_details)
     Toolbar toolbar;
 
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
-
-    @BindView(R.id.viewpager)
+    @BindView(R.id.view_pager_weather_details)
     ViewPager viewPager;
 
-    @BindView(R.id.tabs)
+    @BindView(R.id.tab_layout_forecast_categories)
     TabLayout tabLayout;
 
-    @BindView(R.id.image_view_thumbnail)
-    ImageView imageViewThumbnail;
+    @BindView(R.id.image_weather_icon)
+    ImageView imgWeatherIcon;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,20 +37,12 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        fab.setOnClickListener(view -> {
-            // TODO: 1/24/2019 Add implementation.
-        });
-
-        ViewPagerAdapter mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        // TODO: 1/24/2019 Change tab names.
-        mViewPagerAdapter.addFragment(ForecastFragment.newInstance(), "Tab 1");
-        mViewPagerAdapter.addFragment(ForecastFragment.newInstance(), "Tab 2");
-        mViewPagerAdapter.addFragment(ForecastFragment.newInstance(), "Tab 3");
-        viewPager.setAdapter(mViewPagerAdapter);
+        WeatherDetailsPagerAdapter weatherDetailsPagerAdapter = new WeatherDetailsPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(weatherDetailsPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
 
-        Picasso.get().load(R.drawable.ic_avatar).fit().into(imageViewThumbnail);
+        // TODO: 1/29/2019 Load image according to data from API (currently using test vector)
+        imgWeatherIcon.setImageResource(R.drawable.ic_weather_cloudy);
     }
-
 }

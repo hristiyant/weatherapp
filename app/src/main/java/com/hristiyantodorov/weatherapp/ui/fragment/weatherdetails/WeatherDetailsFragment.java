@@ -14,13 +14,15 @@ import butterknife.ButterKnife;
 
 public class WeatherDetailsFragment extends Fragment {
 
-
     public WeatherDetailsFragment() {
         // Required empty public constructor
     }
 
     public static WeatherDetailsFragment newInstance() {
-        return new WeatherDetailsFragment();
+        WeatherDetailsFragment fragment = new WeatherDetailsFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override

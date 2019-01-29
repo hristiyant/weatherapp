@@ -14,10 +14,10 @@
     <dimen name="main_screen_margin_between_elements">32dp</dimen>
 
     <!--Locations List Screen Layout-->
-    <dimen name="locations_list_image_labels_size">50sp</dimen>
-    <dimen name="button_sign_in_text_size">20sp</dimen>
+    <dimen name="fragment_locations_list_image_labels_size">50sp</dimen>
+    <dimen name="fragment_locations_list_button_sign_in_text_size">20sp</dimen>
 
     <!--Weather Details Screen-->
     <dimen name="activity_weather_details_toolbar_margin_top">24dp</dimen>
-    <dimen name="activity_weather_details_thumbnail_height">256dp</dimen>
+    <dimen name="weather_details_weathor_icon_size">150dp</dimen>
 </resources>

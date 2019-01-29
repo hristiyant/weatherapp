@@ -45,7 +45,10 @@ public class LocationsListFragment extends Fragment implements LocationsListCont
     }
 
     public static LocationsListFragment newInstance() {
-        return new LocationsListFragment();
+        LocationsListFragment fragment = new LocationsListFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
 
 

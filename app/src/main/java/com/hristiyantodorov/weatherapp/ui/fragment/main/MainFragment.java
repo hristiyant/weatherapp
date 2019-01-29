@@ -34,7 +34,10 @@ public class MainFragment extends Fragment {
     ImageButton imgBtnPickLocation;
 
     public static MainFragment newInstance() {
-        return new MainFragment();
+        MainFragment fragment = new MainFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
 
 
