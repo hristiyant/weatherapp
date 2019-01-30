@@ -1,6 +1,5 @@
 package com.hristiyantodorov.weatherapp.ui.fragment.main;
 
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -34,9 +33,11 @@ public class MainFragment extends Fragment {
     ImageButton imgBtnPickLocation;
 
     public static MainFragment newInstance() {
-        return new MainFragment();
+        MainFragment fragment = new MainFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,

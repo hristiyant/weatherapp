@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- Common dimensions -->
     <dimen name="margin_between_elements_default">8dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
@@ -14,7 +13,10 @@
     <dimen name="main_screen_margin_between_elements">32dp</dimen>
 
     <!--Locations List Screen Layout-->
-    <dimen name="locations_list_image_labels_size">50sp</dimen>
-    <dimen name="button_sign_in_text_size">20sp</dimen>
+    <dimen name="fragment_locations_list_image_labels_size">50sp</dimen>
+    <dimen name="fragment_locations_list_button_sign_in_text_size">20sp</dimen>
 
+    <!--Weather Details Screen-->
+    <dimen name="toolbar_weather_details_top_margin">24dp</dimen>
+    <dimen name="icon_current_weather_size">150dp</dimen>
 </resources>

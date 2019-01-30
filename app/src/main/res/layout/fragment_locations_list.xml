@@ -30,6 +30,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edt_filter"
         app:spanCount="2"
-        tools:listItem="@layout/locations_list_item"/>
+        tools:listItem="@layout/locations_list_item" />
 
 </android.support.constraint.ConstraintLayout>
