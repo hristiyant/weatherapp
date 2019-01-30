@@ -2,10 +2,11 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/activity_horizontal_margin"
-    tools:context=".views.login.LoginFragment">
+    tools:context=".ui.fragment.login.LoginFragment">
 
     <ImageView
         android:id="@+id/image_login_screen"
@@ -28,6 +29,7 @@
         android:layout_marginBottom="@dimen/margin_between_elements_default"
         android:background="@drawable/background_edittext"
         android:hint="@string/login_screen_username_hint"
+        android:textColorHint="@color/transparentBlack"
         app:layout_constraintBottom_toTopOf="@+id/til_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -36,12 +38,12 @@
             android:id="@+id/edt_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
             android:layout_margin="@dimen/margin_between_elements_default"
+            android:background="@android:color/transparent"
             android:drawableLeft="@drawable/ic_avatar"
             android:drawablePadding="@dimen/login_screen_icon_padding"
-            android:paddingLeft="@dimen/login_screen_icon_padding" />
-
+            android:paddingLeft="@dimen/login_screen_icon_padding"
+            android:singleLine="true" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -53,6 +55,7 @@
         android:layout_marginBottom="@dimen/margin_between_elements_default"
         android:background="@drawable/background_edittext"
         android:hint="@string/login_screen_password_hint"
+        android:textColorHint="@color/transparentBlack"
         app:layout_constraintBottom_toTopOf="@+id/btn_sign_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -61,8 +64,8 @@
             android:id="@+id/edt_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
             android:layout_margin="@dimen/margin_between_elements_default"
+            android:background="@android:color/transparent"
             android:drawableLeft="@drawable/ic_padlock"
             android:drawablePadding="@dimen/login_screen_icon_padding"
             android:inputType="textPassword"
@@ -85,12 +88,12 @@
         android:id="@+id/btn_sign_in"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:background="@drawable/animated_button"
         android:text="@string/login_screen_btn_sign_in"
-        android:textColor="@color/white"
+        android:textSize="@dimen/fragment_locations_list_button_sign_in_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 </android.support.constraint.ConstraintLayout>
