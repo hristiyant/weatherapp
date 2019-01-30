@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 
 import com.hristiyantodorov.weatherapp.R;
@@ -15,16 +14,13 @@ import butterknife.ButterKnife;
 
 public class WeatherDetailsActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar_weather_details)
-    Toolbar toolbar;
-
     @BindView(R.id.view_pager_forecasts_holder)
     ViewPager viewPager;
 
     @BindView(R.id.tab_layout_forecast_categories)
     TabLayout tabLayout;
 
-    @BindView(R.id.image_current_weather_icon)
+    @BindView(R.id.img_current_weather_icon)
     ImageView imgWeatherIcon;
 
 
@@ -34,8 +30,6 @@ public class WeatherDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_weather_details);
 
         ButterKnife.bind(this);
-
-        setSupportActionBar(toolbar);
 
         WeatherDetailsPagerAdapter weatherDetailsPagerAdapter = new WeatherDetailsPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(weatherDetailsPagerAdapter);
