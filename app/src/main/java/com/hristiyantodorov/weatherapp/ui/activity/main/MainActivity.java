@@ -2,12 +2,12 @@ package com.hristiyantodorov.weatherapp.ui.activity.main;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 
 import com.hristiyantodorov.weatherapp.R;
+import com.hristiyantodorov.weatherapp.ui.activity.BaseActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.main.MainFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -50,10 +50,10 @@ public class ForecastFragment extends Fragment {
      *
      * @return List of WeatherDetailsData test items
      */
-    
+
     private List<WeatherDetailsData> feedItems() {
         String[] conditions = {"sunny", "foggy", "cloudy", "rainy"};
-        String[] temperatures = {"22\u2103", "5\u2103", "18\u2103", "33\u2103"};
+        String[] temperatures = {"22\u2103", "5\u2103", "18\u2103", "33\u2109"};
         int[] images = {R.drawable.ic_weather_cloudy,
                 R.drawable.login_image,
                 R.drawable.ic_weather_cloudy,
