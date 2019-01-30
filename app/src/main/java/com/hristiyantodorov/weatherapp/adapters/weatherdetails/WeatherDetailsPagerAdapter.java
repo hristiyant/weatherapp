@@ -1,5 +1,4 @@
-package com.hristiyantodorov.weatherapp.adapters;
-
+package com.hristiyantodorov.weatherapp.adapters.weatherdetails;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,10 +10,10 @@ import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.ForecastFragme
 import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.WeatherDetailsFragment;
 
 public class WeatherDetailsPagerAdapter extends FragmentPagerAdapter {
-    public static final int FORECAST_TAB_HOURLY = 0;
-    public static final int FORECAST_TAB_DAILY = 1;
-    public static final int FORECAST_TAB_DETAILED = 2;
-    public static final int NUMBER_OF_ELEMENTS = 3;
+    private static final int FORECAST_TAB_HOURLY = 0;
+    private static final int FORECAST_TAB_DAILY = 1;
+    private static final int FORECAST_TAB_DETAILED = 2;
+    private static final int NUMBER_OF_ELEMENTS = 3;
 
     public WeatherDetailsPagerAdapter(FragmentManager manager) {
         super(manager);

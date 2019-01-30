@@ -43,7 +43,7 @@ public class WeatherDetailsAdapter extends RecyclerView.Adapter<WeatherDetailsAd
         return itemsList.size();
     }
 
-    public static class WeatherDetailsItemHolder extends RecyclerView.ViewHolder {
+    static class WeatherDetailsItemHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.img_weather_icon)
         ImageView imgWeatherIcon;
@@ -54,7 +54,7 @@ public class WeatherDetailsAdapter extends RecyclerView.Adapter<WeatherDetailsAd
         @BindView(R.id.txt_conditions)
         TextView txtConditions;
 
-        public WeatherDetailsItemHolder(View itemView) {
+        WeatherDetailsItemHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

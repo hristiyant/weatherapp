@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,7 +10,7 @@
         android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_between_elements_default"
-        android:text="@string/txt_city_name_text"
+        android:text="@string/details_fragment_txt_city_name"
         android:textSize="@dimen/fragment_locations_list_image_labels_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +21,7 @@
         android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_between_elements_default"
-        android:text="@string/txt_area_name_text"
+        android:text="@string/details_fragment_txt_area_name"
         android:textSize="@dimen/main_screen_labels_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_city_name" />
@@ -36,4 +36,4 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:listItem="@layout/locations_list_item" />
 
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>

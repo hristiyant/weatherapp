@@ -1,8 +1,11 @@
 package com.hristiyantodorov.weatherapp.models;
 
+import android.support.annotation.DrawableRes;
+
 public class WeatherDetailsData {
     private String conditions;
     private String temperature;
+    @DrawableRes
     private int drawable;
 
     public WeatherDetailsData(String conditions, String temperature, int drawable) {

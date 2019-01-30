@@ -25,9 +25,6 @@ public class ForecastFragment extends Fragment {
     @BindView(R.id.recycler_view_forecast)
     RecyclerView recyclerViewForecast;
 
-    public ForecastFragment() {
-    }
-
     public static ForecastFragment newInstance() {
         ForecastFragment fragment = new ForecastFragment();
         Bundle args = new Bundle();
@@ -48,6 +45,12 @@ public class ForecastFragment extends Fragment {
         return view;
     }
 
+    /**
+     * This method is used to feed dummy data to the adapter for testing purposes.
+     *
+     * @return List of WeatherDetailsData test items
+     */
+    
     private List<WeatherDetailsData> feedItems() {
         String[] conditions = {"sunny", "foggy", "cloudy", "rainy"};
         String[] temperatures = {"22\u2103", "5\u2103", "18\u2103", "33\u2103"};

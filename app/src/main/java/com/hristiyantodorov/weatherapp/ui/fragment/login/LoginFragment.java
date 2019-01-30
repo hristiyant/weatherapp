@@ -1,8 +1,8 @@
 package com.hristiyantodorov.weatherapp.ui.fragment.login;
 
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,7 +19,6 @@ import com.hristiyantodorov.weatherapp.ui.activity.main.MainActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 
 public class LoginFragment extends Fragment implements LoginContracts.View {
 
@@ -45,7 +44,7 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_login, container, false);

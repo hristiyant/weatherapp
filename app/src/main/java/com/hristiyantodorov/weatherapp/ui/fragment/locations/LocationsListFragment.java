@@ -1,6 +1,5 @@
 package com.hristiyantodorov.weatherapp.ui.fragment.locations;
 
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -23,7 +22,6 @@ import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
 
 import static com.hristiyantodorov.weatherapp.utils.Constants.LOCATIONS_LIST_GRID_LAYOUT_MANAGER_SPAN_COUNT;
-
 
 public class LocationsListFragment extends Fragment implements LocationsListContracts.View {
 
@@ -51,7 +49,6 @@ public class LocationsListFragment extends Fragment implements LocationsListCont
         return fragment;
     }
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,15 +57,12 @@ public class LocationsListFragment extends Fragment implements LocationsListCont
 
         ButterKnife.bind(this, view);
 
-
         recyclerViewLocations.setAdapter(locationsAdapter);
         gridLayoutManager = new GridLayoutManager(getContext(), LOCATIONS_LIST_GRID_LAYOUT_MANAGER_SPAN_COUNT);
         recyclerViewLocations.setLayoutManager(gridLayoutManager);
 
-
         return view;
     }
-
 
     @OnTextChanged(R.id.edt_filter)
     public void onTextChanged() {

@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.ui.fragment.main.MainFragment;
 
-
 public class MainActivity extends AppCompatActivity {
 
     @Override

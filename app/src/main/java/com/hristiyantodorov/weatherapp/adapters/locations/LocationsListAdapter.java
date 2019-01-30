@@ -10,7 +10,7 @@ import java.util.List;
 // TODO: 1/22/2019 This is not implemented.
 public class LocationsListAdapter extends RecyclerView.Adapter {
 
-    List<String> locationsList;
+    private List<String> locationsList;
 
     public LocationsListAdapter() {
         locationsList = new ArrayList<>();
