@@ -24,13 +24,14 @@
         style="@style/WeatherDetailsOverlayText"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="@dimen/no_dimens"
+        android:layout_marginLeft="@dimen/margin_between_elements_default"
         android:gravity="start|center"
-        android:textSize="@dimen/main_screen_labels_size"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/txt_current_temperature"
         app:layout_constraintStart_toEndOf="@+id/img_weather_icon"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="sunny" />
+        tools:text="THU\n sunny" />
 
     <TextView
         android:id="@+id/txt_current_temperature"

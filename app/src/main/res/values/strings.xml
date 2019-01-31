@@ -33,4 +33,14 @@
     <string name="weather_details_tab_daily_title">Daily</string>
     <string name="weather_details_tab_detailed_title">Detailed</string>
     <string name="weather_details_tab_settings_title">Settings</string>
+
+    <!--Settings Screen-->
+    <string name="preferences_category_themes_mode_title">Switch theme auto mode</string>
+    <string name="preference_switch_themes_key">themes</string>
+    <string name="preference_switch_themes_summary">Auto mode is currently ON</string>
+    <string name="preference_switch_themes_title">Turn auto mode on/off</string>
+    <string name="preferences_category_feedback_title">Feedback</string>
+    <string name="preference_feedback_key">feedback</string>
+    <string name="preference_feedback_summary">Our team is at your service MON-SUN 24/7 and will be more than happy to help :)</string>
+    <string name="preference_feedback_title">Email us!</string>
 </resources>

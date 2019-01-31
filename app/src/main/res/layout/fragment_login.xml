@@ -9,18 +9,19 @@
     style="@style/WeatherDetailsOverlayText"
     tools:context=".ui.fragment.login.LoginFragment">
 
-    <ImageView
-        android:id="@+id/image_login_screen"
+    <com.ramotion.circlemenu.CircleMenuView
+        android:id="@+id/circle_menu_login"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="@dimen/no_dimens"
-        android:layout_margin="@dimen/margin_between_elements_default"
-        android:layout_marginBottom="@dimen/margin_between_elements_default"
-        android:contentDescription="@null"
-        android:src="@drawable/splash_image"
-        app:layout_constraintBottom_toTopOf="@+id/progressbar"
+        app:layout_constraintBottom_toTopOf="@+id/til_username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:button_colors="@array/colors"
+        app:button_icons="@array/icons"
+        app:icon_menu="@drawable/ic_social_media">
+
+    </com.ramotion.circlemenu.CircleMenuView>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/til_username"
@@ -80,9 +81,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/til_username"
-        app:layout_constraintEnd_toEndOf="@+id/image_login_screen"
-        app:layout_constraintStart_toStartOf="@+id/image_login_screen" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
         android:id="@+id/btn_sign_in"
