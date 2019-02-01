@@ -2,9 +2,6 @@ package com.hristiyantodorov.weatherapp.ui.fragment.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +13,9 @@ import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.presenter.login.LoginContracts;
 import com.hristiyantodorov.weatherapp.ui.activity.main.MainActivity;
 
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -55,7 +55,7 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
     }
 
     @OnClick(R.id.btn_sign_in)
-    public void onSignInButtonClick() {
+    void onSignInButtonClick() {
 
         // TODO: 1/18/2019  Login from presenter mPresenter.loginUser(userName, password);
         Intent intent = new Intent(getContext(), MainActivity.class);

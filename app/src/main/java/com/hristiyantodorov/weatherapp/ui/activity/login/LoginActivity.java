@@ -1,8 +1,8 @@
 package com.hristiyantodorov.weatherapp.ui.activity.login;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatDelegate;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.AppCompatDelegate;
 import android.view.Window;
 
 import com.hristiyantodorov.weatherapp.R;

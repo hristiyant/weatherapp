@@ -1,10 +1,6 @@
 package com.hristiyantodorov.weatherapp.ui.fragment.locations;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +13,10 @@ import com.hristiyantodorov.weatherapp.presenter.locations.LocationsListContract
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
@@ -65,7 +65,7 @@ public class LocationsListFragment extends Fragment implements LocationsListCont
     }
 
     @OnTextChanged(R.id.edt_filter)
-    public void onTextChanged() {
+    void onTextChanged() {
         String pattern = edtFilter.getText().toString();
         //TODO presenter - add edtFilter method and call here
     }

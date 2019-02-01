@@ -1,13 +1,14 @@
 package com.hristiyantodorov.weatherapp.adapters.weatherdetails;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.ForecastFragment;
 import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.WeatherDetailsFragment;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 public class WeatherDetailsPagerAdapter extends FragmentPagerAdapter {
     private static final int FORECAST_TAB_HOURLY = 0;
@@ -19,6 +20,7 @@ public class WeatherDetailsPagerAdapter extends FragmentPagerAdapter {
         super(manager);
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position) {
         switch (position) {
@@ -28,7 +30,7 @@ public class WeatherDetailsPagerAdapter extends FragmentPagerAdapter {
             case FORECAST_TAB_DETAILED:
                 return WeatherDetailsFragment.newInstance();
             default:
-                return null;
+                 throw new IllegalArgumentException("Message");
         }
     }
 

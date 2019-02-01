@@ -4,8 +4,6 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +14,8 @@ import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.ui.activity.locations.LocationsListActivity;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -51,7 +51,7 @@ public class MainFragment extends Fragment {
     }
 
     @OnClick(R.id.img_btn_pick_location)
-    public void onButtonPickFromLocationClick() {
+    void onButtonPickFromLocationClick() {
         MainFragmentPermissionsDispatcher.openWeatherDetailsWithPermissionCheck(MainFragment.this);
     }
 
@@ -88,7 +88,7 @@ public class MainFragment extends Fragment {
     }
 
     @OnClick(R.id.img_btn_pick_from_list)
-    public void onButtonPickFromListClick() {
+    void onButtonPickFromListClick() {
         Intent intent = new Intent(getActivity(), LocationsListActivity.class);
         startActivity(intent);
     }

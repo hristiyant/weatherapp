@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,6 +10,7 @@
         android:id="@+id/img_weather_icon"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/no_dimens"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:adjustViewBounds="true"
         android:contentDescription="@null"
@@ -36,6 +37,7 @@
         android:layout_width="@dimen/no_dimens"
         android:layout_height="match_parent"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:padding="@dimen/margin_between_elements_default"
         android:textSize="@dimen/main_screen_labels_size"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -43,4 +45,4 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="7℃" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,6 @@
 package com.hristiyantodorov.weatherapp.models;
 
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 
 public class WeatherDetailsData {
     private String conditions;
