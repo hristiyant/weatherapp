@@ -1,8 +1,6 @@
 package com.hristiyantodorov.weatherapp.presenter.login;
 
+//Not implemented.
 public class LoginPresenter {
-
     private LoginContracts.View mView;
-
-    // TODO: 1/18/2019 Dependency inj. Override logInUser
 }

@@ -26,7 +26,6 @@
         android:layout_height="@dimen/no_dimens"
         android:layout_marginLeft="@dimen/margin_between_elements_default"
         android:gravity="start|center"
-        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/txt_current_temperature"
         app:layout_constraintStart_toEndOf="@+id/img_weather_icon"

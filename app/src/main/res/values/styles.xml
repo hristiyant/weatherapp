@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- Application light theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">@color/textColorPrimary</item>
-        <item name="android:editTextColor">@color/white</item>
+        <item name="android:editTextColor">@color/textColorPrimary</item>
         <item name="android:windowBackground">@drawable/background_image</item>
         <item name="preferenceTheme">
             @style/PreferenceThemeOverlay.v14.Material
@@ -22,13 +21,13 @@
 
     <!--Text Shadow-->
     <style name="WeatherDetailsOverlayText">
-        <item name="android:paddingLeft">4px</item>
-        <item name="android:paddingBottom">4px</item>
+        <item name="android:paddingLeft">@dimen/layout_padding</item>
+        <item name="android:paddingBottom">@dimen/layout_padding</item>
         <item name="android:textColor">@color/textColorPrimary</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/layout_text_size</item>
         <item name="android:shadowColor">@color/textColorShadow</item>
-        <item name="android:shadowDx">1</item>
-        <item name="android:shadowDy">1</item>
-        <item name="android:shadowRadius">1</item>
+        <item name="android:shadowDx">@dimen/layout_shadow</item>
+        <item name="android:shadowDy">@dimen/layout_shadow</item>
+        <item name="android:shadowRadius">@dimen/layout_shadow</item>
     </style>
 </resources>

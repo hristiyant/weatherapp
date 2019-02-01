@@ -41,7 +41,7 @@
     <string name="preference_switch_themes_summary">Auto mode is currently ON</string>
     <string name="preference_switch_themes_title">Turn auto mode on/off</string>
     <string name="preferences_category_feedback_title">Feedback</string>
-    <string name="preference_feedback_key">feedback</string>
     <string name="preference_feedback_summary">Our team is at your service MON-SUN 24/7 and will be more than happy to help :)</string>
     <string name="preference_feedback_title">Email us!</string>
+    <string name="preference_feedback_key">feedback</string>
 </resources>

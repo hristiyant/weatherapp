@@ -20,6 +20,7 @@
         android:layout_margin="@dimen/margin_between_elements_default"
         android:drawableLeft="@android:drawable/ic_menu_search"
         android:hint="@string/locations_list_fragment_edit_text_hint"
+        android:inputType="textFilter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

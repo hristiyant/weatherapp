@@ -9,7 +9,6 @@ import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.ui.fragment.login.LoginFragment;
 
 public class LoginActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Set day/night theme

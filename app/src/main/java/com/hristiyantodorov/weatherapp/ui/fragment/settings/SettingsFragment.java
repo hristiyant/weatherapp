@@ -25,8 +25,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             if (preference.getKey().equals("feedback")) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setData(Uri.parse("email"));
-                String sampleEmail = "sample_email@gmail.com";
-                intent.putExtra(Intent.EXTRA_EMAIL, sampleEmail);
+                String[] sampleRecipients = {"hrisko_drisko@vba.com", "drisko_hrisko@blabla.com"};
+                intent.putExtra(Intent.EXTRA_EMAIL, sampleRecipients);
                 intent.putExtra(Intent.EXTRA_SUBJECT, "About WeatherApp");
                 intent.putExtra(Intent.EXTRA_TEXT, "-->Enter text here");
                 intent.setType("message/rfc822");

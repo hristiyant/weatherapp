@@ -21,9 +21,14 @@
     <dimen name="toolbar_weather_details_top_margin">24dp</dimen>
     <dimen name="icon_current_weather_size">150dp</dimen>
 
-    <!--Floating action button-->
+    <!--Overriding sizes of the FAB's image-->
     <dimen name="design_fab_image_size" tools:override="true">55dp</dimen>
 
     <!-- Overriding sizes of the FAB -->
     <dimen name="design_fab_size_normal" tools:override="true">70dp</dimen>
+
+    <!--WeatherDetailsOverlayText-->
+    <dimen name="layout_padding">4dp</dimen>
+    <dimen name="layout_text_size">18sp</dimen>
+    <dimen name="layout_shadow">1</dimen>
 </resources>
