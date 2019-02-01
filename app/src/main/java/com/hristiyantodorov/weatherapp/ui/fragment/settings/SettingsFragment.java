@@ -10,6 +10,8 @@ import com.hristiyantodorov.weatherapp.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
+    private static final String FEEDBACK_KEY = "feedback";
+
     private Preference emailPreference;
 
     public static SettingsFragment newInstance() {
@@ -19,10 +21,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle bundle, String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
-        emailPreference = getPreferenceManager().findPreference("feedback");
+        emailPreference = getPreferenceManager().findPreference(FEEDBACK_KEY);
         emailPreference.setOnPreferenceClickListener(preference -> {
 
-            if (preference.getKey().equals("feedback")) {
+            if (preference.getKey().equals(FEEDBACK_KEY)) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setData(Uri.parse("email"));
                 String[] sampleRecipients = {"hrisko_drisko@vba.com", "drisko_hrisko@blabla.com"};

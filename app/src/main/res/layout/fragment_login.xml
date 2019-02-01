@@ -29,14 +29,14 @@
         android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:gravity="center_horizontal"
         android:text="@string/login_screen_line_text_view_text"
-        android:textSize="@dimen/login_screen_line_text_view_text_size"
+        android:textSize="@dimen/text_size_login_screen_line_text"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@id/til_username"
-        app:layout_constraintEnd_toEndOf="@+id/til_username"
-        app:layout_constraintStart_toStartOf="@+id/til_username" />
+        app:layout_constraintBottom_toTopOf="@id/text_input_username"
+        app:layout_constraintEnd_toEndOf="@+id/text_input_username"
+        app:layout_constraintStart_toStartOf="@+id/text_input_username" />
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_username"
+        android:id="@+id/text_input_username"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_between_elements_default"
@@ -44,7 +44,7 @@
         android:background="@drawable/background_edt"
         android:hint="@string/login_screen_username_hint"
         android:textColorHint="@color/transparentBlack"
-        app:layout_constraintBottom_toTopOf="@+id/til_password"
+        app:layout_constraintBottom_toTopOf="@+id/text_input_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -62,7 +62,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_password"
+        android:id="@+id/text_input_password"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_between_elements_default"
