@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.models;
+package com.hristiyantodorov.weatherapp.model;
 
 public class User {
     private String username;

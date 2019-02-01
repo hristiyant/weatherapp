@@ -3,10 +3,11 @@
     <!-- Common dimensions -->
     <dimen name="margin_between_elements_default">8dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="no_dimens">0dp</dimen>
 
     <!-- Login Screen Layout -->
     <dimen name="login_screen_icon_padding">10dp</dimen>
-    <dimen name="no_dimens">0dp</dimen>
+    <dimen name="login_screen_line_text_view_text_size">16sp</dimen>
 
     <!-- Main Screen Layout -->
     <dimen name="main_screen_labels_size">30sp</dimen>

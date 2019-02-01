@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.adapters.weatherdetails.WeatherDetailsAdapter;
-import com.hristiyantodorov.weatherapp.models.WeatherDetailsData;
+import com.hristiyantodorov.weatherapp.adapter.weatherdetails.WeatherDetailsAdapter;
+import com.hristiyantodorov.weatherapp.model.WeatherDetailsData;
 
 import java.util.ArrayList;
 import java.util.List;

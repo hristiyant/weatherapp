@@ -28,7 +28,6 @@ import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
 public class MainFragment extends Fragment {
-
     @BindView(R.id.img_btn_pick_location)
     ImageButton imgBtnPickLocation;
 
@@ -42,7 +41,6 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         ButterKnife.bind(this, view);

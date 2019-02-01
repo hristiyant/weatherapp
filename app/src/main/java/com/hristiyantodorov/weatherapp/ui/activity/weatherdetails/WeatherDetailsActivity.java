@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.adapters.weatherdetails.WeatherDetailsPagerAdapter;
+import com.hristiyantodorov.weatherapp.adapter.weatherdetails.WeatherDetailsPagerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

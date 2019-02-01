@@ -23,7 +23,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class LoginFragment extends Fragment implements LoginContracts.View {
-
     @BindView(R.id.progressbar)
     ProgressBar progressBar;
 
@@ -51,7 +50,6 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
         ButterKnife.bind(this, view);
@@ -80,13 +78,13 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
             @Override
             public void onButtonClickAnimationStart(@NonNull CircleMenuView view, int index) {
                 Log.d("D", "onButtonClickAnimationStart| index: " + index);
-                Toast.makeText(getContext(),"Login successful!", Toast.LENGTH_LONG);
+                Toast.makeText(getContext(), "Login successful!", Toast.LENGTH_LONG);
             }
 
             @Override
             public void onButtonClickAnimationEnd(@NonNull CircleMenuView view, int index) {
                 Log.d("D", "onButtonClickAnimationEnd| index: " + index);
-                Toast.makeText(getContext(),"Login successful!", Toast.LENGTH_LONG);
+                Toast.makeText(getContext(), "Login successful!", Toast.LENGTH_LONG);
                 circleMenuLogin.setVisibility(View.GONE);
             }
 

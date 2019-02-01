@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.adapters.locations.LocationsListAdapter;
+import com.hristiyantodorov.weatherapp.adapter.locations.LocationsListAdapter;
 import com.hristiyantodorov.weatherapp.presenter.locations.LocationsListContracts;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
 
-import static com.hristiyantodorov.weatherapp.utils.Constants.LOCATIONS_LIST_GRID_LAYOUT_MANAGER_SPAN_COUNT;
+import static com.hristiyantodorov.weatherapp.util.Constants.LOCATIONS_LIST_GRID_LAYOUT_MANAGER_SPAN_COUNT;
 
 public class LocationsListFragment extends Fragment implements LocationsListContracts.View {
 

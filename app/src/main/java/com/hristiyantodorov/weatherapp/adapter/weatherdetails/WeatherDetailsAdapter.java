@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.adapters.weatherdetails;
+package com.hristiyantodorov.weatherapp.adapter.weatherdetails;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.models.WeatherDetailsData;
+import com.hristiyantodorov.weatherapp.model.WeatherDetailsData;
 
 import java.util.List;
 

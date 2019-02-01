@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.adapters.weatherdetails;
+package com.hristiyantodorov.weatherapp.adapter.weatherdetails;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

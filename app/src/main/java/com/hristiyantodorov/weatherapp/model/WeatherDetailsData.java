@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.models;
+package com.hristiyantodorov.weatherapp.model;
 
 import android.support.annotation.DrawableRes;
 

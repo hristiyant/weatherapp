@@ -5,6 +5,7 @@
     <string name="login_screen_btn_sign_in">Sign in</string>
     <string name="login_screen_username_hint">Username: </string>
     <string name="login_screen_password_hint">Password: </string>
+    <string name="login_screen_line_text_view_text">or</string>
 
     <!-- Main Screen Layout -->
     <string name="main_screen_option_pick_location">Current location</string>
