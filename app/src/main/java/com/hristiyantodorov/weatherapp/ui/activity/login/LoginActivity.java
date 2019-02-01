@@ -2,14 +2,15 @@ package com.hristiyantodorov.weatherapp.ui.activity.login;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.Window;
 
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.ui.fragment.login.LoginFragment;
 
-public class LoginActivity extends AppCompatActivity {
+import dagger.android.support.DaggerAppCompatActivity;
+
+public class LoginActivity extends DaggerAppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

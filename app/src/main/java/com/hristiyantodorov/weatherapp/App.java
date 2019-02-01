@@ -1,8 +1,11 @@
 package com.hristiyantodorov.weatherapp;
 
-import android.app.Application;
+import com.hristiyantodorov.weatherapp.dagger.DaggerAppComponent;
 
-public class App extends Application {
+import dagger.android.AndroidInjector;
+import dagger.android.DaggerApplication;
+
+public class App extends DaggerApplication {
 
     private static App instance;
 
@@ -10,6 +13,11 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+    }
+
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        return DaggerAppComponent.builder().application(this).build();
     }
 
     public static App getInstance() {
