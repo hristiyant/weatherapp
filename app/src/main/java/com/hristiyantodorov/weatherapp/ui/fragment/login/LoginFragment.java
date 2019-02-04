@@ -1,5 +1,6 @@
 package com.hristiyantodorov.weatherapp.ui.fragment.login;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,7 +14,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
+import com.hristiyantodorov.weatherapp.model.AppDatabase;
+import com.hristiyantodorov.weatherapp.model.User;
 import com.hristiyantodorov.weatherapp.presenter.login.LoginContracts;
 import com.hristiyantodorov.weatherapp.ui.activity.main.MainActivity;
 import com.ramotion.circlemenu.CircleMenuView;
@@ -26,8 +30,8 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
     @BindView(R.id.progressbar)
     ProgressBar progressBar;
 
-    @BindView(R.id.edt_username)
-    EditText edtUserName;
+    @BindView(R.id.edt_email)
+    EditText edtEmail;
 
     @BindView(R.id.edt_password)
     EditText edtPassword;
@@ -78,13 +82,13 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
             @Override
             public void onButtonClickAnimationStart(@NonNull CircleMenuView view, int index) {
                 Log.d("D", "onButtonClickAnimationStart| index: " + index);
-                Toast.makeText(getContext(), "Login successful!", Toast.LENGTH_LONG);
+                Toast.makeText(getContext(), "Login successful!", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onButtonClickAnimationEnd(@NonNull CircleMenuView view, int index) {
                 Log.d("D", "onButtonClickAnimationEnd| index: " + index);
-                Toast.makeText(getContext(), "Login successful!", Toast.LENGTH_LONG);
+                Toast.makeText(getContext(), "Login successful!", Toast.LENGTH_LONG).show();
                 circleMenuLogin.setVisibility(View.GONE);
             }
 
@@ -95,6 +99,11 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
 
     @OnClick(R.id.btn_sign_in)
     public void onSignInButtonClick() {
+        User loggedInUser = new User();
+        loggedInUser.setEmail(edtEmail.getText().toString());
+        AppDatabase db = Room.databaseBuilder(App.getInstance().getApplicationContext(),
+                AppDatabase.class, "database-name").allowMainThreadQueries().build();
+        db.userDao().insert(loggedInUser);
 
         // TODO: 1/18/2019  Login from presenter mPresenter.loginUser(userName, password);
         Intent intent = new Intent(getContext(), MainActivity.class);
