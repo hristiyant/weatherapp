@@ -6,7 +6,7 @@ import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
-abstract class ActivityBindingModule {
+public abstract class ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector(
             modules = LoginModule.class

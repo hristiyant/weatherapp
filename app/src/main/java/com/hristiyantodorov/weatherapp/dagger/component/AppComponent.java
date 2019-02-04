@@ -1,8 +1,10 @@
-package com.hristiyantodorov.weatherapp.dagger;
+package com.hristiyantodorov.weatherapp.dagger.component;
 
 import android.app.Application;
 
 import com.hristiyantodorov.weatherapp.App;
+import com.hristiyantodorov.weatherapp.dagger.ActivityBindingModule;
+import com.hristiyantodorov.weatherapp.dagger.AppModule;
 
 import javax.inject.Singleton;
 

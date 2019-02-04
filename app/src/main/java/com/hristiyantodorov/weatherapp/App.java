@@ -1,6 +1,7 @@
 package com.hristiyantodorov.weatherapp;
 
-import com.hristiyantodorov.weatherapp.dagger.DaggerAppComponent;
+
+import com.hristiyantodorov.weatherapp.dagger.component.DaggerAppComponent;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DaggerApplication;
