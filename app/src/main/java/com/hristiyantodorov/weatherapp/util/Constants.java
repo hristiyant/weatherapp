@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.utils;
+package com.hristiyantodorov.weatherapp.util;
 
 public class Constants {
     //Test coordinates for API.

@@ -3,34 +3,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/background"
+    style="@style/WeatherDetailsOverlayText"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/activity_horizontal_margin"
     tools:context=".ui.fragment.login.LoginFragment">
 
-    <ImageView
-        android:id="@+id/image_login_screen"
+    <com.ramotion.circlemenu.CircleMenuView
+        android:id="@+id/circle_menu_login"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="@dimen/no_dimens"
-        android:layout_margin="@dimen/margin_between_elements_default"
-        android:layout_marginBottom="@dimen/margin_between_elements_default"
-        android:contentDescription="@null"
-        android:src="@drawable/login_image"
-        app:layout_constraintBottom_toTopOf="@+id/progressbar"
+        app:button_colors="@array/colors"
+        app:button_icons="@array/icons"
+        app:icon_menu="@drawable/ic_social_media"
+        app:layout_constraintBottom_toTopOf="@+id/line_text_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.hristiyantodorov.weatherapp.view.LineTextView
+        android:id="@+id/line_text_view"
+        style="@style/WeatherDetailsOverlayText"
+        android:layout_width="@dimen/no_dimens"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:gravity="center_horizontal"
+        android:text="@string/login_screen_line_text_view_text"
+        android:textSize="@dimen/text_size_login_screen_line_text"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@id/text_input_username"
+        app:layout_constraintEnd_toEndOf="@+id/text_input_username"
+        app:layout_constraintStart_toStartOf="@+id/text_input_username" />
+
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_username"
+        android:id="@+id/text_input_username"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_between_elements_default"
         android:layout_marginBottom="@dimen/margin_between_elements_default"
-        android:background="@drawable/background_edittext"
+        android:background="@drawable/background_edt"
         android:hint="@string/login_screen_username_hint"
         android:textColorHint="@color/transparentBlack"
-        app:layout_constraintBottom_toTopOf="@+id/til_password"
+        app:layout_constraintBottom_toTopOf="@+id/text_input_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -48,12 +62,11 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_password"
+        android:id="@+id/text_input_password"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_between_elements_default"
-        android:layout_marginBottom="@dimen/margin_between_elements_default"
-        android:background="@drawable/background_edittext"
+        android:background="@drawable/background_edt"
         android:hint="@string/login_screen_password_hint"
         android:textColorHint="@color/transparentBlack"
         app:layout_constraintBottom_toTopOf="@+id/btn_sign_in"
@@ -80,18 +93,20 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/til_username"
-        app:layout_constraintEnd_toEndOf="@+id/image_login_screen"
-        app:layout_constraintStart_toStartOf="@+id/image_login_screen" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_sign_in"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_margin="@dimen/margin_between_elements_default"
         android:background="@drawable/animated_button"
         android:text="@string/login_screen_btn_sign_in"
         android:textSize="@dimen/fragment_locations_list_button_sign_in_text_size"
+        android:textStyle="bold"
+        style="@style/WeatherDetailsOverlayText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -2,10 +2,10 @@
 <resources>
     <color name="colorPrimaryLight">#FFF9C4</color>
     <color name="colorPrimary">#FFEB3B</color>
-    <color name="colorPrimaryDark">#FBC02D</color>
-    <color name="colorAccent">#FF9800</color>
-    <color name="textColorPrimary">#212121</color>
-
+    <color name="colorPrimaryDark">#1A000000</color>
+    <color name="colorAccent">#444EAE</color>
+    <color name="textColorPrimary">#000000</color>
+    <color name="textColorShadow">#FFFFFF</color>
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
@@ -15,9 +15,6 @@
     <color name="darkPurple">#2B1F3A</color>
     <color name="lightBlue">#6011454D</color>
     <color name="transparentBlack">#80000000</color>
-    <color name="transparentBlackLight">#33000000</color>
+    <color name="transparentBlackLight">#1A000000</color>
     <color name="transparentDarkGray">#B3000000</color>
-
-
-
 </resources>

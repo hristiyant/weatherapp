@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Common dimensions -->
     <dimen name="margin_between_elements_default">8dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="no_dimens">0dp</dimen>
 
     <!-- Login Screen Layout -->
     <dimen name="login_screen_icon_padding">10dp</dimen>
-    <dimen name="no_dimens">0dp</dimen>
+    <dimen name="text_size_login_screen_line_text">16sp</dimen>
 
     <!-- Main Screen Layout -->
     <dimen name="main_screen_labels_size">30sp</dimen>
@@ -19,4 +20,15 @@
     <!--Weather Details Screen-->
     <dimen name="toolbar_weather_details_top_margin">24dp</dimen>
     <dimen name="icon_current_weather_size">150dp</dimen>
+
+    <!--Overriding sizes of the FAB's image-->
+    <dimen name="design_fab_image_size" tools:override="true">55dp</dimen>
+
+    <!-- Overriding sizes of the FAB -->
+    <dimen name="design_fab_size_normal" tools:override="true">70dp</dimen>
+
+    <!--WeatherDetailsOverlayText-->
+    <dimen name="layout_padding">4dp</dimen>
+    <dimen name="layout_text_size">18sp</dimen>
+    <dimen name="layout_shadow">1</dimen>
 </resources>

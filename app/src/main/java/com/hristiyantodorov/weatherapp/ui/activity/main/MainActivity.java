@@ -8,7 +8,6 @@ import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.ui.fragment.main.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

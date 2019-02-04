@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.adapters.weatherdetails.WeatherDetailsAdapter;
-import com.hristiyantodorov.weatherapp.models.WeatherDetailsData;
+import com.hristiyantodorov.weatherapp.adapter.weatherdetails.WeatherDetailsAdapter;
+import com.hristiyantodorov.weatherapp.model.WeatherDetailsData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,10 +50,10 @@ public class ForecastFragment extends Fragment {
      *
      * @return List of WeatherDetailsData test items
      */
-    
+
     private List<WeatherDetailsData> feedItems() {
-        String[] conditions = {"sunny", "foggy", "cloudy", "rainy"};
-        String[] temperatures = {"22\u2103", "5\u2103", "18\u2103", "33\u2103"};
+        String[] conditions = {"THU\n sunny", "FRI\n foggy", "SAT\n cloudy", "SUN\n rainy"};
+        String[] temperatures = {"22\u2103", "5\u2103", "18\u2103", "33\u2109"};
         int[] images = {R.drawable.ic_weather_cloudy,
                 R.drawable.login_image,
                 R.drawable.ic_weather_cloudy,
