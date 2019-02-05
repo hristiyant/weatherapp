@@ -6,14 +6,15 @@
     <string name="login_screen_username_hint">Username: </string>
     <string name="login_screen_password_hint">Password: </string>
     <string name="login_screen_line_text_view_text">or</string>
+    <string name="login_screen_toast_login_successful_text">Login successful!</string>
 
     <!-- Main Screen Layout -->
-    <string name="main_screen_option_pick_location">Current location</string>
+    <string name="main_screen_option_pick_location">Current locationDbModel</string>
     <string name="main_screen_option_pick_from_list">Pick from list</string>
 
     <!--Main Fragment-->
     <string name="alert_dialog_title">This permission is needed because weather details cannot be
-    displayed if the app is not able to detect your current location.</string>
+    displayed if the app is not able to detect your current locationDbModel.</string>
     <string name="rationale_message">Permission needed</string>
     <string name="positive_button_text">OK</string>
     <string name="negative_button_text">Cancel</string>

@@ -14,7 +14,7 @@ public class PersistenceDatabase {
         if (appDatabase == null) {
             synchronized (LOCK) {
                 if (appDatabase == null) {
-                    appDatabase = Room.databaseBuilder(context, AppDatabase.class, "app db")
+                    appDatabase = Room.databaseBuilder(context, AppDatabase.class, "app_db")
                             .build();
                 }
             }

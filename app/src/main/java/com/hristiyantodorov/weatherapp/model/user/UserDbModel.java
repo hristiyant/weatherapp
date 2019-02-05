@@ -4,7 +4,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "users")
-public class User {
+public class UserDbModel {
     @PrimaryKey(autoGenerate = true)
     private int id;
 

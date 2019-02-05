@@ -1,8 +1,8 @@
-package com.hristiyantodorov.weatherapp.service;
+package com.hristiyantodorov.weatherapp.repository;
 
 import android.location.Location;
 
-public interface LocationService {
+public interface LocationRepository {
 
     Location getLocationByName(String name);
 

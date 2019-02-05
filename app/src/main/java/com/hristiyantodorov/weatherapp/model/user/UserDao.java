@@ -10,17 +10,17 @@ import java.util.List;
 @Dao
 public interface UserDao {
     @Query("SELECT * FROM users")
-    List<User> getAllUsers();
+    List<UserDbModel> getAllUsers();
 
-    @Query("SELECT * FROM users WHERE email LIKE :email LIMIT 1")
-    User getUserByEmail(String email);
+    @Query("SELECT * FROM users WHERE email = :email")
+    UserDbModel getUserByEmail(String email);
 
-    @Query("SELECT * FROM users WHERE id LIKE :id LIMIT 1")
-    User getUserById(int id);
+    @Query("SELECT * FROM users WHERE id = :id")
+    UserDbModel getUserById(int id);
 
     @Insert
-    void insertUser(User user);
+    void insertUser(UserDbModel userDbModel);
 
     @Delete
-    void deleteUser(User user);
+    void deleteUser(UserDbModel userDbModel);
 }

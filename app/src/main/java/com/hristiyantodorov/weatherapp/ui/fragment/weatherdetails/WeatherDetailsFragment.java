@@ -26,7 +26,7 @@ import static android.support.constraint.Constraints.TAG;
 public class WeatherDetailsFragment extends Fragment {
     private double longitude;
     private double latitude;
-    Geocoder geocoder;
+    private Geocoder geocoder;
 
     public WeatherDetailsFragment() {
         // Required empty public constructor
@@ -46,6 +46,7 @@ public class WeatherDetailsFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
+        //FIXME Test implementation - get location info
         getLongAndLat();
         geocoder = new Geocoder(getContext(), Locale.getDefault());
         List<Address> addresses = null;
@@ -66,7 +67,7 @@ public class WeatherDetailsFragment extends Fragment {
         return view;
     }
 
-
+    //FIXME Test implementation - get location info
     public void getLongAndLat() {
         LocationManager lm = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);

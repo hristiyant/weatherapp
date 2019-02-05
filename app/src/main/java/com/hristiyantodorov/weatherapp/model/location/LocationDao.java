@@ -10,14 +10,14 @@ import java.util.List;
 public interface LocationDao {
 
     @Query("SELECT * FROM locations")
-    List<Location> getAllLocations();
+    List<LocationDbModel> getAllLocations();
 
-    @Query("SELECT * FROM locations WHERE id LIKE :id LIMIT 1")
-    Location getLocationById(int id);
+    @Query("SELECT * FROM locations WHERE id = :id")
+    LocationDbModel getLocationById(int id);
 
-    @Query("SELECT * FROM locations WHERE name LIKE :name LIMIT 1")
-    Location getLocationByName(String name);
+    @Query("SELECT * FROM locations WHERE name = :name")
+    LocationDbModel getLocationByName(String name);
 
     @Insert
-    void insert(Location location);
+    void insert(LocationDbModel locationDbModel);
 }

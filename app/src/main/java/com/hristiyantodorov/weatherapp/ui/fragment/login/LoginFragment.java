@@ -15,15 +15,13 @@ import android.widget.Toast;
 
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.model.user.User;
 import com.hristiyantodorov.weatherapp.model.user.UserDao;
+import com.hristiyantodorov.weatherapp.model.user.UserDbModel;
 import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
 import com.hristiyantodorov.weatherapp.presenter.login.LoginContracts;
 import com.hristiyantodorov.weatherapp.ui.activity.main.MainActivity;
+import com.hristiyantodorov.weatherapp.util.AppExecutorUtil;
 import com.ramotion.circlemenu.CircleMenuView;
-
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,7 +88,7 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
             @Override
             public void onButtonClickAnimationEnd(@NonNull CircleMenuView view, int index) {
                 Log.d("D", "onButtonClickAnimationEnd| index: " + index);
-                Toast.makeText(getContext(), "Login successful!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), getString(R.string.login_screen_toast_login_successful_text), Toast.LENGTH_LONG).show();
                 circleMenuLogin.setVisibility(View.GONE);
             }
         });
@@ -100,13 +98,12 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
     @OnClick(R.id.btn_sign_in)
     public void onSignInButtonClick() {
         //Test implementation - adding and entry to the database "users"
-        final Executor executor = Executors.newFixedThreadPool(2);
+        UserDbModel user = new UserDbModel();
+        String email = edtEmail.getText().toString();
+        user.setEmail(email);
         UserDao userDao = PersistenceDatabase
                 .getAppDatabase(App.getInstance().getApplicationContext()).userDao();
-        String email = edtEmail.getText().toString();
-        User user = new User();
-        user.setEmail(email);
-        executor.execute(() -> userDao.insertUser(user));
+        AppExecutorUtil.getInstance().execute(() -> userDao.insertUser(user));
         // TODO: 1/18/2019  Login from presenter mPresenter.loginUser(userName, password);
         Intent intent = new Intent(getContext(), MainActivity.class);
         startActivity(intent);
