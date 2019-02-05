@@ -1,6 +1,5 @@
 package com.hristiyantodorov.weatherapp.ui.fragment.login;
 
-import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,11 +15,15 @@ import android.widget.Toast;
 
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.model.AppDatabase;
-import com.hristiyantodorov.weatherapp.model.User;
+import com.hristiyantodorov.weatherapp.model.user.User;
+import com.hristiyantodorov.weatherapp.model.user.UserDao;
+import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
 import com.hristiyantodorov.weatherapp.presenter.login.LoginContracts;
 import com.hristiyantodorov.weatherapp.ui.activity.main.MainActivity;
 import com.ramotion.circlemenu.CircleMenuView;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,7 +85,6 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
             @Override
             public void onButtonClickAnimationStart(@NonNull CircleMenuView view, int index) {
                 Log.d("D", "onButtonClickAnimationStart| index: " + index);
-                Toast.makeText(getContext(), "Login successful!", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -91,20 +93,20 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
                 Toast.makeText(getContext(), "Login successful!", Toast.LENGTH_LONG).show();
                 circleMenuLogin.setVisibility(View.GONE);
             }
-
         });
-
         return view;
     }
 
     @OnClick(R.id.btn_sign_in)
     public void onSignInButtonClick() {
-        User loggedInUser = new User();
-        loggedInUser.setEmail(edtEmail.getText().toString());
-        AppDatabase db = Room.databaseBuilder(App.getInstance().getApplicationContext(),
-                AppDatabase.class, "database-name").allowMainThreadQueries().build();
-        db.userDao().insert(loggedInUser);
-
+        //Test implementation - adding and entry to the database "users"
+        final Executor executor = Executors.newFixedThreadPool(2);
+        UserDao userDao = PersistenceDatabase
+                .getAppDatabase(App.getInstance().getApplicationContext()).userDao();
+        String email = edtEmail.getText().toString();
+        User user = new User();
+        user.setEmail(email);
+        executor.execute(() -> userDao.insertUser(user));
         // TODO: 1/18/2019  Login from presenter mPresenter.loginUser(userName, password);
         Intent intent = new Intent(getContext(), MainActivity.class);
         startActivity(intent);
