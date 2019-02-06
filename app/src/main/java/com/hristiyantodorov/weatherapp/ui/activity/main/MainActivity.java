@@ -1,7 +1,6 @@
 package com.hristiyantodorov.weatherapp.ui.activity.main;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.ui.activity.BaseActivity;
@@ -12,9 +11,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content, MainFragment.newInstance());
-        fragmentTransaction.commit();
+        commitFragmentTransaction(R.id.content, MainFragment.newInstance());
     }
 
     @Override
