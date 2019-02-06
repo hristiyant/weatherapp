@@ -1,26 +1,22 @@
 package com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.weatherdetails.WeatherDetailsAdapter;
 import com.hristiyantodorov.weatherapp.model.WeatherDetailsData;
+import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class ForecastFragment extends Fragment {
+public class ForecastFragment extends BaseFragment {
 
     @BindView(R.id.recycler_view_forecast)
     RecyclerView recyclerViewForecast;
@@ -33,16 +29,17 @@ public class ForecastFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_forecast, container, false);
-
-        ButterKnife.bind(this, view);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         recyclerViewForecast.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewForecast.setAdapter(new WeatherDetailsAdapter(feedItems(), getContext()));
         recyclerViewForecast.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        return view;
+    }
+
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.fragment_forecast;
     }
 
     /**
@@ -50,7 +47,6 @@ public class ForecastFragment extends Fragment {
      *
      * @return List of WeatherDetailsData test items
      */
-
     private List<WeatherDetailsData> feedItems() {
         String[] conditions = {"THU\n sunny", "FRI\n foggy", "SAT\n cloudy", "SUN\n rainy"};
         String[] temperatures = {"22\u2103", "5\u2103", "18\u2103", "33\u2109"};

@@ -5,19 +5,17 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.annotation.Nullable;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.ui.activity.locations.LocationsListActivity;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
+import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -27,7 +25,7 @@ import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class MainFragment extends Fragment {
+public class MainFragment extends BaseFragment {
     @BindView(R.id.img_btn_pick_location)
     ImageButton imgBtnPickLocation;
 
@@ -39,13 +37,13 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
 
-        ButterKnife.bind(this, view);
-
-        return view;
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.fragment_main;
     }
 
     @OnClick(R.id.img_btn_pick_location)

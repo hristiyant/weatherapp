@@ -4,11 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -16,13 +13,13 @@ import android.widget.Toast;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.presenter.login.LoginContracts;
 import com.hristiyantodorov.weatherapp.ui.activity.main.MainActivity;
+import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 import com.ramotion.circlemenu.CircleMenuView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginFragment extends Fragment implements LoginContracts.View {
+public class LoginFragment extends BaseFragment implements LoginContracts.View {
     @BindView(R.id.progressbar)
     ProgressBar progressBar;
 
@@ -48,11 +45,8 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
-
-        ButterKnife.bind(this, view);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         circleMenuLogin.setEventListener(new CircleMenuView.EventListener() {
             @Override
@@ -78,19 +72,21 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
             @Override
             public void onButtonClickAnimationStart(@NonNull CircleMenuView view, int index) {
                 Log.d("D", "onButtonClickAnimationStart| index: " + index);
-                Toast.makeText(getContext(), "Login successful!", Toast.LENGTH_LONG);
+                Toast.makeText(getContext(), "Login successful!", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onButtonClickAnimationEnd(@NonNull CircleMenuView view, int index) {
                 Log.d("D", "onButtonClickAnimationEnd| index: " + index);
-                Toast.makeText(getContext(), "Login successful!", Toast.LENGTH_LONG);
+                Toast.makeText(getContext(), "Login successful!", Toast.LENGTH_LONG).show();
                 circleMenuLogin.setVisibility(View.GONE);
             }
-
         });
+    }
 
-        return view;
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.fragment_login;
     }
 
     @OnClick(R.id.btn_sign_in)
