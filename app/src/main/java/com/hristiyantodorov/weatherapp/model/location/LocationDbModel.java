@@ -1,18 +1,21 @@
 package com.hristiyantodorov.weatherapp.model.location;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "locations")
 public class LocationDbModel {
-
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    @ColumnInfo(name = "name")
     private String name;
 
+    @ColumnInfo(name = "longitude")
     private double longitude;
 
+    @ColumnInfo(name = "latitude")
     private double latitude;
 
     public String getName() {

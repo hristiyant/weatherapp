@@ -6,10 +6,15 @@ import java.util.concurrent.Executors;
 public class AppExecutorUtil {
 
     private static Executor executor = null;
+    private static final Object LOCK = new Object();
 
-    public static Executor getInstance() {
+    public synchronized static Executor getInstance() {
         if (executor == null) {
-            executor = Executors.newSingleThreadExecutor();
+            synchronized (LOCK) {
+                if (executor == null) {
+                    executor = Executors.newSingleThreadExecutor();
+                }
+            }
         }
         return executor;
     }

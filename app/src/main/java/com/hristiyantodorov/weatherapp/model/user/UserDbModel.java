@@ -1,5 +1,6 @@
 package com.hristiyantodorov.weatherapp.model.user;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
@@ -8,6 +9,7 @@ public class UserDbModel {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    @ColumnInfo(name = "email")
     private String email;
 
     public String getEmail() {
