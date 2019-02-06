@@ -11,10 +11,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutResourceId());
-        ButterKnife.bind(this);
+        setContentView(getLayoutResId());
+        ButterKnife.bind(this, this);
     }
 
     @LayoutRes
-    protected abstract int getLayoutResourceId();
+    protected abstract int getLayoutResId();
 }

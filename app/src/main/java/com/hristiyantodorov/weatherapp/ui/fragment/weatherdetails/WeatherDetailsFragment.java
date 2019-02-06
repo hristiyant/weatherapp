@@ -30,7 +30,7 @@ public class WeatherDetailsFragment extends BaseFragment {
     }
 
     @Override
-    protected int getFragmentLayout() {
+    protected int getLayoutResId() {
         return R.layout.fragment_weather_details;
     }
 }

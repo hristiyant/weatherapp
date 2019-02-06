@@ -51,7 +51,7 @@ public class LocationsListFragment extends BaseFragment implements LocationsList
     }
 
     @Override
-    protected int getFragmentLayout() {
+    protected int getLayoutResId() {
         return R.layout.fragment_locations_list;
     }
 

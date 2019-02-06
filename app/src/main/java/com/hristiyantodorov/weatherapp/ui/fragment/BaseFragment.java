@@ -15,7 +15,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(getFragmentLayout(), container, false);
+        return inflater.inflate(getLayoutResId(), container, false);
     }
 
     @Override
@@ -25,5 +25,5 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @LayoutRes
-    protected abstract int getFragmentLayout();
+    protected abstract int getLayoutResId();
 }

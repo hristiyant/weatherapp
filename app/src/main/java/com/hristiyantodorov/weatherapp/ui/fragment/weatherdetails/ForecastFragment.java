@@ -38,7 +38,7 @@ public class ForecastFragment extends BaseFragment {
     }
 
     @Override
-    protected int getFragmentLayout() {
+    protected int getLayoutResId() {
         return R.layout.fragment_forecast;
     }
 

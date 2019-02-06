@@ -85,7 +85,7 @@ public class LoginFragment extends BaseFragment implements LoginContracts.View {
     }
 
     @Override
-    protected int getFragmentLayout() {
+    protected int getLayoutResId() {
         return R.layout.fragment_login;
     }
 

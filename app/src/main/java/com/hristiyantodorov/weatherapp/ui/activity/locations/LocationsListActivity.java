@@ -18,7 +18,7 @@ public class LocationsListActivity extends BaseActivity {
     }
 
     @Override
-    protected int getLayoutResourceId() {
+    protected int getLayoutResId() {
         return R.layout.activity_locations;
     }
 }
