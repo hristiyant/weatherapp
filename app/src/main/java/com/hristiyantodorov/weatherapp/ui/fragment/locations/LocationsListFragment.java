@@ -35,10 +35,7 @@ public class LocationsListFragment extends BaseFragment implements LocationsList
     private LocationsListContracts.Presenter presenter;
 
     public static LocationsListFragment newInstance() {
-        LocationsListFragment fragment = new LocationsListFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        return new LocationsListFragment();
     }
 
     @Override

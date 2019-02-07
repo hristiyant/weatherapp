@@ -22,10 +22,7 @@ public class ForecastFragment extends BaseFragment {
     RecyclerView recyclerViewForecast;
 
     public static ForecastFragment newInstance() {
-        ForecastFragment fragment = new ForecastFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        return new ForecastFragment();
     }
 
     @Override

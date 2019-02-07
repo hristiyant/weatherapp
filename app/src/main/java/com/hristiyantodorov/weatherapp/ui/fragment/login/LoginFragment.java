@@ -38,10 +38,7 @@ public class LoginFragment extends BaseFragment implements LoginContracts.View {
     private LoginContracts.Presenter loginPresenter;
 
     public static LoginFragment newInstance() {
-        LoginFragment fragment = new LoginFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        return new LoginFragment();
     }
 
     @Override
@@ -93,8 +90,7 @@ public class LoginFragment extends BaseFragment implements LoginContracts.View {
     public void onSignInButtonClick() {
 
         // TODO: 1/18/2019  Login from presenter mPresenter.loginUser(userName, password);
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(getContext(), MainActivity.class));
     }
 
     @Override

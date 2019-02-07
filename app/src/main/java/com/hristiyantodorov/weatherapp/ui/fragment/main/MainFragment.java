@@ -30,10 +30,7 @@ public class MainFragment extends BaseFragment {
     ImageButton imgBtnPickLocation;
 
     public static MainFragment newInstance() {
-        MainFragment fragment = new MainFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        return new MainFragment();
     }
 
     @Override
@@ -53,8 +50,7 @@ public class MainFragment extends BaseFragment {
 
     @NeedsPermission(Manifest.permission.ACCESS_FINE_LOCATION)
     void openWeatherDetails() {
-        Intent intent = new Intent(getActivity(), WeatherDetailsActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(getActivity(), WeatherDetailsActivity.class));
     }
 
     @Override
@@ -85,7 +81,6 @@ public class MainFragment extends BaseFragment {
 
     @OnClick(R.id.img_btn_pick_from_list)
     public void onButtonPickFromListClick() {
-        Intent intent = new Intent(getActivity(), LocationsListActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(getActivity(), LocationsListActivity.class));
     }
 }

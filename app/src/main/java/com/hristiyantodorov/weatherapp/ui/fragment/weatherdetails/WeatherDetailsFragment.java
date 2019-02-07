@@ -12,10 +12,7 @@ import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 public class WeatherDetailsFragment extends BaseFragment {
 
     public static WeatherDetailsFragment newInstance() {
-        WeatherDetailsFragment fragment = new WeatherDetailsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        return new WeatherDetailsFragment();
     }
 
     @Override
