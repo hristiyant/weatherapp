@@ -1,6 +1,7 @@
-package com.hristiyantodorov.weatherapp.model.location;
+package com.hristiyantodorov.weatherapp.persistence.location;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
@@ -19,5 +20,8 @@ public interface LocationDao {
     LocationDbModel getLocationByName(String name);
 
     @Insert
-    void insert(LocationDbModel locationDbModel);
+    void insertLocation(LocationDbModel locationDbModel);
+
+    @Delete
+    void deleteLocation(int id);
 }

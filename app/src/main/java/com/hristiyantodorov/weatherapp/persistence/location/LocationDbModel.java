@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.model.location;
+package com.hristiyantodorov.weatherapp.persistence.location;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

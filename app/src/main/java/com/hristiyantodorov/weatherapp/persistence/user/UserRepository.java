@@ -1,6 +1,4 @@
-package com.hristiyantodorov.weatherapp.repository;
-
-import com.hristiyantodorov.weatherapp.model.user.UserDbModel;
+package com.hristiyantodorov.weatherapp.persistence.user;
 
 public interface UserRepository {
     void createUser(String email);

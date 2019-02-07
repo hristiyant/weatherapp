@@ -4,10 +4,10 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 
-import com.hristiyantodorov.weatherapp.model.location.LocationDao;
-import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
-import com.hristiyantodorov.weatherapp.model.user.UserDao;
-import com.hristiyantodorov.weatherapp.model.user.UserDbModel;
+import com.hristiyantodorov.weatherapp.persistence.location.LocationDao;
+import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.persistence.user.UserDao;
+import com.hristiyantodorov.weatherapp.persistence.user.UserDbModel;
 import com.hristiyantodorov.weatherapp.persistence.PersistenceTypeConverter;
 
 @Database(entities = {

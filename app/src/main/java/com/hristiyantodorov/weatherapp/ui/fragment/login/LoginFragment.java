@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.model.user.UserDao;
-import com.hristiyantodorov.weatherapp.model.user.UserDbModel;
+import com.hristiyantodorov.weatherapp.persistence.user.UserDao;
+import com.hristiyantodorov.weatherapp.persistence.user.UserDbModel;
 import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
 import com.hristiyantodorov.weatherapp.presenter.login.LoginContracts;
 import com.hristiyantodorov.weatherapp.ui.activity.main.MainActivity;

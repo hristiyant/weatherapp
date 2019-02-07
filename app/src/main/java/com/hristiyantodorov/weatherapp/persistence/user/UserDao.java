@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.model.user;
+package com.hristiyantodorov.weatherapp.persistence.user;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
