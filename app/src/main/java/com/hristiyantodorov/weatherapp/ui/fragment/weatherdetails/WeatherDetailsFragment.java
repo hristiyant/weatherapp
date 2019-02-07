@@ -7,44 +7,38 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.hristiyantodorov.weatherapp.R;
+import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.ButterKnife;
-
 import static android.support.constraint.Constraints.TAG;
 
-public class WeatherDetailsFragment extends Fragment {
+public class WeatherDetailsFragment extends BaseFragment {
     private double longitude;
     private double latitude;
     private Geocoder geocoder;
 
-    public WeatherDetailsFragment() {
-        // Required empty public constructor
-    }
-
     public static WeatherDetailsFragment newInstance() {
-        WeatherDetailsFragment fragment = new WeatherDetailsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        return new WeatherDetailsFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_weather_details, container, false);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
-        ButterKnife.bind(this, view);
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         //FIXME Test implementation - get location info
         getLongAndLat();
@@ -63,8 +57,11 @@ public class WeatherDetailsFragment extends Fragment {
 
             Log.d(TAG, "location info: " + cityName + stateName + countryName);
         }
+    }
 
-        return view;
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.fragment_weather_details;
     }
 
     //FIXME Test implementation - get location info

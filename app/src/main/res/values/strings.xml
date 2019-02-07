@@ -9,7 +9,7 @@
     <string name="login_screen_toast_login_successful_text">Login successful!</string>
 
     <!-- Main Screen Layout -->
-    <string name="main_screen_option_pick_location">Current locationDbModel</string>
+    <string name="main_screen_option_pick_location">Current location</string>
     <string name="main_screen_option_pick_from_list">Pick from list</string>
 
     <!--Main Fragment-->
@@ -45,4 +45,7 @@
     <string name="preference_feedback_summary">Our team is at your service MON-SUN 24/7 and will be more than happy to help :)</string>
     <string name="preference_feedback_title">Email us!</string>
     <string name="preference_feedback_key">feedback</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

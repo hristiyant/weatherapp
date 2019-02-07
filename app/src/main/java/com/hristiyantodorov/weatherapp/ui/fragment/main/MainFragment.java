@@ -5,19 +5,17 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.annotation.Nullable;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.ui.activity.locations.LocationsListActivity;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
+import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -27,25 +25,22 @@ import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class MainFragment extends Fragment {
+public class MainFragment extends BaseFragment {
     @BindView(R.id.img_btn_pick_location)
     ImageButton imgBtnPickLocation;
 
     public static MainFragment newInstance() {
-        MainFragment fragment = new MainFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        return new MainFragment();
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
 
-        ButterKnife.bind(this, view);
-
-        return view;
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.fragment_main;
     }
 
     @OnClick(R.id.img_btn_pick_location)
@@ -55,8 +50,7 @@ public class MainFragment extends Fragment {
 
     @NeedsPermission(Manifest.permission.ACCESS_FINE_LOCATION)
     void openWeatherDetails() {
-        Intent intent = new Intent(getActivity(), WeatherDetailsActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(getActivity(), WeatherDetailsActivity.class));
     }
 
     @Override
@@ -87,7 +81,6 @@ public class MainFragment extends Fragment {
 
     @OnClick(R.id.img_btn_pick_from_list)
     public void onButtonPickFromListClick() {
-        Intent intent = new Intent(getActivity(), LocationsListActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(getActivity(), LocationsListActivity.class));
     }
 }

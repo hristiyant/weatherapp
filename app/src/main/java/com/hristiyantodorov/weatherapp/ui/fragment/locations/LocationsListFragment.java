@@ -1,29 +1,25 @@
 package com.hristiyantodorov.weatherapp.ui.fragment.locations;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.locations.LocationsListAdapter;
 import com.hristiyantodorov.weatherapp.presenter.locations.LocationsListContracts;
+import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
 
 import static com.hristiyantodorov.weatherapp.util.Constants.LOCATIONS_LIST_GRID_LAYOUT_MANAGER_SPAN_COUNT;
 
-public class LocationsListFragment extends Fragment implements LocationsListContracts.View {
+public class LocationsListFragment extends BaseFragment implements LocationsListContracts.View {
 
     @BindView(R.id.edt_filter)
     EditText edtFilter;
@@ -38,30 +34,22 @@ public class LocationsListFragment extends Fragment implements LocationsListCont
     private GridLayoutManager gridLayoutManager;
     private LocationsListContracts.Presenter presenter;
 
-    public LocationsListFragment() {
-        // Required empty public constructor
-    }
-
     public static LocationsListFragment newInstance() {
-        LocationsListFragment fragment = new LocationsListFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        return new LocationsListFragment();
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_locations_list, container, false);
-
-        ButterKnife.bind(this, view);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         recyclerViewLocations.setAdapter(locationsAdapter);
         gridLayoutManager = new GridLayoutManager(getContext(), LOCATIONS_LIST_GRID_LAYOUT_MANAGER_SPAN_COUNT);
         recyclerViewLocations.setLayoutManager(gridLayoutManager);
+    }
 
-        return view;
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.fragment_locations_list;
     }
 
     @OnTextChanged(R.id.edt_filter)

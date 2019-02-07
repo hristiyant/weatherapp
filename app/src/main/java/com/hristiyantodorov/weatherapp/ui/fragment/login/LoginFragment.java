@@ -4,11 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -20,14 +17,14 @@ import com.hristiyantodorov.weatherapp.model.user.UserDbModel;
 import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
 import com.hristiyantodorov.weatherapp.presenter.login.LoginContracts;
 import com.hristiyantodorov.weatherapp.ui.activity.main.MainActivity;
+import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 import com.hristiyantodorov.weatherapp.util.AppExecutorUtil;
 import com.ramotion.circlemenu.CircleMenuView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginFragment extends Fragment implements LoginContracts.View {
+public class LoginFragment extends BaseFragment implements LoginContracts.View {
     @BindView(R.id.progressbar)
     ProgressBar progressBar;
 
@@ -46,18 +43,12 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
     private LoginContracts.Presenter loginPresenter;
 
     public static LoginFragment newInstance() {
-        LoginFragment fragment = new LoginFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        return new LoginFragment();
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
-
-        ButterKnife.bind(this, view);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         circleMenuLogin.setEventListener(new CircleMenuView.EventListener() {
             @Override
@@ -92,7 +83,11 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
                 circleMenuLogin.setVisibility(View.GONE);
             }
         });
-        return view;
+    }
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.fragment_login;
     }
 
     @OnClick(R.id.btn_sign_in)
@@ -105,8 +100,7 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
                 .getAppDatabase(App.getInstance().getApplicationContext()).userDao();
         AppExecutorUtil.getInstance().execute(() -> userDao.insertUser(user));
         // TODO: 1/18/2019  Login from presenter mPresenter.loginUser(userName, password);
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(getContext(), MainActivity.class));
     }
 
     @Override
