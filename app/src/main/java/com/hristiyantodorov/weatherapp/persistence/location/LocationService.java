@@ -2,83 +2,120 @@ package com.hristiyantodorov.weatherapp.persistence.location;
 
 import android.os.AsyncTask;
 
-import com.hristiyantodorov.weatherapp.App;
-import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
 import com.hristiyantodorov.weatherapp.util.AppExecutorUtil;
 
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
 public class LocationService implements LocationRepository {
-
-    LocationDao locationDao;
-    Executor executor;
+    private static LocationDao locationDao;
+    private Executor executor;
 
     public LocationService(LocationDao locationDao) {
-        this.locationDao = locationDao;
+        LocationService.locationDao = locationDao;
         executor = AppExecutorUtil.getInstance();
     }
 
     @Override
+    public List<LocationDbModel> getAllLocations() {
+        try {
+            return new GetAllLocationsAsyncTask().execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public LocationDbModel getLocationByName(String name) {
-        return new LocationDbModel();
+        try {
+            return new GetLocationByNameAsyncTask().execute(name).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
     public LocationDbModel getLocationById(int id) {
-        return new LocationDbModel();
+        try {
+            return new GetLocationByIdAsyncTask().execute(id).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
-    public void insertLocation(LocationDbModel... locations) {
-        new InsertLocationInDatabase().doInBackground(locations);
+    public void insertLocations(LocationDbModel... locations) {
+        executor.execute(() -> locationDao.insertLocations(locations));
     }
 
     @Override
-    public void deleteLocation(Integer... ids) {
-        new DeleteLocationFromDatabase().doInBackground(ids);
+    public void updateLocations(LocationDbModel... locations) {
+        executor.execute(() -> locationDao.updateLocations(locations));
     }
 
-    public class InsertLocationInDatabase extends AsyncTask<LocationDbModel, Integer, Void> {
+    @Override
+    public void deleteLocations(LocationDbModel... locations) {
+        executor.execute(() -> locationDao.deleteLocations(locations));
+    }
 
+    public static class GetAllLocationsAsyncTask extends AsyncTask<Void, Integer, List<LocationDbModel>> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
         @Override
-        protected Void doInBackground(LocationDbModel... locations) {
-            LocationDao locationDao = PersistenceDatabase
-                    .getAppDatabase(App.getInstance().getApplicationContext()).locationDao();
-            for (LocationDbModel location : locations) {
-                locationDao.insertLocation(location);
-            }
-            return null;
+        protected List<LocationDbModel> doInBackground(Void... voids) {
+            return locationDao.getAllLocations();
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
+        protected void onPostExecute(List<LocationDbModel> locationDbModels) {
+            super.onPostExecute(locationDbModels);
         }
     }
 
-    public class DeleteLocationFromDatabase extends AsyncTask<Integer, Integer, Void> {
-
+    public static class GetLocationByNameAsyncTask extends AsyncTask<String, Integer, LocationDbModel> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
         @Override
-        protected Void doInBackground(Integer... ids) {
-            LocationDao locationDao = PersistenceDatabase
-                    .getAppDatabase(App.getInstance().getApplicationContext()).locationDao();
-            for (Integer id : ids) {
-                locationDao.deleteLocation(id);
-            }
-            return null;
+        protected LocationDbModel doInBackground(String... strings) {
+            return locationDao.getLocationByName(strings[0]);
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
+        protected void onPostExecute(LocationDbModel locationDbModel) {
+            super.onPostExecute(locationDbModel);
+        }
+    }
+
+    public static class GetLocationByIdAsyncTask extends AsyncTask<Integer, Void, LocationDbModel> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected LocationDbModel doInBackground(Integer... integers) {
+            return locationDao.getLocationById(1);
+        }
+
+        @Override
+        protected void onPostExecute(LocationDbModel locationDbModel) {
+            super.onPostExecute(locationDbModel);
         }
     }
 }

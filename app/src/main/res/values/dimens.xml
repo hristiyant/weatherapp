@@ -14,7 +14,7 @@
     <dimen name="main_screen_margin_between_elements">32dp</dimen>
 
     <!--Locations List Screen Layout-->
-    <dimen name="fragment_locations_list_image_labels_size">50sp</dimen>
+    <dimen name="fragment_locations_list_image_labels_size">25sp</dimen>
     <dimen name="fragment_locations_list_button_sign_in_text_size">20sp</dimen>
 
     <!--Weather Details Screen-->

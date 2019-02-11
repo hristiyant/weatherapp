@@ -19,8 +19,11 @@ public interface UserDao {
     UserDbModel getUserById(int id);
 
     @Insert
-    void insertUser(UserDbModel userDbModel);
+    void insertUsers(UserDbModel... users);
 
     @Delete
-    void deleteUser(UserDbModel userDbModel);
+    void deleteUsers(UserDbModel... users);
+
+    @Query("DELETE FROM users WHERE id = :userId")
+    void deleteUserById(int userId);
 }

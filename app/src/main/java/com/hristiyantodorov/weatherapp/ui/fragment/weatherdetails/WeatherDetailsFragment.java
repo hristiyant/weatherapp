@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
@@ -19,9 +20,17 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
+
 import static android.support.constraint.Constraints.TAG;
 
 public class WeatherDetailsFragment extends BaseFragment {
+
+    @BindView(R.id.txt_city_name)
+    TextView txtCityName;
+    @BindView(R.id.txt_area_name)
+    TextView txtAreaName;
+
     private double longitude;
     private double latitude;
     private Geocoder geocoder;
@@ -33,12 +42,7 @@ public class WeatherDetailsFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
 
         //FIXME Test implementation - get location info
         getLongAndLat();
@@ -50,13 +54,16 @@ public class WeatherDetailsFragment extends BaseFragment {
             e.printStackTrace();
         }
         if (addresses.size() > 0) {
+            String cityName = addresses.get(0).getLocality();
+            String areaName = addresses.get(0).getCountryName();
 
-            String cityName = addresses.get(0).getAddressLine(0);
-            String stateName = addresses.get(0).getAddressLine(1);
-            String countryName = addresses.get(0).getAddressLine(2);
+            Log.d(TAG, "location info: " + cityName + "//" + areaName);
 
-            Log.d(TAG, "location info: " + cityName + stateName + countryName);
+            txtCityName.setText(cityName);
+            txtAreaName.setText(areaName);
         }
+
+        return view;
     }
 
     @Override

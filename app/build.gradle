@@ -80,6 +80,10 @@ dependencies {
     testImplementation 'org.powermock:powermock-module-junit4:1.7.0RC2'
     testImplementation 'org.powermock:powermock-api-mockito2:1.7.0RC2'
 
-    //Stetho
-    implementation 'com.facebook.stetho:stetho:1.5.0'
+    //Glide
+    /*implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'*/
+
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

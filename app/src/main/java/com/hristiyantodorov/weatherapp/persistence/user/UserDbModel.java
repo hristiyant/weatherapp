@@ -12,6 +12,10 @@ public class UserDbModel {
     @ColumnInfo(name = "email")
     private String email;
 
+    public UserDbModel(String email) {
+        this.email = email;
+    }
+
     public String getEmail() {
         return email;
     }
