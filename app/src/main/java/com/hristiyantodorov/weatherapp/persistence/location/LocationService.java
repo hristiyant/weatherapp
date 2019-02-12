@@ -3,9 +3,9 @@ package com.hristiyantodorov.weatherapp.persistence.location;
 import android.os.AsyncTask;
 
 import com.hristiyantodorov.weatherapp.util.AppExecutorUtil;
+import com.hristiyantodorov.weatherapp.util.AsyncResponse;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
 public class LocationService implements LocationRepository {
@@ -18,38 +18,20 @@ public class LocationService implements LocationRepository {
     }
 
     @Override
-    public List<LocationDbModel> getAllLocations() {
-        try {
-            return new GetAllLocationsAsyncTask().execute().get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public List<LocationDbModel> getAllLocations(AsyncResponse response) {
+        new GetAllLocationsAsyncTask(response).execute();
         return null;
     }
 
     @Override
-    public LocationDbModel getLocationByName(String name) {
-        try {
-            return new GetLocationByNameAsyncTask().execute(name).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public LocationDbModel getLocationByName(String name, AsyncResponse response) {
+        new GetLocationByNameAsyncTask(response).execute(name);
         return null;
     }
 
     @Override
-    public LocationDbModel getLocationById(int id) {
-        try {
-            return new GetLocationByIdAsyncTask().execute(id).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public LocationDbModel getLocationById(int id, AsyncResponse response) {
+        new GetLocationByIdAsyncTask(response).execute(id);
         return null;
     }
 
@@ -68,7 +50,15 @@ public class LocationService implements LocationRepository {
         executor.execute(() -> locationDao.deleteLocations(locations));
     }
 
-    public static class GetAllLocationsAsyncTask extends AsyncTask<Void, Integer, List<LocationDbModel>> {
+    private static class GetAllLocationsAsyncTask extends AsyncTask<Void, Void, List<LocationDbModel>> {
+
+        private AsyncResponse response = null;
+        public Exception exception;
+
+        public GetAllLocationsAsyncTask(AsyncResponse response) {
+            this.response = response;
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -76,46 +66,95 @@ public class LocationService implements LocationRepository {
 
         @Override
         protected List<LocationDbModel> doInBackground(Void... voids) {
-            return locationDao.getAllLocations();
+            try {
+                return locationDao.getAllLocations();
+            } catch (Exception e) {
+                exception = e;
+            }
+            return null;
         }
 
         @Override
-        protected void onPostExecute(List<LocationDbModel> locationDbModels) {
-            super.onPostExecute(locationDbModels);
+        protected void onPostExecute(List<LocationDbModel> locations) {
+            if (response != null) {
+                if (exception == null) {
+                    response.onSuccess(locations);
+                } else {
+                    response.onFailure(exception);
+                }
+            }
         }
     }
 
-    public static class GetLocationByNameAsyncTask extends AsyncTask<String, Integer, LocationDbModel> {
+    public static class GetLocationByNameAsyncTask extends AsyncTask<String, Void, LocationDbModel> {
+        private AsyncResponse response = null;
+        public Exception exception;
+
+        public GetLocationByNameAsyncTask(AsyncResponse response) {
+            this.response = response;
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
         @Override
-        protected LocationDbModel doInBackground(String... strings) {
-            return locationDao.getLocationByName(strings[0]);
+        protected LocationDbModel doInBackground(String... names) {
+            try {
+                return locationDao.getLocationByName(names[0]);
+            } catch (Exception e) {
+                exception = e;
+            }
+            return null;
         }
 
         @Override
-        protected void onPostExecute(LocationDbModel locationDbModel) {
-            super.onPostExecute(locationDbModel);
+        protected void onPostExecute(LocationDbModel location) {
+            if (response != null) {
+                if (exception == null) {
+                    response.onSuccess(location);
+                } else {
+                    response.onFailure(exception);
+                }
+            }
         }
+
     }
 
     public static class GetLocationByIdAsyncTask extends AsyncTask<Integer, Void, LocationDbModel> {
+
+        private AsyncResponse response = null;
+        public Exception exception;
+
+        public GetLocationByIdAsyncTask(AsyncResponse response) {
+            this.response = response;
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
         @Override
-        protected LocationDbModel doInBackground(Integer... integers) {
-            return locationDao.getLocationById(1);
+        protected LocationDbModel doInBackground(Integer... ids) {
+            try {
+                return locationDao.getLocationById(ids[0]);
+            } catch (Exception e) {
+                exception = e;
+            }
+            return null;
         }
 
         @Override
-        protected void onPostExecute(LocationDbModel locationDbModel) {
-            super.onPostExecute(locationDbModel);
+        protected void onPostExecute(LocationDbModel location) {
+            if (response != null) {
+                if (exception == null) {
+                    response.onSuccess(location);
+                } else {
+                    response.onFailure(exception);
+                }
+            }
         }
     }
 }

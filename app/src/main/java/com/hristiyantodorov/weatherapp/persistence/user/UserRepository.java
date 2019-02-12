@@ -1,13 +1,15 @@
 package com.hristiyantodorov.weatherapp.persistence.user;
 
+import com.hristiyantodorov.weatherapp.util.AsyncResponse;
+
 import java.util.List;
 
 public interface UserRepository {
-    List<UserDbModel> getAllUsers();
+    List<UserDbModel> getAllUsers(AsyncResponse response);
 
-    UserDbModel getUserByEmail(String email);
+    UserDbModel getUserByEmail(String email, AsyncResponse response);
 
-    UserDbModel getUserById(int id);
+    UserDbModel getUserById(int id, AsyncResponse response);
 
     void insertUsers(UserDbModel... users);
 

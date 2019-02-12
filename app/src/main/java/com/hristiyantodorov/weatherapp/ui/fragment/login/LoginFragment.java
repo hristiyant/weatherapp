@@ -1,5 +1,6 @@
 package com.hristiyantodorov.weatherapp.ui.fragment.login;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,20 +15,24 @@ import android.widget.Toast;
 
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
-import com.hristiyantodorov.weatherapp.persistence.user.UserDao;
-import com.hristiyantodorov.weatherapp.persistence.user.UserDbModel;
+import com.hristiyantodorov.weatherapp.model.AppDatabase;
+import com.hristiyantodorov.weatherapp.persistence.location.LocationDao;
+import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.persistence.location.LocationService;
 import com.hristiyantodorov.weatherapp.presenter.login.LoginContracts;
 import com.hristiyantodorov.weatherapp.ui.activity.main.MainActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
-import com.hristiyantodorov.weatherapp.util.AppExecutorUtil;
+import com.hristiyantodorov.weatherapp.util.AsyncResponse;
 import com.hristiyantodorov.weatherapp.view.LoadingView;
 import com.ramotion.circlemenu.CircleMenuView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class LoginFragment extends BaseFragment implements LoginContracts.View {
+public class LoginFragment extends BaseFragment
+        implements LoginContracts.View, AsyncResponse<List<LocationDbModel>> {
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
 
@@ -46,6 +51,7 @@ public class LoginFragment extends BaseFragment implements LoginContracts.View {
     LoadingView loadingView;
 
     private LoginContracts.Presenter loginPresenter;
+    private List<LocationDbModel> results;
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
@@ -103,11 +109,13 @@ public class LoginFragment extends BaseFragment implements LoginContracts.View {
     @OnClick(R.id.btn_sign_in)
     public void onSignInButtonClick() {
         //Practice implementation
-        String email = edtEmail.getText().toString();
-        UserDbModel user = new UserDbModel(email);
-        UserDao userDao = PersistenceDatabase
-                .getAppDatabase(App.getInstance().getApplicationContext()).userDao();
-        AppExecutorUtil.getInstance().execute(() -> userDao.deleteUserById(1));
+        AppDatabase testDB =
+                Room.inMemoryDatabaseBuilder(App.getInstance().getApplicationContext(), AppDatabase.class).build();
+        LocationDbModel testLoc =
+                new LocationDbModel("testLoc", 1.1, 1.2, "url");
+        LocationDao dao = testDB.locationDao();
+        LocationService service = new LocationService(dao);
+        service.insertLocations(testLoc);
 
         // TODO: 1/18/2019  Login from presenter mPresenter.loginUser(userName, password);
         startActivity(new Intent(getContext(), MainActivity.class));
@@ -127,4 +135,15 @@ public class LoginFragment extends BaseFragment implements LoginContracts.View {
     public void showError(Throwable e) {
         Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
     }
+
+    @Override
+    public void onSuccess(List<LocationDbModel> output) {
+        results.addAll(output);
+    }
+
+    @Override
+    public void onFailure(Exception e) {
+        Toast.makeText(getContext(), "ERROR: " + e.getMessage(), Toast.LENGTH_LONG).show();
+    }
+
 }

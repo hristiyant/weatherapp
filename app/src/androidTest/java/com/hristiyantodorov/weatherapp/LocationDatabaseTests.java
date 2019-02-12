@@ -7,6 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.hristiyantodorov.weatherapp.model.AppDatabase;
 import com.hristiyantodorov.weatherapp.persistence.location.LocationDao;
 import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.persistence.location.LocationService;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -20,12 +21,14 @@ import java.util.List;
 public class LocationDatabaseTests {
     private LocationDao locationDao;
     private AppDatabase testDatabase;
+    private LocationService service;
 
     @Before
     public void createDB() {
         Context context = App.getInstance().getApplicationContext();
         testDatabase = Room.inMemoryDatabaseBuilder(context, AppDatabase.class).build();
         locationDao = testDatabase.locationDao();
+        service = new LocationService(locationDao);
     }
 
     @After
