@@ -1,6 +1,7 @@
 package com.hristiyantodorov.weatherapp.ui.fragment.login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -23,6 +24,10 @@ import com.ramotion.circlemenu.CircleMenuView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static android.content.Context.MODE_PRIVATE;
+import static android.support.constraint.Constraints.TAG;
+import static com.hristiyantodorov.weatherapp.util.Constants.MY_PREFS_NAME;
 
 public class LoginFragment extends BaseFragment implements LoginContracts.View {
     @BindView(R.id.progressbar)
@@ -99,6 +104,14 @@ public class LoginFragment extends BaseFragment implements LoginContracts.View {
         UserDao userDao = PersistenceDatabase
                 .getAppDatabase(App.getInstance().getApplicationContext()).userDao();
         AppExecutorUtil.getInstance().execute(() -> userDao.insertUser(user));
+
+        //Test implementation - add logged user's email and extracting it from shared pref
+        SharedPreferences sharedPref = App.getInstance().getApplicationContext().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.shared_pref_key_logged_user_email), edtEmail.getText().toString());
+        editor.apply();
+        String loggedUsrEmail = sharedPref.getString(getString(R.string.shared_pref_key_logged_user_email), getString(R.string.shared_pref_def_value_empty));
+         Log.d(TAG, "onSignInButtonClick: " + loggedUsrEmail);
         // TODO: 1/18/2019  Login from presenter mPresenter.loginUser(userName, password);
         startActivity(new Intent(getContext(), MainActivity.class));
     }
