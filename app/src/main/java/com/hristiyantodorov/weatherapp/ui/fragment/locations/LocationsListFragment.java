@@ -50,9 +50,6 @@ public class LocationsListFragment extends BaseFragment implements LocationsList
         recyclerViewLocations.setAdapter(new LocationsListAdapter(feedItems(), getContext()));
         gridLayoutManager = new GridLayoutManager(getContext(), LOCATIONS_LIST_GRID_LAYOUT_MANAGER_SPAN_COUNT);
         recyclerViewLocations.setLayoutManager(gridLayoutManager);
-        progressBar.setVisibility(View.GONE);
-        recyclerViewLocations.setVisibility(View.VISIBLE);
-
 
         return view;
     }
