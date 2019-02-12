@@ -21,7 +21,6 @@ public class UserDatabaseTests {
     private UserDao userDao;
     private AppDatabase testDatabase;
 
-
     @Before
     public void createDB() {
         Context context = App.getInstance().getApplicationContext();
