@@ -9,18 +9,17 @@ import com.hristiyantodorov.weatherapp.persistence.user.UserDao;
 import com.hristiyantodorov.weatherapp.persistence.user.UserDbModel;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.IOException;
 import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 public class UserDatabaseTests {
     private UserDao userDao;
     private AppDatabase testDatabase;
-
 
     @Before
     public void createDB() {
@@ -30,26 +29,34 @@ public class UserDatabaseTests {
     }
 
     @After
-    public void closeDB() throws IOException {
+    public void closeDB() {
         testDatabase.close();
     }
 
     @Test
-    public void When_InsertUsers_Expect_DatabaseNotEmpty() throws Exception {
+    public void When_InsertUsers_Expect_DatabaseNotEmpty() {
         userDao.insertUsers(new UserDbModel("test1.com"),
                 new UserDbModel("test2.com"),
                 new UserDbModel("test3.com"));
         List<UserDbModel> users = userDao.getAllUsers();
-        assert (!users.isEmpty());
+        Assert.assertFalse(users.isEmpty());
     }
 
     @Test
-    public void When_deleteUser_Expect_DatabaseEmpty() throws Exception{
+    public void When_deleteUser_Expect_DatabaseEmpty() {
         UserDbModel testUser = new UserDbModel("testUser");
         userDao.insertUsers(testUser);
         List<UserDbModel> usersBeforeDelete = userDao.getAllUsers();
-        userDao.deleteUserById(1);
+        userDao.deleteUsers(usersBeforeDelete.get(0));
         List<UserDbModel> usersAfterDelete = userDao.getAllUsers();
-        assert (!usersBeforeDelete.isEmpty() && usersAfterDelete.isEmpty());
+        Assert.assertTrue(!usersBeforeDelete.isEmpty() && usersAfterDelete.isEmpty());
+    }
+
+    @Test
+    public void When_GetUserByEmail_Expect_NotNull() {
+        UserDbModel testUser = new UserDbModel("testEmail");
+        userDao.insertUsers(testUser);
+        UserDbModel testUserToCompare = userDao.getUserByEmail("testEmail");
+        Assert.assertNotNull(testUserToCompare);
     }
 }
