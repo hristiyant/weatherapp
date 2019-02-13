@@ -39,7 +39,7 @@ public class LoginFragment extends BaseFragment
     EditText edtEmail;
     @BindView(R.id.edt_password)
     EditText edtPassword;
-    @BindView(R.id.background)
+    @BindView(R.id.container)
     ConstraintLayout constraintLayout;
     @BindView(R.id.circle_menu_login)
     CircleMenuView circleMenuLogin;
