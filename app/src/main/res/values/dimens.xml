@@ -31,4 +31,7 @@
     <dimen name="layout_padding">4dp</dimen>
     <dimen name="layout_text_size">18sp</dimen>
     <dimen name="layout_shadow">1</dimen>
+
+    <!--Locations List Item-->
+    <dimen name="item_locations_list_height">100dp</dimen>
 </resources>

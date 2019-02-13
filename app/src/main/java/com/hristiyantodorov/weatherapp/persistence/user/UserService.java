@@ -50,10 +50,10 @@ public class UserService implements UserRepository {
         executor.execute(() -> userDao.deleteUserById(id));
     }
 
-    public static class GetAllUsersAsyncTask extends AsyncTask<Void, Integer, List<UserDbModel>> {
+    private static class GetAllUsersAsyncTask extends AsyncTask<Void, Integer, List<UserDbModel>> {
 
         private AsyncResponse response = null;
-        public Exception exception;
+        private Exception exception;
 
         public GetAllUsersAsyncTask(AsyncResponse response) {
             this.response = response;
@@ -86,10 +86,10 @@ public class UserService implements UserRepository {
         }
     }
 
-    public static class GetUserByEmailAsyncTask extends AsyncTask<String, Void, UserDbModel> {
+    private static class GetUserByEmailAsyncTask extends AsyncTask<String, Void, UserDbModel> {
 
         private AsyncResponse response = null;
-        public Exception exception;
+        private Exception exception;
 
         public GetUserByEmailAsyncTask(AsyncResponse response) {
             this.response = response;
@@ -122,10 +122,10 @@ public class UserService implements UserRepository {
         }
     }
 
-    public static class GetUserByIdAsyncTask extends AsyncTask<Integer, Void, UserDbModel> {
+    private static class GetUserByIdAsyncTask extends AsyncTask<Integer, Void, UserDbModel> {
 
         private AsyncResponse response = null;
-        public Exception exception;
+        private Exception exception;
 
         public GetUserByIdAsyncTask(AsyncResponse response) {
             this.response = response;

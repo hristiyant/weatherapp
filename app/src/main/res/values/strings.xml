@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">WeatherApp</string>
 
+    <!--Base Fragment-->
+    <string name="base_fragment_error_dialog_title">Error!</string>
+
     <!-- Login Screen Layout -->
     <string name="login_screen_btn_sign_in">Sign in</string>
     <string name="login_screen_username_hint">Username: </string>

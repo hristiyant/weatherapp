@@ -23,7 +23,6 @@ import com.hristiyantodorov.weatherapp.presenter.login.LoginContracts;
 import com.hristiyantodorov.weatherapp.ui.activity.main.MainActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 import com.hristiyantodorov.weatherapp.util.AsyncResponse;
-import com.hristiyantodorov.weatherapp.view.LoadingView;
 import com.ramotion.circlemenu.CircleMenuView;
 
 import java.util.List;
@@ -33,22 +32,17 @@ import butterknife.OnClick;
 
 public class LoginFragment extends BaseFragment
         implements LoginContracts.View, AsyncResponse<List<LocationDbModel>> {
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
 
+    @BindView(R.id.progressbar)
+    ProgressBar progressBar;
     @BindView(R.id.edt_email)
     EditText edtEmail;
-
     @BindView(R.id.edt_password)
     EditText edtPassword;
-
     @BindView(R.id.background)
     ConstraintLayout constraintLayout;
-
     @BindView(R.id.circle_menu_login)
     CircleMenuView circleMenuLogin;
-
-    LoadingView loadingView;
 
     private LoginContracts.Presenter loginPresenter;
     private List<LocationDbModel> results;
@@ -60,9 +54,6 @@ public class LoginFragment extends BaseFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-
-        loadingView = new LoadingView(getContext());
-        loadingView.setLoading(false);
 
         circleMenuLogin.setEventListener(new CircleMenuView.EventListener() {
             @Override
@@ -97,7 +88,6 @@ public class LoginFragment extends BaseFragment
                 circleMenuLogin.setVisibility(View.GONE);
             }
         });
-
         return view;
     }
 
@@ -108,7 +98,7 @@ public class LoginFragment extends BaseFragment
 
     @OnClick(R.id.btn_sign_in)
     public void onSignInButtonClick() {
-        //Practice implementation
+        // TODO: 2/13/2019 Practice implementation
         AppDatabase testDB =
                 Room.inMemoryDatabaseBuilder(App.getInstance().getApplicationContext(), AppDatabase.class).build();
         LocationDbModel testLoc =
@@ -133,17 +123,22 @@ public class LoginFragment extends BaseFragment
 
     @Override
     public void showError(Throwable e) {
-        Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        if (isAdded()) {
+            showErrorDialog(getContext(), e.getMessage());
+        }
     }
 
     @Override
     public void onSuccess(List<LocationDbModel> output) {
-        results.addAll(output);
+        if (isAdded()) {
+            results.addAll(output);
+        }
     }
 
     @Override
     public void onFailure(Exception e) {
-        Toast.makeText(getContext(), "ERROR: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        if (isAdded()) {
+            showErrorDialog(getContext(), e.getMessage());
+        }
     }
-
 }

@@ -28,11 +28,9 @@ public class LocationsListFragment extends BaseFragment implements LocationsList
 
     @BindView(R.id.edt_filter)
     EditText edtFilter;
-
     @BindView(R.id.progressbar)
     ProgressBar progressBar;
-
-    @BindView(R.id.rv_locations)
+    @BindView(R.id.recycler_view_locations)
     RecyclerView recyclerViewLocations;
 
     private LocationsListAdapter locationsAdapter;
@@ -67,7 +65,7 @@ public class LocationsListFragment extends BaseFragment implements LocationsList
 
     @Override
     public void showLoader(boolean isShowing) {
-        // TODO: 1/22/2019 Implement
+        progressBar.setVisibility(isShowing ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -82,7 +80,9 @@ public class LocationsListFragment extends BaseFragment implements LocationsList
 
     @Override
     public void showError(Throwable e) {
-        // TODO: 1/22/2019 Implement
+        if (isAdded()) {
+            showErrorDialog(getContext(), e.getMessage());
+        }
     }
 
     @Override
@@ -95,9 +95,9 @@ public class LocationsListFragment extends BaseFragment implements LocationsList
         // TODO: 1/22/2019 Implement
     }
 
+    // TODO: 2/13/2019 Add dummy data for test implementation
     private List<LocationDbModel> feedItems() {
-
-        List<LocationDbModel> demoLocations = new ArrayList<>(Arrays.asList(
+        return new ArrayList<>(Arrays.asList(
                 new LocationDbModel("Sydney", -33.838314, 150.999260,
                         "https://s2.thingpic.com/images/AC/ZP5RrCrtTJ83eWDuK9SmUSaf.jpeg"),
                 new LocationDbModel("New York", 40.730610, -73.935242,
@@ -128,6 +128,5 @@ public class LocationsListFragment extends BaseFragment implements LocationsList
                         "https://www.japan-guide.com/thumb/destination_tokyo.jpg"),
                 new LocationDbModel("London", 51.509865, -0.118092,
                         "https://cdn.londonandpartners.com/assets/73295-640x360-london-skyline-ns.jpg")));
-        return demoLocations;
     }
 }
