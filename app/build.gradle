@@ -79,7 +79,4 @@ dependencies {
     testImplementation 'org.powermock:powermock-core:1.7.0RC2'
     testImplementation 'org.powermock:powermock-module-junit4:1.7.0RC2'
     testImplementation 'org.powermock:powermock-api-mockito2:1.7.0RC2'
-
-    //Stetho
-    implementation 'com.facebook.stetho:stetho:1.5.0'
 }
