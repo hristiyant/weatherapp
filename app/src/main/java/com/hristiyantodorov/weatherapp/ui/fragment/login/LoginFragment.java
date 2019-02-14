@@ -16,7 +16,6 @@ import com.hristiyantodorov.weatherapp.model.user.UserDao;
 import com.hristiyantodorov.weatherapp.model.user.UserDbModel;
 import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
 import com.hristiyantodorov.weatherapp.presenter.login.LoginContracts;
-import com.hristiyantodorov.weatherapp.ui.activity.main.MainActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 import com.hristiyantodorov.weatherapp.util.AppExecutorUtil;
 import com.ramotion.circlemenu.CircleMenuView;
@@ -100,7 +99,7 @@ public class LoginFragment extends BaseFragment implements LoginContracts.View {
                 .getAppDatabase(App.getInstance().getApplicationContext()).userDao();
         AppExecutorUtil.getInstance().execute(() -> userDao.insertUser(user));
         // TODO: 1/18/2019  Login from presenter mPresenter.loginUser(userName, password);
-        startActivity(new Intent(getContext(), MainActivity.class));
+        startActivity(new Intent(getContext(), NetworkingDemoActivity.class));
     }
 
     @Override

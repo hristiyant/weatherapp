@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hristiyantodorov.weatherapp.R;
+import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 
 import java.io.IOException;
@@ -21,10 +22,11 @@ import java.util.Locale;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class WeatherDetailsFragment extends BaseFragment {
+public class WeatherDetailsFragment extends BaseFragment{
     private double longitude;
     private double latitude;
     private Geocoder geocoder;
+    WeatherData data;
 
     public static WeatherDetailsFragment newInstance() {
         return new WeatherDetailsFragment();
@@ -39,24 +41,6 @@ public class WeatherDetailsFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        //FIXME Test implementation - get location info
-        getLongAndLat();
-        geocoder = new Geocoder(getContext(), Locale.getDefault());
-        List<Address> addresses = null;
-        try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (addresses.size() > 0) {
-
-            String cityName = addresses.get(0).getAddressLine(0);
-            String stateName = addresses.get(0).getAddressLine(1);
-            String countryName = addresses.get(0).getAddressLine(2);
-
-            Log.d(TAG, "location info: " + cityName + stateName + countryName);
-        }
     }
 
     @Override
