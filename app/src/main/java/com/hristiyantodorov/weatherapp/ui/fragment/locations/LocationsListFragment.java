@@ -23,10 +23,8 @@ public class LocationsListFragment extends BaseFragment implements LocationsList
 
     @BindView(R.id.edt_filter)
     EditText edtFilter;
-
     @BindView(R.id.progressbar)
     ProgressBar progressBar;
-
     @BindView(R.id.rv_locations)
     RecyclerView recyclerViewLocations;
 

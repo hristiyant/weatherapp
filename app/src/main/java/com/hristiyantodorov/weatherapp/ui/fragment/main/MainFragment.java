@@ -26,6 +26,7 @@ import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
 public class MainFragment extends BaseFragment {
+
     @BindView(R.id.img_btn_pick_location)
     ImageButton imgBtnPickLocation;
 
