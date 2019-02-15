@@ -24,11 +24,11 @@
     <!--Locations List Fragment-->
     <string name="locations_list_fragment_edit_text_hint">Enter to search:</string>
 
-    <!--Weather Details Fragment - Test Values-->
-    <string name="details_fragment_txt_city_name">City Name</string>
-    <string name="details_fragment_txt_area_name">Area Name</string>
-    <string name="txt_current_temp_celsius">15℃</string>
-    <string name="txt_current_temp_fahrenheit">50\u2109</string>
+    <!--Weather Details-->
+    <string name="txt_current_temp_celsius">℃</string>
+    <string name="txt_current_temp_fahrenheit">\u2109</string>
+    <string name="txt_last_updated">Last updated: </string>
+
 
     <!--WeatherDetailsPagerAdapter-->
     <string name="weather_details_tab_hourly_title">Hourly</string>

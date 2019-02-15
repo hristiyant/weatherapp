@@ -1,9 +1,11 @@
 package com.hristiyantodorov.weatherapp.model.weather;
 
+import java.io.Serializable;
+
 /**
  * Model class for storing the entire data received from the API
  */
-public class WeatherData {
+public class WeatherData implements Serializable {
     private double latitude;
     private double longitude;
     private String timezone;

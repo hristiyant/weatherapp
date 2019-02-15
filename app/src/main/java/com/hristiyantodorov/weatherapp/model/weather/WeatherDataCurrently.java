@@ -1,9 +1,11 @@
 package com.hristiyantodorov.weatherapp.model.weather;
 
+import java.io.Serializable;
+
 /**
  * Model class for storing ONLY the current weather data received from the API
  */
-public class WeatherDataCurrently {
+public class WeatherDataCurrently implements Serializable {
 
     private long time;
     private String summary;

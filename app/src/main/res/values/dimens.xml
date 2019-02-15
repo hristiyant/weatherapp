@@ -7,7 +7,7 @@
 
     <!-- Login Screen Layout -->
     <dimen name="login_screen_icon_padding">10dp</dimen>
-    <dimen name="text_size_login_screen_line_text">16sp</dimen>
+    <dimen name="login_screen_line_text_text_size_">16sp</dimen>
 
     <!-- Main Screen Layout -->
     <dimen name="main_screen_labels_size">30sp</dimen>
@@ -18,8 +18,10 @@
     <dimen name="fragment_locations_list_button_sign_in_text_size">20sp</dimen>
 
     <!--Weather Details Screen-->
-    <dimen name="toolbar_weather_details_top_margin">24dp</dimen>
-    <dimen name="icon_current_weather_size">150dp</dimen>
+    <dimen name="weather_details_toolbar_top_margin">24dp</dimen>
+    <dimen name="weather_details_icon_current_weather_size">150dp</dimen>
+    <dimen name="weather_details_text_view">150dp</dimen>
+    <dimen name="weather_details_last_updated_text_size">12sp</dimen>
 
     <!--Overriding sizes of the FAB's image-->
     <dimen name="design_fab_image_size" tools:override="true">55dp</dimen>

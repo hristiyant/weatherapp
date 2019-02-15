@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txt_city_name"
+        android:id="@+id/txt_timezone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/image_label_background"

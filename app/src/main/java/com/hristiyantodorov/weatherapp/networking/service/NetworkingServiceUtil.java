@@ -1,10 +1,11 @@
-package com.hristiyantodorov.weatherapp.util;
+package com.hristiyantodorov.weatherapp.networking.service;
 
 import android.os.AsyncTask;
 import android.util.JsonReader;
 
 import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
 import com.hristiyantodorov.weatherapp.model.weather.WeatherDataCurrently;
+import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,11 +18,15 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class NetworkingServiceUtil {
 
+    public void getWeatherData(DownloadResponse callback) {
+        new DownloadTask(callback).execute();
+    }
+
     public static class DownloadTask extends AsyncTask<Void, Integer, WeatherData> {
-        private DownloadCallback callback = null;
+        private DownloadResponse callback;
+        private Exception exception;
 
-
-        public DownloadTask(DownloadCallback callback) {
+        DownloadTask(DownloadResponse callback) {
             this.callback = callback;
         }
 
@@ -53,7 +58,13 @@ public class NetworkingServiceUtil {
 
         @Override
         protected void onPostExecute(WeatherData result) {
-            callback.updateFromDownload(result);
+            if (callback != null) {
+                if (exception == null) {
+                    callback.onSuccess(result);
+                } else {
+                    callback.onFailure(exception);
+                }
+            }
         }
     }
 
@@ -65,7 +76,6 @@ public class NetworkingServiceUtil {
             connection = (HttpsURLConnection) url.openConnection();
             connection.setReadTimeout(3000);
             connection.setConnectTimeout(3000);
-            // For this use case, setting HTTP method to GET.
             connection.setRequestMethod("GET");
             connection.setDoInput(true);
             connection.connect();
@@ -75,17 +85,13 @@ public class NetworkingServiceUtil {
             if (responseCode != HttpURLConnection.HTTP_OK) {
                 throw new IOException("Http error code: " + responseCode);
             }
-
-            // Retrieve the response body as an InputStream.
             stream = connection.getInputStream();
             // publishProgress(DownloadCallback.Progress.GET_INPUT_STREAM_SUCCESS, 0);
             if (stream != null) {
-                // Converts Stream to String with max length of 500.
                 result = readJsonStream(new InputStreamReader(stream, "UTF-8"));
                 //publishProgress(DownloadCallback.Progress.PROCESS_INPUT_STREAM_SUCCESS, 0);
             }
         } finally {
-            // Close Stream and disconnect HTTPS connection.
             if (stream != null) {
                 stream.close();
             }
@@ -96,45 +102,42 @@ public class NetworkingServiceUtil {
         return result;
     }
 
-    //Converts the contents of an InputStream to a String
+    //Converts the contents of an InputStream to the desired data model class
     private static WeatherData readJsonStream(InputStreamReader inputStreamReader) throws IOException {
         JsonReader jsonReader = new JsonReader(inputStreamReader);
-        return readForecastData(jsonReader);
-
-    }
-
-    private static WeatherData readForecastData(JsonReader reader) throws IOException {
-        return readData(reader);
+        return readData(jsonReader);
     }
 
     private static WeatherData readData(JsonReader reader) throws IOException {
-        WeatherData forecastData = new WeatherData();
+
+        WeatherData weatherData = new WeatherData();
 
         reader.beginObject();
         while (reader.hasNext()) {
             String name = reader.nextName();
             switch (name) {
                 case "latitude":
-                    forecastData.setLatitude(reader.nextDouble());
+                    weatherData.setLatitude(reader.nextDouble());
                     break;
                 case "longitude":
-                    forecastData.setLongitude(reader.nextDouble());
+                    weatherData.setLongitude(reader.nextDouble());
                     break;
                 case "timezone":
-                    forecastData.setTimezone(reader.nextString());
+                    weatherData.setTimezone(reader.nextString());
                     break;
                 case "currently":
-                    forecastData.setCurrently(readCurrently(reader));
+                    weatherData.setCurrently(readCurrently(reader));
                     break;
                 default:
                     reader.skipValue();
             }
         }
         reader.endObject();
-        return forecastData;
+        return weatherData;
     }
 
     private static WeatherDataCurrently readCurrently(JsonReader reader) throws IOException {
+
         WeatherDataCurrently forecastDataCurrently = new WeatherDataCurrently();
 
         reader.beginObject();
