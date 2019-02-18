@@ -2,23 +2,26 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/item_locations_list_height"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="@dimen/margin_between_elements_default">
 
     <ImageView
-        android:id="@+id/img_location"
+        android:id="@+id/img_city_image"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
         android:contentDescription="@null"
+        android:scaleType="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/sydney"/>
 
     <TextView
         android:id="@+id/txt_city_name"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
         android:background="@drawable/image_label_background"
         android:gravity="center"

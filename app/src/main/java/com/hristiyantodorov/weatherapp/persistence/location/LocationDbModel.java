@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.model.location;
+package com.hristiyantodorov.weatherapp.persistence.location;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -17,6 +17,16 @@ public class LocationDbModel {
 
     @ColumnInfo(name = "latitude")
     private double latitude;
+
+    @ColumnInfo(name = "image_url")
+    private String imageUrl;
+
+    public LocationDbModel(String name, double longitude, double latitude, String imageUrl) {
+        this.name = name;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.imageUrl = imageUrl;
+    }
 
     public String getName() {
         return name;
@@ -48,5 +58,13 @@ public class LocationDbModel {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

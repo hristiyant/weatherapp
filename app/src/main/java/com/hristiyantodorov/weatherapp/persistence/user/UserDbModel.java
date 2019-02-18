@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.model.user;
+package com.hristiyantodorov.weatherapp.persistence.user;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -11,6 +11,10 @@ public class UserDbModel {
 
     @ColumnInfo(name = "email")
     private String email;
+
+    public UserDbModel(String email) {
+        this.email = email;
+    }
 
     public String getEmail() {
         return email;

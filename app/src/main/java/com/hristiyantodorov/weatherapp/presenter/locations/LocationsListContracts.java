@@ -1,5 +1,7 @@
 package com.hristiyantodorov.weatherapp.presenter.locations;
 
+import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
+
 import java.util.List;
 
 public interface LocationsListContracts {
@@ -21,7 +23,7 @@ public interface LocationsListContracts {
     interface Presenter {
         void subscribe(View view);
 
-        void loadLocations();
+        List<LocationDbModel> loadLocations();
 
         void filterLocations();
 
