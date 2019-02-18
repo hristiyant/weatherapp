@@ -52,10 +52,10 @@ public class UserService implements UserRepository {
 
     private static class GetAllUsersAsyncTask extends AsyncTask<Void, Integer, List<UserDbModel>> {
 
-        private AsyncResponse response = null;
+        private AsyncResponse response;
         private Exception exception;
 
-        public GetAllUsersAsyncTask(AsyncResponse response) {
+        GetAllUsersAsyncTask(AsyncResponse response) {
             this.response = response;
         }
 
@@ -88,10 +88,10 @@ public class UserService implements UserRepository {
 
     private static class GetUserByEmailAsyncTask extends AsyncTask<String, Void, UserDbModel> {
 
-        private AsyncResponse response = null;
+        private AsyncResponse response;
         private Exception exception;
 
-        public GetUserByEmailAsyncTask(AsyncResponse response) {
+        GetUserByEmailAsyncTask(AsyncResponse response) {
             this.response = response;
         }
 
@@ -124,10 +124,10 @@ public class UserService implements UserRepository {
 
     private static class GetUserByIdAsyncTask extends AsyncTask<Integer, Void, UserDbModel> {
 
-        private AsyncResponse response = null;
+        private AsyncResponse response;
         private Exception exception;
 
-        public GetUserByIdAsyncTask(AsyncResponse response) {
+        GetUserByIdAsyncTask(AsyncResponse response) {
             this.response = response;
         }
 

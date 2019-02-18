@@ -52,10 +52,10 @@ public class LocationService implements LocationRepository {
 
     private static class GetAllLocationsAsyncTask extends AsyncTask<Void, Void, List<LocationDbModel>> {
 
-        private AsyncResponse response = null;
+        private AsyncResponse response;
         private Exception exception;
 
-        public GetAllLocationsAsyncTask(AsyncResponse response) {
+        GetAllLocationsAsyncTask(AsyncResponse response) {
             this.response = response;
         }
 
@@ -87,10 +87,10 @@ public class LocationService implements LocationRepository {
     }
 
     private static class GetLocationByNameAsyncTask extends AsyncTask<String, Void, LocationDbModel> {
-        private AsyncResponse response = null;
+        private AsyncResponse response;
         private Exception exception;
 
-        public GetLocationByNameAsyncTask(AsyncResponse response) {
+        GetLocationByNameAsyncTask(AsyncResponse response) {
             this.response = response;
         }
 
@@ -124,10 +124,10 @@ public class LocationService implements LocationRepository {
 
     private static class GetLocationByIdAsyncTask extends AsyncTask<Integer, Void, LocationDbModel> {
 
-        private AsyncResponse response = null;
+        private AsyncResponse response;
         private Exception exception;
 
-        public GetLocationByIdAsyncTask(AsyncResponse response) {
+        GetLocationByIdAsyncTask(AsyncResponse response) {
             this.response = response;
         }
 

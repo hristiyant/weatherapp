@@ -26,12 +26,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
             if (preference.getKey().equals(FEEDBACK_KEY)) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setData(Uri.parse("email"));
+                intent.setDataAndType(Uri.parse("email"), "message/rfc822");
                 String[] sampleRecipients = {"@strings/preference_feedback_sample_email_one", "@strings/preference_feedback_sample_email_two"};
                 intent.putExtra(Intent.EXTRA_EMAIL, sampleRecipients);
                 intent.putExtra(Intent.EXTRA_SUBJECT, "@strings/preference_feedback_subject_text");
                 intent.putExtra(Intent.EXTRA_TEXT, "@strings/preference_feedback_subject_extra_text");
-                intent.setType("message/rfc822");
                 Intent chooser = Intent.createChooser(intent, "Launch Email");
                 startActivity(chooser);
                 return true;
