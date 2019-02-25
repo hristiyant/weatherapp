@@ -1,9 +1,5 @@
 package com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails;
 
-import android.content.Context;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -13,33 +9,35 @@ import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
-import com.hristiyantodorov.weatherapp.model.weather.WeatherDataCurrently;
-import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
 import com.hristiyantodorov.weatherapp.networking.service.NetworkingServiceUtil;
+import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 
 import butterknife.BindView;
 
 public class WeatherDetailsFragment extends BaseFragment implements DownloadResponse<WeatherData> {
 
-    @BindView(R.id.txt_timezone)
-    TextView txtTimezone;
-
-    private double longitude;
-    private double latitude;
-    private Geocoder geocoder;
-    WeatherDataCurrently weatherDataCurrently;
-
     public static WeatherDetailsFragment newInstance() {
         return new WeatherDetailsFragment();
     }
+
+    @BindView(R.id.txt_temperature)
+    TextView txtTemperature;
+    @BindView(R.id.txt_apparent_temperature)
+    TextView txtApparentTemperature;
+    @BindView(R.id.txt_humidity)
+    TextView txtHumidity;
+    @BindView(R.id.txt_pressure)
+    TextView txtPressure;
+    @BindView(R.id.txt_wind_speed)
+    TextView txtWindSpeed;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        new NetworkingServiceUtil().getWeatherData(WeatherDetailsFragment.this);
+        new NetworkingServiceUtil().getWeatherDataCurrently(WeatherDetailsFragment.this);
 
         return view;
     }
@@ -55,18 +53,14 @@ public class WeatherDetailsFragment extends BaseFragment implements DownloadResp
         return R.layout.fragment_weather_details;
     }
 
-    //FIXME Test implementation - get location info
-    public void getLongAndLat() {
-        LocationManager lm = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
-        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        longitude = location.getLongitude();
-        latitude = location.getLatitude();
-    }
-
     @Override
     public void onSuccess(WeatherData result) {
-        weatherDataCurrently = result.getCurrently();
-        txtTimezone.setText(weatherDataCurrently.getIcon());
+        // TODO: 2/22/2019 Add presenter method for bindging
+        txtTemperature.setText("Temperature: " + String.valueOf(result.getCurrently().getTemperature()));
+        txtApparentTemperature.setText("Apparent temperature: " + String.valueOf(result.getCurrently().getApparentTemperature()));
+        txtHumidity.setText("Humidity: " + String.valueOf(result.getCurrently().getHumidity()));
+        txtPressure.setText("Pressure: " + String.valueOf(result.getCurrently().getPressure()));
+        txtWindSpeed.setText("Wind speed: " + String.valueOf(result.getCurrently().getWindSpeed()));
     }
 
     @Override

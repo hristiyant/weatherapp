@@ -1,39 +1,64 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:id="@+id/fragment_weather_details"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/activity_horizontal_margin"
     tools:context=".ui.fragment.weatherdetails.WeatherDetailsFragment">
 
     <TextView
-        android:id="@+id/txt_timezone"
-        style="@style/WeatherDetailsOverlayText"
-        android:layout_width="@dimen/no_dimens"
+        android:id="@+id/txt_temperature"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_between_elements_default"
-        android:text="@string/details_fragment_txt_city_name"
-        android:textSize="@dimen/fragment_locations_list_image_labels_size"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:drawableStart="@drawable/ic_wall_thermometer"
+        android:drawableLeft="@drawable/ic_wall_thermometer"
+        android:drawablePadding="@dimen/margin_between_elements_default"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Temperature: 18 C" />
 
     <TextView
-        android:id="@+id/txt_area_name"
-        style="@style/WeatherDetailsOverlayText"
-        android:layout_width="@dimen/no_dimens"
+        android:id="@+id/txt_apparent_temperature"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_between_elements_default"
-        android:textSize="@dimen/main_screen_labels_size"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_timezone" />
+        android:drawableStart="@drawable/ic_wall_thermometer"
+        android:drawableLeft="@drawable/ic_wall_thermometer"
+        android:drawablePadding="@dimen/margin_between_elements_default"
+        app:layout_constraintTop_toBottomOf="@id/txt_temperature"
+        tools:text="Feels like: 20 C" />
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="@dimen/no_dimens"
+    <TextView
+        android:id="@+id/txt_humidity"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_between_elements_default"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:drawableStart="@drawable/ic_humidity"
+        android:drawableLeft="@drawable/ic_humidity"
+        android:drawablePadding="@dimen/margin_between_elements_default"
+        app:layout_constraintTop_toBottomOf="@id/txt_apparent_temperature"
+        tools:text="Humidity:" />
 
+    <TextView
+        android:id="@+id/txt_pressure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_between_elements_default"
+        android:drawableStart="@drawable/ic_pressure"
+        android:drawableLeft="@drawable/ic_pressure"
+        android:drawablePadding="@dimen/margin_between_elements_default"
+        app:layout_constraintTop_toBottomOf="@id/txt_humidity"
+        tools:text="Pressure: " />
+
+    <TextView
+        android:id="@+id/txt_wind_speed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_between_elements_default"
+        android:drawableStart="@drawable/ic_wind_sock"
+        android:drawableLeft="@drawable/ic_wind_sock"
+        android:drawablePadding="@dimen/margin_between_elements_default"
+        app:layout_constraintTop_toBottomOf="@id/txt_pressure"
+        tools:text="Wind speed: 5 kts" />
 </android.support.constraint.ConstraintLayout>

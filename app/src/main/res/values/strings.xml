@@ -25,9 +25,9 @@
     <string name="locations_list_fragment_edit_text_hint">Enter to search:</string>
 
     <!--Weather Details-->
-    <string name="txt_current_temp_celsius">℃</string>
+    <string name="txt_current_temp_celsius">%1$s<sup>\u00B0C</sup> </string>
     <string name="txt_current_temp_fahrenheit">\u2109</string>
-    <string name="txt_last_updated">Last updated: </string>
+    <string name="txt_last_updated">Last updated: %1$s</string>
 
 
     <!--WeatherDetailsPagerAdapter-->
