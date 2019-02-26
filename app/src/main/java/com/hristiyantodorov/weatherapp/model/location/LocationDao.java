@@ -16,8 +16,12 @@ public interface LocationDao {
     LocationDbModel getLocationById(int id);
 
     @Query("SELECT * FROM locations WHERE name = :name")
-    LocationDbModel getLocationByName(String name);
+    List<LocationDbModel> getLocationsByName(String name);
 
     @Insert
     void insert(LocationDbModel locationDbModel);
+
+    @Insert
+    void insertAll(List<LocationDbModel> locationDbModels);
+
 }

@@ -1,9 +1,15 @@
 package com.hristiyantodorov.weatherapp.persistence;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
+import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.hristiyantodorov.weatherapp.model.AppDatabase;
+import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
+
+import java.util.concurrent.Executors;
 
 public class PersistenceDatabase {
 
@@ -15,6 +21,18 @@ public class PersistenceDatabase {
             synchronized (LOCK) {
                 if (appDatabase == null) {
                     appDatabase = Room.databaseBuilder(context, AppDatabase.class, "app_db")
+                            .addCallback(new RoomDatabase.Callback() {
+                                @Override
+                                public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                                    super.onCreate(db);
+                                    Executors.newSingleThreadExecutor().execute(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            appDatabase.locationDao().insertAll(LocationDbModel.prePopulateLocationsList());
+                                        }
+                                    });
+                                }
+                            })
                             .build();
                 }
             }

@@ -1,5 +1,7 @@
 package com.hristiyantodorov.weatherapp.presenter.locations;
 
+import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
+
 import java.util.List;
 
 public interface LocationsListContracts {
@@ -7,7 +9,7 @@ public interface LocationsListContracts {
         void showLoader(boolean isShowing);
 
         // TODO: 1/22/2019 Change <String> to the model when ready.
-        void showLocations(List<String> locations);
+        void showLocations(List<LocationDbModel> locations);
 
         void showDefaultLocationsList();
 
@@ -23,8 +25,8 @@ public interface LocationsListContracts {
 
         void loadLocations();
 
-        void filterLocations();
+        void filterLocations(String pattern);
 
-        void selectLocation();
+        void selectLocation(LocationDbModel location);
     }
 }

@@ -7,14 +7,11 @@ import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.temp.BaseView;
 import java.util.List;
 
 public interface ForecastHourlyContracts {
-  interface View extends BaseView<Presenter> {
-      void showForecastHourlyData(List<WeatherDataCurrently> hourlyData);
-      void showLoading();
-      void hideLoading();
+    interface View extends BaseView<Presenter> {
+        void showForecastHourlyData(List<WeatherDataCurrently> hourlyData);
+    }
 
-  }
-
-  interface Presenter extends BasePresenter {
-      void loadForecastHourlyData();
-  }
+    interface Presenter extends BasePresenter {
+        void loadForecastHourlyData();
+    }
 }

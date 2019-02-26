@@ -11,7 +11,8 @@ import com.hristiyantodorov.weatherapp.model.user.UserDbModel;
 @Database(entities = {
         UserDbModel.class,
         LocationDbModel.class},
-        version = 1)
+        version = 1,
+        exportSchema = false)
 //@TypeConverters({PersistenceTypeConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();

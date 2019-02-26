@@ -24,16 +24,15 @@ import butterknife.BindView;
 public class ForecastHourlyFragment extends BaseFragment implements ForecastHourlyContracts.View,
         SwipeRefreshLayout.OnRefreshListener {
 
-    private static final String TAG = "FHF";
-
     @BindView(R.id.recycler_view_forecast)
     RecyclerView recyclerViewForecast;
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
-    ForecastHourlyAdapter hourlyAdapter;
-    ForecastHourlyContracts.Presenter presenter;
+
+    private ForecastHourlyAdapter hourlyAdapter;
+    private ForecastHourlyContracts.Presenter presenter;
 
 
     public static ForecastHourlyFragment newInstance() {
@@ -45,7 +44,7 @@ public class ForecastHourlyFragment extends BaseFragment implements ForecastHour
         super.onViewCreated(view, savedInstanceState);
         hourlyAdapter = new ForecastHourlyAdapter();
 
-        recyclerViewForecast.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewForecast.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewForecast.setAdapter(hourlyAdapter);
         recyclerViewForecast.addItemDecoration(new DividerItemDecoration(
                 App.getInstance().getApplicationContext(), DividerItemDecoration.VERTICAL
@@ -90,8 +89,8 @@ public class ForecastHourlyFragment extends BaseFragment implements ForecastHour
 
     @Override
     public void showLoading() {
-    recyclerViewForecast.setVisibility(View.GONE);
-    progressBar.setVisibility(View.VISIBLE);
+        recyclerViewForecast.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override

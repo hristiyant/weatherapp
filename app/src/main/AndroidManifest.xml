@@ -18,13 +18,16 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".view.MenuTestActivity"></activity>
-        <activity android:name=".ui.activity.locations.LocationsListActivity">
+        <activity
+            android:name=".ui.activity.locations.LocationsListActivity"
+            android:launchMode="singleInstance">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.main.MainActivity" />
         </activity>
         <activity
             android:name=".ui.activity.login.LoginActivity"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">
@@ -34,16 +37,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.main.MainActivity">
+        <activity
+            android:name=".ui.activity.main.MainActivity"
+            android:launchMode="singleInstance">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.login.LoginActivity" />
         </activity>
-        <activity android:name=".ui.activity.weatherdetails.WeatherDetailsActivity">
+        <activity
+            android:name=".ui.activity.weatherdetails.WeatherDetailsActivity"
+            android:launchMode="singleInstance">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.main.MainActivity" />
         </activity>
     </application>
-
 </manifest>

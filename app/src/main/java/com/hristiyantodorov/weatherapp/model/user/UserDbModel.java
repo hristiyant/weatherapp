@@ -6,6 +6,7 @@ import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "users")
 public class UserDbModel {
+
     @PrimaryKey(autoGenerate = true)
     private int id;
 
@@ -27,4 +28,5 @@ public class UserDbModel {
     public void setId(int id) {
         this.id = id;
     }
+
 }

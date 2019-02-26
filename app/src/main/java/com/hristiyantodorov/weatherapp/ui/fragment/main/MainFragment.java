@@ -81,6 +81,7 @@ public class MainFragment extends BaseFragment {
 
     @OnClick(R.id.img_btn_pick_from_list)
     public void onButtonPickFromListClick() {
-        startActivity(new Intent(getActivity(), LocationsListActivity.class));
+        Intent intent = new Intent(getActivity(), LocationsListActivity.class);
+        startActivity(intent);
     }
 }

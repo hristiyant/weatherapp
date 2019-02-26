@@ -15,7 +15,9 @@ public class ForecastHourlyPresenter implements ForecastHourlyContracts.Presente
 
     @Override
     public void loadForecastHourlyData() {
+        view.showLoading();
         new NetworkingServiceUtil().getWeatherDataHourly(this);
+        view.hideLoading();
     }
 
     @Override

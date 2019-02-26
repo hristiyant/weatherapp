@@ -1,12 +1,16 @@
 package com.hristiyantodorov.weatherapp.repository;
 
-import android.location.Location;
+import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
+
+import java.util.List;
 
 public interface LocationRepository {
 
-    Location getLocationByName(String name);
+    LocationDbModel getLocationByName(String name);
 
-    Location getLocationById(String id);
+    LocationDbModel getLocationById(String id);
 
-    void insertLocation(Location location);
+    void insertLocation(LocationDbModel locationDbModel);
+
+    void insertLocations(List<LocationDbModel> locationDbModels);
 }
