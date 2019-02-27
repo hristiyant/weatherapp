@@ -43,12 +43,6 @@ public class WeatherDetailsFragment extends BaseFragment implements DownloadResp
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-    }
-
-    @Override
     protected int getLayoutResId() {
         return R.layout.fragment_weather_details;
     }

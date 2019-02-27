@@ -69,5 +69,4 @@ public class LocationDbModel {
                 new LocationDbModel("Sydney", -33.865143, 151.209900)
         );
     }
-
 }

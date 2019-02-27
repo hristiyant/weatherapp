@@ -1,22 +1,20 @@
 package com.hristiyantodorov.weatherapp.presenter.locations;
 
-import android.widget.Toast;
+import android.util.Log;
 
-import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
-import com.hristiyantodorov.weatherapp.networking.service.NetworkingServiceUtil;
-import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
+import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
+import com.hristiyantodorov.weatherapp.util.SearchFilterAsyncTask;
 
 import java.util.List;
-import java.util.concurrent.Executors;
 
-public class LocationsListPresenter implements LocationsListContracts.Presenter {
+public class LocationsListPresenter implements LocationsListContracts.Presenter, DownloadResponse<List<LocationDbModel>> {
 
-    private final NetworkingServiceUtil networkingServiceUtil;
     private LocationsListContracts.View view;
 
-    public LocationsListPresenter(NetworkingServiceUtil networkingServiceUtil) {
-        this.networkingServiceUtil = networkingServiceUtil;
+    public LocationsListPresenter(LocationsListContracts.View view) {
+        this.view = view;
+        this.view.setPresenter(this);
     }
 
     @Override
@@ -31,15 +29,22 @@ public class LocationsListPresenter implements LocationsListContracts.Presenter 
 
     @Override
     public void filterLocations(String pattern) {
-        //view.showLoader(true);
-        Executors.newSingleThreadExecutor().execute(() -> {
-            List<LocationDbModel> filteredLocations = PersistenceDatabase.getAppDatabase(App.getInstance().getApplicationContext()).locationDao().getLocationsByName(pattern);
-            // view.showLoader(true);
-        });
+        new SearchFilterAsyncTask(this).execute(pattern);
     }
 
     @Override
-    public void selectLocation(LocationDbModel location) {
-        Toast.makeText(App.getInstance().getApplicationContext(), location.getName(), Toast.LENGTH_SHORT).show();
+    public void selectLocation(LocationDbModel selectedLocation) {
+        view.showLocationWeatherDetails(selectedLocation);
+    }
+
+    @Override
+    public void onSuccess(List<LocationDbModel> filteredLocations) {
+        view.showLocations(filteredLocations);
+        Log.d("SUCC", "Success ");
+    }
+
+    @Override
+    public void onFailure(Exception e) {
+        Log.d("FAIL", "onFailure: ");
     }
 }

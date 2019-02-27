@@ -15,7 +15,7 @@ public interface LocationDao {
     @Query("SELECT * FROM locations WHERE id = :id")
     LocationDbModel getLocationById(int id);
 
-    @Query("SELECT * FROM locations WHERE name = :name")
+    @Query("SELECT * FROM locations WHERE name LIKE '%' || :name || '%'")
     List<LocationDbModel> getLocationsByName(String name);
 
     @Insert

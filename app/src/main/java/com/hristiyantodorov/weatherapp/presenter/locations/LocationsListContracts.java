@@ -1,14 +1,15 @@
 package com.hristiyantodorov.weatherapp.presenter.locations;
 
 import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.temp.BasePresenter;
+import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.temp.BaseView;
 
 import java.util.List;
 
 public interface LocationsListContracts {
-    interface View {
-        void showLoader(boolean isShowing);
+    interface View extends BaseView<Presenter> {
+//        void showLoader(boolean isShowing);
 
-        // TODO: 1/22/2019 Change <String> to the model when ready.
         void showLocations(List<LocationDbModel> locations);
 
         void showDefaultLocationsList();
@@ -17,10 +18,14 @@ public interface LocationsListContracts {
 
         void setPresenter(Presenter presenter);
 
-        void showLocationWeatherDetails();
+        void showLoading();
+
+        void hideLoading();
+
+        void showLocationWeatherDetails(LocationDbModel selectedLocation);
     }
 
-    interface Presenter {
+    interface Presenter extends BasePresenter {
         void subscribe(View view);
 
         void loadLocations();

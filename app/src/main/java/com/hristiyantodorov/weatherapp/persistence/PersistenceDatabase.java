@@ -25,12 +25,11 @@ public class PersistenceDatabase {
                                 @Override
                                 public void onCreate(@NonNull SupportSQLiteDatabase db) {
                                     super.onCreate(db);
-                                    Executors.newSingleThreadExecutor().execute(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            appDatabase.locationDao().insertAll(LocationDbModel.prePopulateLocationsList());
-                                        }
-                                    });
+                                    Executors.newSingleThreadExecutor().execute(
+                                            () -> appDatabase
+                                                    .locationDao()
+                                                    .insertAll(LocationDbModel.prePopulateLocationsList())
+                                    );
                                 }
                             })
                             .build();

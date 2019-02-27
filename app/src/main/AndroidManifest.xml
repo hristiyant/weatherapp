@@ -20,14 +20,14 @@
         <activity android:name=".view.MenuTestActivity"></activity>
         <activity
             android:name=".ui.activity.locations.LocationsListActivity"
-            android:launchMode="singleInstance">
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.main.MainActivity" />
         </activity>
         <activity
             android:name=".ui.activity.login.LoginActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">
@@ -39,14 +39,14 @@
         </activity>
         <activity
             android:name=".ui.activity.main.MainActivity"
-            android:launchMode="singleInstance">
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.login.LoginActivity" />
         </activity>
         <activity
             android:name=".ui.activity.weatherdetails.WeatherDetailsActivity"
-            android:launchMode="singleInstance">
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.main.MainActivity" />

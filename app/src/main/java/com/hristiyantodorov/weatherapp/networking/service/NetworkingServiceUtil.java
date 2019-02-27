@@ -37,6 +37,11 @@ public class NetworkingServiceUtil {
         new DownloadTaskCurrently(callback).execute(url);
     }
 
+    public void getWeatherDataCurrently(DownloadResponse callback, double latitude, double longitude) {
+        String url = URL_PREFIX + latitude + "," + longitude + URL_SUFFIX_CURRENTLY;
+        new DownloadTaskCurrently(callback).execute(url);
+    }
+
     public void getWeatherDataHourly(DownloadResponse callback) {
         String url = URL_PREFIX + latitude + "," + longitude + URL_SUFFIX_HOURLY;
         new DownloadTaskCurrently(callback).execute(url);

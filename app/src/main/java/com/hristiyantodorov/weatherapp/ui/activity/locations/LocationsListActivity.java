@@ -3,7 +3,6 @@ package com.hristiyantodorov.weatherapp.ui.activity.locations;
 import android.os.Bundle;
 
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.networking.service.NetworkingServiceUtil;
 import com.hristiyantodorov.weatherapp.presenter.locations.LocationsListContracts;
 import com.hristiyantodorov.weatherapp.presenter.locations.LocationsListPresenter;
 import com.hristiyantodorov.weatherapp.ui.activity.BaseActivity;
@@ -13,13 +12,13 @@ public class LocationsListActivity extends BaseActivity {
 
     private LocationsListFragment fragment;
     private LocationsListContracts.Presenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        presenter = new LocationsListPresenter(new NetworkingServiceUtil());
         fragment = LocationsListFragment.newInstance();
-        fragment.setPresenter(presenter);
+        presenter = new LocationsListPresenter(fragment);
         commitFragmentTransaction(R.id.content, fragment);
     }
 
