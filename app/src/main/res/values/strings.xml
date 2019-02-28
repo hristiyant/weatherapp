@@ -27,8 +27,14 @@
     <!--Weather Details-->
     <string name="txt_current_temp_celsius">%1$s<sup>\u00B0C</sup> </string>
     <string name="txt_current_temp_fahrenheit">\u2109</string>
-    <string name="txt_last_updated">Last updated: %1$s</string>
+    <string name="txt_current_wind_speed">%1$s m/s</string>
 
+    <string name="txt_last_updated">Last updated: %1$s</string>
+    <string name="txt_wind_speed">Wind speed: %1$s</string>
+    <string name="txt_temperature">Temperature: %1$s<sup>\u00B0C</sup></string>
+    <string name="txt_apparent_temperature">Feels like: %1$s<sup>\u00B0C</sup></string>
+    <string name="txt_humidity">Humidity: %1$s m/s</string>
+    <string name="txt_pressure">Pressure: %1$s</string>
 
     <!--WeatherDetailsPagerAdapter-->
     <string name="weather_details_tab_hourly_title">Hourly</string>

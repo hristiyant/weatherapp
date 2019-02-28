@@ -24,6 +24,8 @@ import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
 import com.hristiyantodorov.weatherapp.presenter.locations.LocationsListContracts;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
+import com.hristiyantodorov.weatherapp.util.Constants;
+import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 import com.hristiyantodorov.weatherapp.view.DividerItemDecoration;
 
 import java.util.List;
@@ -110,17 +112,17 @@ public class LocationsListFragment extends BaseFragment implements LocationsList
     }
 
     @Override
-    public void showLocationWeatherDetails(LocationDbModel selectedLocation) {
-        Intent intent = new Intent(getContext(), WeatherDetailsActivity.class);
-        intent.putExtra("LATITUDE", selectedLocation.getLatitude());
-        intent.putExtra("LONGITUDE", selectedLocation.getLongitude());
-        startActivity(intent);
+    public void onClick(LocationDbModel location) {
+        presenter.selectLocation(location);
+        Log.d("LLF", "onClick: ");
     }
 
     @Override
-    public void onClick(LocationDbModel location) {
-        presenter.selectLocation(location);
-        Log.d("LLF", "onClick: " + location.toString());
+    public void showLocationWeatherDetails(LocationDbModel selectedLocation) {
+        SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_NAME, selectedLocation.getName());
+        SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_LAT, String.valueOf(selectedLocation.getLatitude()));
+        SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_LON, String.valueOf(selectedLocation.getLongitude()));
+        startActivity(new Intent(getContext(), WeatherDetailsActivity.class));
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.hristiyantodorov.weatherapp.adapter.locations;
 
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +13,7 @@ import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
 import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
 import com.hristiyantodorov.weatherapp.networking.service.NetworkingServiceUtil;
+import com.hristiyantodorov.weatherapp.util.WeatherIconPickerUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +85,7 @@ public class LocationsListAdapter extends RecyclerView.Adapter<LocationsListAdap
                 @Override
                 public void onSuccess(WeatherData result) {
                     txtCurrentTemperature.setText(String.valueOf(result.getCurrently().getTemperature()));
-                    imgWeatherIcon.setImageResource(setWeatherIcon(result.getCurrently().getIcon()));
+                    imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(result.getCurrently().getIcon()));
                     txtCityName.setText(location.getName());
                 }
 
@@ -93,8 +93,8 @@ public class LocationsListAdapter extends RecyclerView.Adapter<LocationsListAdap
                 public void onFailure(Exception e) {
 
                 }
-            }, location.getLatitude(), location.getLongitude());
-
+            }, String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
+            this.location = location;
         }
 
         @OnClick
@@ -120,33 +120,5 @@ public class LocationsListAdapter extends RecyclerView.Adapter<LocationsListAdap
 
     public interface OnLocationClickListener {
         void onClick(LocationDbModel location);
-    }
-
-    @DrawableRes
-    private static int setWeatherIcon(String icon) {
-        switch (icon) {
-            case "clear-day":
-                return R.drawable.ic_clear_day;
-            case "clear-night":
-                return R.drawable.ic_clear_night;
-            case "rain":
-                return R.drawable.ic_rain;
-            case "snow":
-                return R.drawable.ic_snow;
-            case "sleet":
-                return R.drawable.ic_sleet;
-            case "wind":
-                return R.drawable.ic_wind;
-            case "fog":
-                return R.drawable.ic_fog;
-            case "cloudy":
-                return R.drawable.ic_cloudy;
-            case "partly-cloudy-day":
-                return R.drawable.ic_partly_cloudy_day;
-            case "partly-cloudy-night":
-                return R.drawable.ic_partly_cloudy_night;
-            default:
-                return 0;
-        }
     }
 }

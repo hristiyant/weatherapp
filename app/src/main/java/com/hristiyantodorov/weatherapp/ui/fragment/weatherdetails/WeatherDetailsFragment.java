@@ -12,6 +12,8 @@ import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
 import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
 import com.hristiyantodorov.weatherapp.networking.service.NetworkingServiceUtil;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
+import com.hristiyantodorov.weatherapp.util.Constants;
+import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 
 import butterknife.BindView;
 
@@ -37,7 +39,11 @@ public class WeatherDetailsFragment extends BaseFragment implements DownloadResp
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        new NetworkingServiceUtil().getWeatherDataCurrently(WeatherDetailsFragment.this);
+        new NetworkingServiceUtil().getWeatherDataCurrently(
+                WeatherDetailsFragment.this,
+                SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
+                SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null)
+        );
 
         return view;
     }

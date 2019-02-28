@@ -37,17 +37,17 @@ public class NetworkingServiceUtil {
         new DownloadTaskCurrently(callback).execute(url);
     }
 
-    public void getWeatherDataCurrently(DownloadResponse callback, double latitude, double longitude) {
+    public void getWeatherDataCurrently(DownloadResponse callback, String latitude, String longitude) {
         String url = URL_PREFIX + latitude + "," + longitude + URL_SUFFIX_CURRENTLY;
         new DownloadTaskCurrently(callback).execute(url);
     }
 
-    public void getWeatherDataHourly(DownloadResponse callback) {
+    public void getWeatherDataHourly(DownloadResponse callback, String latitude, String longitude) {
         String url = URL_PREFIX + latitude + "," + longitude + URL_SUFFIX_HOURLY;
         new DownloadTaskCurrently(callback).execute(url);
     }
 
-    public void getWeatherDataDaily(DownloadResponse callback) {
+    public void getWeatherDataDaily(DownloadResponse callback, String latitude, String longitude) {
         String url = URL_PREFIX + latitude + "," + longitude + URL_SUFFIX_DAILY;
         new DownloadTaskCurrently(callback).execute(url);
     }

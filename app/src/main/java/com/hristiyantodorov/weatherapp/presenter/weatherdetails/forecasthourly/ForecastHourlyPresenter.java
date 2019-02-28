@@ -3,6 +3,8 @@ package com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly;
 import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
 import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
 import com.hristiyantodorov.weatherapp.networking.service.NetworkingServiceUtil;
+import com.hristiyantodorov.weatherapp.util.Constants;
+import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 
 public class ForecastHourlyPresenter implements ForecastHourlyContracts.Presenter, DownloadResponse<WeatherData> {
 
@@ -16,7 +18,11 @@ public class ForecastHourlyPresenter implements ForecastHourlyContracts.Presente
     @Override
     public void loadForecastHourlyData() {
         view.showLoading();
-        new NetworkingServiceUtil().getWeatherDataHourly(this);
+        new NetworkingServiceUtil().getWeatherDataHourly(
+                this,
+                SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
+                SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null)
+                );
         view.hideLoading();
     }
 

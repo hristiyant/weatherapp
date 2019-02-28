@@ -17,6 +17,8 @@ import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
 import com.hristiyantodorov.weatherapp.networking.service.NetworkingServiceUtil;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
+import com.hristiyantodorov.weatherapp.util.Constants;
+import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 
 import java.util.Objects;
 
@@ -48,7 +50,11 @@ public class ForecastDailyFragment extends BaseFragment implements DownloadRespo
                 App.getInstance().getApplicationContext(), DividerItemDecoration.VERTICAL
         ));
 
-        new NetworkingServiceUtil().getWeatherDataDaily(this);
+        new NetworkingServiceUtil().getWeatherDataDaily(
+                this,
+                SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
+                SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null)
+        );
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -92,7 +98,10 @@ public class ForecastDailyFragment extends BaseFragment implements DownloadRespo
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        new NetworkingServiceUtil().getWeatherDataDaily(this);
+        new NetworkingServiceUtil().getWeatherDataDaily(this,
+                SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
+                SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null)
+        );
         swipeRefreshLayout.setRefreshing(false);
     }
 }
