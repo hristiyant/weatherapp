@@ -1,6 +1,7 @@
 package com.hristiyantodorov.weatherapp.adapter.locations;
 
 import android.support.annotation.NonNull;
+import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,28 +9,27 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
 import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
 import com.hristiyantodorov.weatherapp.networking.service.NetworkingServiceUtil;
+import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherIconPickerUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 // TODO: 1/22/2019 This is not implemented.
-public class LocationsListAdapter extends RecyclerView.Adapter<LocationsListAdapter.LocationsViewHolder> {
+public class LocationsListAdapter
+        extends ListAdapter<LocationDbModel, LocationsListAdapter.LocationsViewHolder> {
 
-    private List<LocationDbModel> locationsList;
     private OnLocationClickListener onLocationClickListener;
 
-    public LocationsListAdapter() {
-        locationsList = new ArrayList<>();
+    public LocationsListAdapter(LocationsListDiffCallback diffCallback) {
+        super(diffCallback);
     }
 
     @NonNull
@@ -41,29 +41,17 @@ public class LocationsListAdapter extends RecyclerView.Adapter<LocationsListAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull LocationsViewHolder locationsViewHolder, int position) {
-        locationsViewHolder.setOnLocationClickListener(this.onLocationClickListener);
-        locationsViewHolder.bind(locationsList.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
-        return locationsList.size();
-    }
-
-    public void addAll(List<LocationDbModel> locations) {
-        locationsList.addAll(locations);
-    }
-
-    public void clear() {
-        locationsList.clear();
+    public void onBindViewHolder(@NonNull LocationsViewHolder viewHolder, int position) {
+        viewHolder.bind(getItem(position));
+        viewHolder.setOnLocationClickListener(onLocationClickListener);
     }
 
     public void setOnLocationClickListener(OnLocationClickListener onLocationClickListener) {
         this.onLocationClickListener = onLocationClickListener;
     }
 
-    public static class LocationsViewHolder extends RecyclerView.ViewHolder implements DownloadResponse<WeatherData> {
+    public static class LocationsViewHolder extends RecyclerView.ViewHolder
+            implements DownloadResponse<WeatherData> {
 
         @BindView(R.id.txt_city_name)
         TextView txtCityName;
@@ -72,49 +60,49 @@ public class LocationsListAdapter extends RecyclerView.Adapter<LocationsListAdap
         @BindView(R.id.txt_current_temperature)
         TextView txtCurrentTemperature;
 
-        private OnLocationClickListener onLocationClickListener;
+        private OnLocationClickListener onClickListener;
         private LocationDbModel location;
 
-        public LocationsViewHolder(@NonNull View itemView) {
+        LocationsViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
         void bind(LocationDbModel location) {
-            new NetworkingServiceUtil().getWeatherDataCurrently(new DownloadResponse<WeatherData>() {
-                @Override
-                public void onSuccess(WeatherData result) {
-                    txtCurrentTemperature.setText(String.valueOf(result.getCurrently().getTemperature()));
-                    imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(result.getCurrently().getIcon()));
-                    txtCityName.setText(location.getName());
-                }
-
-                @Override
-                public void onFailure(Exception e) {
-
-                }
-            }, String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
+            new NetworkingServiceUtil().getWeatherDataCurrently(this,
+                    String.valueOf(location.getLatitude()),
+                    String.valueOf(location.getLongitude())
+            );
             this.location = location;
         }
 
         @OnClick
-        public void onClick() {
-            onLocationClickListener.onClick(this.location);
+        void onClick() {
+            onClickListener.onClick(this.location);
         }
 
-        public void setOnLocationClickListener(OnLocationClickListener onLocationClickListener) {
-            this.onLocationClickListener = onLocationClickListener;
+        void setOnLocationClickListener(OnLocationClickListener onLocationClickListener) {
+            onClickListener = onLocationClickListener;
         }
 
         @Override
         public void onSuccess(WeatherData result) {
-
-
+            txtCurrentTemperature
+                    .setText(App.getInstance().getApplicationContext()
+                            .getString(R.string.txt_current_temp_celsius,
+                                    WeatherDataFormatterUtil.convertFahrenheitToCelsius(result
+                                            .getCurrently()
+                                            .getTemperature())));
+            imgWeatherIcon
+                    .setImageResource(WeatherIconPickerUtil.pickWeatherIcon(result
+                            .getCurrently()
+                            .getIcon()));
+            txtCityName.setText(location.getName());
         }
 
         @Override
         public void onFailure(Exception e) {
-
+            // TODO: 3/1/2019 CURRENTLY NOT BEING USED
         }
     }
 

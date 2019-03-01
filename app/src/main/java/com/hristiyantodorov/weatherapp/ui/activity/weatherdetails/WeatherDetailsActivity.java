@@ -105,13 +105,13 @@ public class WeatherDetailsActivity extends BaseActivity implements DownloadResp
                 .getTimeInstance(SimpleDateFormat.MEDIUM, Locale.getDefault())
                 .format(new java.util.Date());
         txtLastUpdated.setText(getString(R.string.txt_last_updated, currentTimeStamp));
-        txtWindSpeed.setText(getString(R.string.txt_current_wind_speed,WeatherDataFormatterUtil.convertFromMphToMs(result.getCurrently().getWindSpeed())));
+        txtWindSpeed.setText(getString(R.string.txt_current_wind_speed,WeatherDataFormatterUtil.convertMphToMs(result.getCurrently().getWindSpeed())));
         imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(result.getCurrently().getIcon()));
     }
 
     @Override
     public void onFailure(Exception e) {
-        // TODO: 2/15/2019 Add showErrorDialog when available.
+        // TODO: 3/1/2019 CURRENTLY NOT BEING USED
     }
 
     private double convertFahrenheitToCelsius(double degreesFahrenheit) {

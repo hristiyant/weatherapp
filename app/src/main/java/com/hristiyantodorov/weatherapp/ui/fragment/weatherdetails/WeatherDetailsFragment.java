@@ -14,6 +14,7 @@ import com.hristiyantodorov.weatherapp.networking.service.NetworkingServiceUtil;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 import com.hristiyantodorov.weatherapp.util.Constants;
 import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
+import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 
 import butterknife.BindView;
 
@@ -55,12 +56,22 @@ public class WeatherDetailsFragment extends BaseFragment implements DownloadResp
 
     @Override
     public void onSuccess(WeatherData result) {
-        // TODO: 2/22/2019 Add presenter method for bindging
-        txtTemperature.setText("Temperature: " + String.valueOf(result.getCurrently().getTemperature()));
-        txtApparentTemperature.setText("Apparent temperature: " + String.valueOf(result.getCurrently().getApparentTemperature()));
-        txtHumidity.setText("Humidity: " + String.valueOf(result.getCurrently().getHumidity()));
-        txtPressure.setText("Pressure: " + String.valueOf(result.getCurrently().getPressure()));
-        txtWindSpeed.setText("Wind speed: " + String.valueOf(result.getCurrently().getWindSpeed()));
+        // TODO: 2/22/2019 Add presenter method for binding
+        //txtTemperature.setText("Temperature: " + String.valueOf(result.getCurrently().getTemperature()));
+        txtTemperature.setText(getString(R.string.txt_temperature,
+                WeatherDataFormatterUtil.convertFahrenheitToCelsius(result.getCurrently().getTemperature())));
+//        txtApparentTemperature.setText("Apparent temperature: " + String.valueOf(result.getCurrently().getApparentTemperature()));
+        txtApparentTemperature.setText(getString(R.string.txt_apparent_temperature,
+                WeatherDataFormatterUtil.convertFahrenheitToCelsius(result.getCurrently().getApparentTemperature())));
+//        txtHumidity.setText("Humidity: " + String.valueOf(result.getCurrently().getHumidity()));
+        txtHumidity.setText(getString(R.string.txt_humidity,
+                WeatherDataFormatterUtil.convertDoubleToPercentage(result.getCurrently().getHumidity())));
+//        txtPressure.setText("Pressure: " + String.valueOf(result.getCurrently().getPressure()));
+        txtPressure.setText(getString(R.string.txt_pressure,
+                WeatherDataFormatterUtil.convertRoundedDoubleToString(result.getCurrently().getPressure())));
+//        txtWindSpeed.setText("Wind speed: " + String.valueOf(result.getCurrently().getWindSpeed()));
+        txtWindSpeed.setText(getString(R.string.txt_wind_speed,
+                WeatherDataFormatterUtil.convertMphToMs(result.getCurrently().getWindSpeed())));
     }
 
     @Override

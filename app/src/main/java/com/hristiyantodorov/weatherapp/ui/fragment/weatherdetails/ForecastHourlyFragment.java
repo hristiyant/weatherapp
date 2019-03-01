@@ -1,6 +1,7 @@
 package com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,13 +35,12 @@ public class ForecastHourlyFragment extends BaseFragment implements ForecastHour
     private ForecastHourlyAdapter hourlyAdapter;
     private ForecastHourlyContracts.Presenter presenter;
 
-
     public static ForecastHourlyFragment newInstance() {
         return new ForecastHourlyFragment();
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         hourlyAdapter = new ForecastHourlyAdapter();
 

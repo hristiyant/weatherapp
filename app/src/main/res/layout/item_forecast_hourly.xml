@@ -46,7 +46,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Clear" />
 
-
     <TextView
         android:id="@+id/txt_current_temperature"
         style="@style/WeatherDetailsOverlayText"
@@ -78,6 +77,5 @@
         app:layout_constraintStart_toEndOf="@+id/txt_current_temperature"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@drawable/ic_clear_day" />
-
 
 </android.support.constraint.ConstraintLayout>

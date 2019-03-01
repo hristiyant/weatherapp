@@ -61,22 +61,6 @@ public class ForecastDailyFragment extends BaseFragment implements DownloadRespo
         return view;
     }
 
-    /*@Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        dailyAdapter = new ForecastDailyAdapter();
-
-        *//*recyclerViewForecast.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerViewForecast.setAdapter(dailyAdapter);
-        recyclerViewForecast.addItemDecoration(new DividerItemDecoration(
-                App.getInstance().getApplicationContext(), DividerItemDecoration.VERTICAL
-        ));*//*
-
-        new NetworkingServiceUtil().getWeatherDataDaily(this);
-
-        swipeRefreshLayout.setOnRefreshListener(this);
-    }
-*/
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_forecast;
@@ -92,7 +76,7 @@ public class ForecastDailyFragment extends BaseFragment implements DownloadRespo
 
     @Override
     public void onFailure(Exception e) {
-
+// TODO: 3/1/2019 CURRENTLY NOT BEING USED
     }
 
     @Override

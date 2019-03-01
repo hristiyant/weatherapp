@@ -8,7 +8,7 @@ import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 
 public class ForecastHourlyPresenter implements ForecastHourlyContracts.Presenter, DownloadResponse<WeatherData> {
 
-    ForecastHourlyContracts.View view;
+    private ForecastHourlyContracts.View view;
 
     public ForecastHourlyPresenter(ForecastHourlyContracts.View view) {
         this.view = view;
@@ -22,7 +22,7 @@ public class ForecastHourlyPresenter implements ForecastHourlyContracts.Presente
                 this,
                 SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
                 SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null)
-                );
+        );
         view.hideLoading();
     }
 
@@ -33,6 +33,6 @@ public class ForecastHourlyPresenter implements ForecastHourlyContracts.Presente
 
     @Override
     public void onFailure(Exception e) {
-
+// TODO: 3/1/2019 CURRENTLY NOT BEING USED
     }
 }

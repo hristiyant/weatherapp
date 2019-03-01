@@ -27,18 +27,15 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class LoginFragment extends BaseFragment implements LoginContracts.View {
-    @BindView(R.id.progressbar)
-    ProgressBar progressBar;
 
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
     @BindView(R.id.edt_email)
     EditText edtEmail;
-
     @BindView(R.id.edt_password)
     EditText edtPassword;
-
     @BindView(R.id.background)
     ConstraintLayout constraintLayout;
-
     @BindView(R.id.circle_menu_login)
     CircleMenuView circleMenuLogin;
 
@@ -88,45 +85,6 @@ public class LoginFragment extends BaseFragment implements LoginContracts.View {
 
         return view;
     }
-
-    /*@Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        circleMenuLogin.setEventListener(new CircleMenuView.EventListener() {
-            @Override
-            public void onMenuOpenAnimationStart(@NonNull CircleMenuView view) {
-                Log.d("D", "onMenuOpenAnimationStart");
-            }
-
-            @Override
-            public void onMenuOpenAnimationEnd(@NonNull CircleMenuView view) {
-                Log.d("D", "onMenuOpenAnimationEnd");
-            }
-
-            @Override
-            public void onMenuCloseAnimationStart(@NonNull CircleMenuView view) {
-                Log.d("D", "onMenuCloseAnimationStart");
-            }
-
-            @Override
-            public void onMenuCloseAnimationEnd(@NonNull CircleMenuView view) {
-                Log.d("D", "onMenuCloseAnimationEnd");
-            }
-
-            @Override
-            public void onButtonClickAnimationStart(@NonNull CircleMenuView view, int index) {
-                Log.d("D", "onButtonClickAnimationStart| index: " + index);
-            }
-
-            @Override
-            public void onButtonClickAnimationEnd(@NonNull CircleMenuView view, int index) {
-                Log.d("D", "onButtonClickAnimationEnd| index: " + index);
-                Toast.makeText(getContext(), getString(R.string.login_screen_toast_login_successful_text), Toast.LENGTH_LONG).show();
-                circleMenuLogin.setVisibility(View.GONE);
-            }
-        });
-    }*/
 
     @Override
     protected int getLayoutResId() {

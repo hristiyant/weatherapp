@@ -7,12 +7,13 @@ import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.temp.BaseView;
 import java.util.List;
 
 public interface LocationsListContracts {
+
     interface View extends BaseView<Presenter> {
 //        void showLoader(boolean isShowing);
 
         void showLocations(List<LocationDbModel> locations);
 
-        void showDefaultLocationsList();
+        void getLocationsFromDatabase();
 
         void showError(Throwable e);
 
@@ -26,12 +27,12 @@ public interface LocationsListContracts {
     }
 
     interface Presenter extends BasePresenter {
-        void subscribe(View view);
 
-        void loadLocations();
+        void loadLocationsFromDatabase();
 
         void filterLocations(String pattern);
 
         void selectLocation(LocationDbModel location);
     }
+
 }

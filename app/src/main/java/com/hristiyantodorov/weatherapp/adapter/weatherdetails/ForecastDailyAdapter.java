@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.model.weather.WeatherDataDaily;
+import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
+import com.hristiyantodorov.weatherapp.util.WeatherIconPickerUtil;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,58 +74,18 @@ public class ForecastDailyAdapter extends RecyclerView.Adapter<ForecastDailyAdap
                     .format(new java.util.Date(item.getTime() * 1000));
             txtTime.setText(timeStamp.substring(0, 3));
 
-            Integer integer =
-                    (int) roundDoubleNum(convertFahrenheitToCelsius(item.getTemperatureMax()), 1);
-            txtTemperature.setText(Html.fromHtml(String.valueOf(integer) + "<sup>\u00B0c</sup>"));
-            txtSummary.setText(item.getSummary());
+            txtTemperature.setText(
+                    Html.fromHtml(WeatherDataFormatterUtil.convertFahrenheitToCelsius(item.getTemperatureMax())
+                            + "<sup>\u00B0c</sup>")
+            );
 
-            int drawableRes = 0;
-            switch (item.getIcon()) {
-                case "clear-day":
-                    drawableRes = R.drawable.ic_clear_day;
-                    break;
-                case "clear-night":
-                    drawableRes = R.drawable.ic_clear_night;
-                    break;
-                case "rain":
-                    drawableRes = R.drawable.ic_rain;
-                    break;
-                case "snow":
-                    drawableRes = R.drawable.ic_snow;
-                    break;
-                case "sleet":
-                    drawableRes = R.drawable.ic_sleet;
-                    break;
-                case "wind":
-                    drawableRes = R.drawable.ic_wind;
-                    txtSummary.setText("Windy");
-                    break;
-                case "fog":
-                    drawableRes = R.drawable.ic_fog;
-                    break;
-                case "cloudy":
-                    drawableRes = R.drawable.ic_cloudy;
-                    break;
-                case "partly-cloudy-day":
-                    drawableRes = R.drawable.ic_partly_cloudy_day;
-                    break;
-                case "partly-cloudy-night":
-                    drawableRes = R.drawable.ic_partly_cloudy_night;
-                    break;
+            if (item.getIcon().equals("wind")) {
+                txtSummary.setText(R.string.txt_summary_windy);
+            } else {
+                txtSummary.setText(item.getSummary());
             }
-            imgWeatherIcon.setImageResource(drawableRes);
-        }
 
-        private double convertFahrenheitToCelsius(double degreesFahrenheit) {
-            return (5.0 / 9.0) * (degreesFahrenheit - 32.0);
-        }
-
-        private double roundDoubleNum(double value, int places) {
-            if (places < 0) throw new IllegalArgumentException();
-
-            BigDecimal bigDecimal = new BigDecimal(value);
-            bigDecimal = bigDecimal.setScale(places, RoundingMode.HALF_UP);
-            return bigDecimal.doubleValue();
+            imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(item.getIcon()));
         }
     }
 }

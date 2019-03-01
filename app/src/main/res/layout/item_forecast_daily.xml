@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_item_weather_details"
-    android:layout_margin="@dimen/margin_between_elements_default">
+    android:layout_margin="@dimen/margin_between_elements_default"
+    android:background="@drawable/background_item_weather_details">
 
     <TextView
         android:id="@+id/txt_time"
@@ -29,20 +29,19 @@
         style="@style/WeatherDetailsOverlayText"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
-        android:fontFamily="casual"
         android:layout_marginStart="@dimen/margin_between_elements_default"
         android:layout_marginEnd="@dimen/margin_between_elements_default"
+        android:fontFamily="casual"
         android:gravity="center"
         android:lines="3"
         android:textSize="@dimen/material_design_body_txt_size"
-        app:layout_constraintHorizontal_weight="2"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/img_weather_icon"
         tools:text="Clear" />
-
 
     <TextView
         android:id="@+id/txt_current_temperature"
@@ -74,6 +73,5 @@
         app:layout_constraintStart_toEndOf="@+id/txt_current_temperature"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@drawable/ic_clear_day" />
-
 
 </android.support.constraint.ConstraintLayout>

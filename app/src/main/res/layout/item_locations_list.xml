@@ -36,6 +36,8 @@
         style="@style/WeatherDetailsOverlayText"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/margin_between_elements_default"
+        android:layout_marginRight="@dimen/margin_between_elements_default"
         android:fontFamily="casual"
         android:gravity="end"
         android:textSize="@dimen/main_screen_labels_size"
