@@ -1,8 +1,8 @@
 package com.hristiyantodorov.weatherapp.presenter.locations;
 
 import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
-import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.temp.BasePresenter;
-import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.temp.BaseView;
+import com.hristiyantodorov.weatherapp.presenter.BasePresenter;
+import com.hristiyantodorov.weatherapp.presenter.BaseView;
 
 import java.util.List;
 

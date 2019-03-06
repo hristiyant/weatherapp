@@ -1,37 +1,35 @@
 package com.hristiyantodorov.weatherapp.ui.activity.weatherdetails;
 
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.weatherdetails.WeatherDetailsPagerAdapter;
-import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
-import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
-import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
-import com.hristiyantodorov.weatherapp.networking.service.NetworkingServiceUtil;
 import com.hristiyantodorov.weatherapp.ui.activity.BaseActivity;
 import com.hristiyantodorov.weatherapp.util.Constants;
 import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherIconPickerUtil;
+import com.hristiyantodorov.weatherapp.util.retrofit.APIClient;
+import com.hristiyantodorov.weatherapp.util.retrofit.APIInterface;
+import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastCurrentlyResponse;
+import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastFullResponse;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import butterknife.BindView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class WeatherDetailsActivity extends BaseActivity implements DownloadResponse<WeatherData>, LocationListener {
-    private static final int DOUBLE_ROUND_PLACES = 1;
+public class WeatherDetailsActivity extends BaseActivity implements Callback<ForecastFullResponse> {
 
     @BindView(R.id.view_pager_forecasts_holder)
     ViewPager viewPager;
@@ -50,20 +48,20 @@ public class WeatherDetailsActivity extends BaseActivity implements DownloadResp
     @BindView(R.id.txt_wind_speed)
     TextView txtWindSpeed;
 
-    WeatherData weatherData;
-
-    LocationManager locationManager;
-
-    LocationDbModel finalLocation;
+    private APIInterface apiInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String currentLocationName = SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_NAME, null);
+//        String currentLocationName = SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_NAME, "Current location");
         String currentLocationLat = SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null);
         String currentLocationLon = SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null);
-        new NetworkingServiceUtil().getWeatherDataCurrently(WeatherDetailsActivity.this, currentLocationLat, currentLocationLon);
+
+        apiInterface = APIClient.getClient().create(APIInterface.class);
+
+        Call<ForecastFullResponse> call = apiInterface.getFullForecastData(currentLocationLat, currentLocationLon);
+        call.enqueue(this);
 
         WeatherDetailsPagerAdapter weatherDetailsPagerAdapter =
                 new WeatherDetailsPagerAdapter(getSupportFragmentManager());
@@ -71,7 +69,7 @@ public class WeatherDetailsActivity extends BaseActivity implements DownloadResp
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
-
+                // TODO: 3/6/2019 CURRENTLY NOT BEING USED
             }
 
             @Override
@@ -81,11 +79,10 @@ public class WeatherDetailsActivity extends BaseActivity implements DownloadResp
 
             @Override
             public void onPageScrollStateChanged(int i) {
-
+                // TODO: 3/6/2019 CURRENTLY NOT BEING USED
             }
         });
         tabLayout.setupWithViewPager(viewPager);
-
     }
 
     @Override
@@ -93,39 +90,24 @@ public class WeatherDetailsActivity extends BaseActivity implements DownloadResp
         return R.layout.activity_weather_details;
     }
 
-    @Override
-    public void onSuccess(WeatherData result) {
-        weatherData = result;
-        txtLocationName.setText(SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_NAME, "Current Location"));
-        txtSummary.setText(weatherData.getCurrently().getSummary());
-        double temperature = convertFahrenheitToCelsius(weatherData.getCurrently().getTemperature());
-//        txtCurrentTemp.setText(getString(R.string.txt_current_temp_celsius, String.valueOf(roundDoubleNum(temperature, DOUBLE_ROUND_PLACES))));
-        txtCurrentTemp.setText(Html.fromHtml(String.valueOf(roundDoubleNum(temperature, DOUBLE_ROUND_PLACES)) + "<sup>\u00B0c</sup>"));
+    private void setFields(ForecastCurrentlyResponse response, String timezone) {
+        txtLocationName.setText(timezone);
+        txtSummary.setText(response.getSummary());
+        txtCurrentTemp.setText(Html.fromHtml(
+                WeatherDataFormatterUtil
+                        .convertFahrenheitToCelsius(response.getTemperature())
+                        + "<sup>\u00B0c</sup>"
+        ));
+        txtWindSpeed.setText(getString(
+                R.string.txt_current_wind_speed,
+                WeatherDataFormatterUtil.convertMphToMs(response.getWindSpeed())
+        ));
         String currentTimeStamp = DateFormat
                 .getTimeInstance(SimpleDateFormat.MEDIUM, Locale.getDefault())
                 .format(new java.util.Date());
         txtLastUpdated.setText(getString(R.string.txt_last_updated, currentTimeStamp));
-        txtWindSpeed.setText(getString(R.string.txt_current_wind_speed,WeatherDataFormatterUtil.convertMphToMs(result.getCurrently().getWindSpeed())));
-        imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(result.getCurrently().getIcon()));
+        imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(response.getIcon()));
     }
-
-    @Override
-    public void onFailure(Exception e) {
-        // TODO: 3/1/2019 CURRENTLY NOT BEING USED
-    }
-
-    private double convertFahrenheitToCelsius(double degreesFahrenheit) {
-        return (5.0 / 9.0) * (degreesFahrenheit - 32.0);
-    }
-
-    private double roundDoubleNum(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
-
-        BigDecimal bigDecimal = new BigDecimal(value);
-        bigDecimal = bigDecimal.setScale(places, RoundingMode.HALF_UP);
-        return bigDecimal.doubleValue();
-    }
-
 
     public void refreshLastUpdated() {
         String timeStamp = DateFormat
@@ -135,22 +117,16 @@ public class WeatherDetailsActivity extends BaseActivity implements DownloadResp
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-// TODO: 2/22/2019 CURRENTLY NOT USED
+    public void onResponse(Call<ForecastFullResponse> call, Response<ForecastFullResponse> response) {
+        int statusCode = response.code();
+        Log.d("WDActivity", "response code: " + statusCode);
+        ForecastFullResponse fullResponse = response.body();
+        setFields(fullResponse.getCurrently(), fullResponse.getTimezone());
     }
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-// TODO: 2/22/2019 CURRENTLY NOT USED
+    public void onFailure(Call<ForecastFullResponse> call, Throwable t) {
+        Log.e("WDActivity", "onFailure: ");
     }
 
-    @Override
-    public void onProviderEnabled(String provider) {
-// TODO: 2/22/2019 CURRENTLY NOT USED
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-// TODO: 2/22/2019 CURRENTLY NOT USED
-    }
 }

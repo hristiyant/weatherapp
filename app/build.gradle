@@ -25,9 +25,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String", "ApiKey", '"09ab310ab4796f158888f52a6b5fa900"')
+            buildConfigField("String", "ApiBaseUrl", '"https://api.darksky.net/forecast/"')
         }
         debug {
             buildConfigField("String", "ApiKey", '"09ab310ab4796f158888f52a6b5fa900"')
+            buildConfigField("String", "ApiBaseUrl", '"https://api.darksky.net/forecast/"')
         }
     }
     compileOptions {
@@ -86,4 +88,15 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 
     implementation 'com.annimon:stream:1.2.1'
+
+    //OkHttp
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+
+    //Gson
+    implementation 'com.google.code.gson:gson:2.8.5'
 }

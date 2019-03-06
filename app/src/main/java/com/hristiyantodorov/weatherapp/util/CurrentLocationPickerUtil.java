@@ -64,7 +64,7 @@ public class CurrentLocationPickerUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_NAME, getLocationName(context, location));
+//        SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_NAME, getLocationName(context, location));
         SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_LAT, String.valueOf(location.getLatitude()));
         SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_LON, String.valueOf(location.getLongitude()));
     }

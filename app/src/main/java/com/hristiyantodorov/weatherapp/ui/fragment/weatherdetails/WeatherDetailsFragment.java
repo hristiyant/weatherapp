@@ -8,17 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
-import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
-import com.hristiyantodorov.weatherapp.networking.service.NetworkingServiceUtil;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.WeatherDetailsContracts;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
-import com.hristiyantodorov.weatherapp.util.Constants;
-import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
+import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastFullResponse;
 
 import butterknife.BindView;
 
-public class WeatherDetailsFragment extends BaseFragment implements DownloadResponse<WeatherData> {
+public class WeatherDetailsFragment extends BaseFragment implements WeatherDetailsContracts.View {
 
     public static WeatherDetailsFragment newInstance() {
         return new WeatherDetailsFragment();
@@ -35,16 +32,14 @@ public class WeatherDetailsFragment extends BaseFragment implements DownloadResp
     @BindView(R.id.txt_wind_speed)
     TextView txtWindSpeed;
 
+    private WeatherDetailsContracts.Presenter presenter;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        new NetworkingServiceUtil().getWeatherDataCurrently(
-                WeatherDetailsFragment.this,
-                SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
-                SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null)
-        );
+        presenter.requestForecastCurrentlyFromApi();
 
         return view;
     }
@@ -55,27 +50,36 @@ public class WeatherDetailsFragment extends BaseFragment implements DownloadResp
     }
 
     @Override
-    public void onSuccess(WeatherData result) {
-        // TODO: 2/22/2019 Add presenter method for binding
+    public void showForecastCurrentlyData(ForecastFullResponse response) {
         //txtTemperature.setText("Temperature: " + String.valueOf(result.getCurrently().getTemperature()));
         txtTemperature.setText(getString(R.string.txt_temperature,
-                WeatherDataFormatterUtil.convertFahrenheitToCelsius(result.getCurrently().getTemperature())));
+                WeatherDataFormatterUtil.convertFahrenheitToCelsius(response.getCurrently().getTemperature())));
 //        txtApparentTemperature.setText("Apparent temperature: " + String.valueOf(result.getCurrently().getApparentTemperature()));
         txtApparentTemperature.setText(getString(R.string.txt_apparent_temperature,
-                WeatherDataFormatterUtil.convertFahrenheitToCelsius(result.getCurrently().getApparentTemperature())));
+                WeatherDataFormatterUtil.convertFahrenheitToCelsius(response.getCurrently().getApparentTemperature())));
 //        txtHumidity.setText("Humidity: " + String.valueOf(result.getCurrently().getHumidity()));
         txtHumidity.setText(getString(R.string.txt_humidity,
-                WeatherDataFormatterUtil.convertDoubleToPercentage(result.getCurrently().getHumidity())));
+                WeatherDataFormatterUtil.convertDoubleToPercentage(response.getCurrently().getHumidity())));
 //        txtPressure.setText("Pressure: " + String.valueOf(result.getCurrently().getPressure()));
         txtPressure.setText(getString(R.string.txt_pressure,
-                WeatherDataFormatterUtil.convertRoundedDoubleToString(result.getCurrently().getPressure())));
+                WeatherDataFormatterUtil.convertRoundedDoubleToString(response.getCurrently().getPressure())));
 //        txtWindSpeed.setText("Wind speed: " + String.valueOf(result.getCurrently().getWindSpeed()));
         txtWindSpeed.setText(getString(R.string.txt_wind_speed,
-                WeatherDataFormatterUtil.convertMphToMs(result.getCurrently().getWindSpeed())));
+                WeatherDataFormatterUtil.convertMphToMs(response.getCurrently().getWindSpeed())));
     }
 
     @Override
-    public void onFailure(Exception e) {
-// TODO: 2/15/2019 Add showErrorDialog()
+    public void setPresenter(WeatherDetailsContracts.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void showLoading() {
+        //TODO: CURRENTLY NOT BEING USED
+    }
+
+    @Override
+    public void hideLoading() {
+        //TODO: CURRENTLY NOT BEING USED
     }
 }

@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.GetForecastDataInteractorImpl;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.WeatherDetailsContracts;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.WeatherDetailsPresenter;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly.ForecastHourlyContracts;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly.ForecastHourlyPresenter;
 import com.hristiyantodorov.weatherapp.ui.fragment.settings.SettingsFragment;
@@ -25,12 +28,18 @@ public class WeatherDetailsPagerAdapter extends FragmentPagerAdapter {
     }
 
     ForecastHourlyContracts.Presenter forecastHourlyPresenter;
+    WeatherDetailsContracts.Presenter weatherDetailsPresenter;
 
     @Override
     public Fragment getItem(int position) {
         switch (position) {
             case FORECAST_TAB_DETAILED:
-                return WeatherDetailsFragment.newInstance();
+                WeatherDetailsFragment weatherDetailsFragment = WeatherDetailsFragment.newInstance();
+                weatherDetailsPresenter = new WeatherDetailsPresenter(
+                        weatherDetailsFragment,
+                        new GetForecastDataInteractorImpl()
+                );
+                return weatherDetailsFragment;
             case FORECAST_TAB_HOURLY:
                 ForecastHourlyFragment fragment = ForecastHourlyFragment.newInstance();
                 forecastHourlyPresenter = new ForecastHourlyPresenter(fragment);
