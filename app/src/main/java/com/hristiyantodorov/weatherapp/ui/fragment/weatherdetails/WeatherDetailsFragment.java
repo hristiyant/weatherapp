@@ -2,9 +2,11 @@ package com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.R;
@@ -31,6 +33,10 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
     TextView txtPressure;
     @BindView(R.id.txt_wind_speed)
     TextView txtWindSpeed;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+    @BindView(R.id.fragment_weather_details)
+    ConstraintLayout constraintLayout;
 
     private WeatherDetailsContracts.Presenter presenter;
 
@@ -40,6 +46,20 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         presenter.requestForecastCurrentlyFromApi();
+
+        //Test forecast object cache
+        /*Context context = App.getInstance().getApplicationContext();
+        try {
+            ForecastFullResponse fullCached = (ForecastFullResponse) InternalStorageCache.readObject(context);
+            Log.d("WDFragment", "timezone: " + fullCached.getTimezone());
+            Toast.makeText(context,fullCached.getTimezone(),Toast.LENGTH_LONG).show();
+            showForecastCurrentlyData(fullCached);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+*/
 
         return view;
     }
@@ -66,6 +86,8 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
 //        txtWindSpeed.setText("Wind speed: " + String.valueOf(result.getCurrently().getWindSpeed()));
         txtWindSpeed.setText(getString(R.string.txt_wind_speed,
                 WeatherDataFormatterUtil.convertMphToMs(response.getCurrently().getWindSpeed())));
+        progressBar.setVisibility(View.GONE);
+        constraintLayout.setVisibility(View.VISIBLE);
     }
 
     @Override

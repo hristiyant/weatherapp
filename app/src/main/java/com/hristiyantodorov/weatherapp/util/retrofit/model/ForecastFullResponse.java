@@ -2,7 +2,9 @@ package com.hristiyantodorov.weatherapp.util.retrofit.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ForecastFullResponse {
+import java.io.Serializable;
+
+public class ForecastFullResponse implements Serializable {
 
     @SerializedName("latitude")
     private Double latitude;
@@ -16,8 +18,6 @@ public class ForecastFullResponse {
     private ForecastHourlyResponse hourly;
     @SerializedName("daily")
     private ForecastDailyResponse daily;
-    @SerializedName("offset")
-    private int offset;
 
     public double getLatitude() {
         return latitude;
@@ -67,11 +67,4 @@ public class ForecastFullResponse {
         this.daily = daily;
     }
 
-    public int getOffset() {
-        return offset;
-    }
-
-    public void setOffset(int offset) {
-        this.offset = offset;
-    }
 }

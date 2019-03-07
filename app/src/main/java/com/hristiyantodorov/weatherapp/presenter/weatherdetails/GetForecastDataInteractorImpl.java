@@ -15,7 +15,7 @@ public class GetForecastDataInteractorImpl implements WeatherDetailsContracts.Ge
     public void getForecastCurrentlyResponse(final OnFinishedListener onFinishedListener) {
         APIInterface service = APIClient.getClient().create(APIInterface.class);
 
-        Call<ForecastFullResponse> call = service.getFullForecastData(
+        Call<ForecastFullResponse> call = service.getForecastCurrently(
                 SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT,null),
                 SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON,null)
         );

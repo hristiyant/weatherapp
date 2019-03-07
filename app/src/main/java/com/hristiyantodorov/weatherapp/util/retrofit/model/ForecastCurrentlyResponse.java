@@ -2,7 +2,9 @@ package com.hristiyantodorov.weatherapp.util.retrofit.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ForecastCurrentlyResponse {
+import java.io.Serializable;
+
+public class ForecastCurrentlyResponse implements Serializable {
 
     @SerializedName("time")
     private Long time;

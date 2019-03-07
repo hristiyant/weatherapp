@@ -1,6 +1,8 @@
 package com.hristiyantodorov.weatherapp.util.retrofit;
 
+import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.BuildConfig;
+import com.readystatesoftware.chuck.ChuckInterceptor;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -19,6 +21,7 @@ public class APIClient {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
+                .addInterceptor(new ChuckInterceptor(App.getInstance().getApplicationContext()))
                 .build();
 
         retrofit = new Retrofit.Builder()

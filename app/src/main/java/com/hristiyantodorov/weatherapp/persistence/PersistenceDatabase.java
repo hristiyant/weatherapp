@@ -7,7 +7,9 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.hristiyantodorov.weatherapp.model.AppDatabase;
+import com.hristiyantodorov.weatherapp.model.forecast.ForecastFullDbModel;
 import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.util.AppExecutorUtil;
 
 import java.util.concurrent.Executors;
 
@@ -30,6 +32,10 @@ public class PersistenceDatabase {
                                                     .locationDao()
                                                     .insertAll(LocationDbModel.prePopulateLocationsList())
                                     );
+                                    AppExecutorUtil.getInstance().execute(
+                                            () -> appDatabase
+                                                    .forecastFullDao()
+                                                    .insert(new ForecastFullDbModel()));
                                 }
                             })
                             .build();

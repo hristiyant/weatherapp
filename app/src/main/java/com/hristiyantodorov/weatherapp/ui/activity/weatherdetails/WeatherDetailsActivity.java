@@ -1,11 +1,14 @@
 package com.hristiyantodorov.weatherapp.ui.activity.weatherdetails;
 
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.R;
@@ -15,11 +18,13 @@ import com.hristiyantodorov.weatherapp.util.Constants;
 import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherIconPickerUtil;
+import com.hristiyantodorov.weatherapp.util.cache.InternalStorageCache;
 import com.hristiyantodorov.weatherapp.util.retrofit.APIClient;
 import com.hristiyantodorov.weatherapp.util.retrofit.APIInterface;
 import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastCurrentlyResponse;
 import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastFullResponse;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -47,6 +52,10 @@ public class WeatherDetailsActivity extends BaseActivity implements Callback<For
     TextView txtLocationName;
     @BindView(R.id.txt_wind_speed)
     TextView txtWindSpeed;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+    @BindView(R.id.coordinatorLayout)
+    CoordinatorLayout coordinatorLayout;
 
     private APIInterface apiInterface;
 
@@ -60,7 +69,7 @@ public class WeatherDetailsActivity extends BaseActivity implements Callback<For
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        Call<ForecastFullResponse> call = apiInterface.getFullForecastData(currentLocationLat, currentLocationLon);
+        Call<ForecastFullResponse> call = apiInterface.getForecastCurrently(currentLocationLat, currentLocationLon);
         call.enqueue(this);
 
         WeatherDetailsPagerAdapter weatherDetailsPagerAdapter =
@@ -107,6 +116,8 @@ public class WeatherDetailsActivity extends BaseActivity implements Callback<For
                 .format(new java.util.Date());
         txtLastUpdated.setText(getString(R.string.txt_last_updated, currentTimeStamp));
         imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(response.getIcon()));
+        progressBar.setVisibility(View.GONE);
+        coordinatorLayout.setVisibility(View.VISIBLE);
     }
 
     public void refreshLastUpdated() {
@@ -122,6 +133,11 @@ public class WeatherDetailsActivity extends BaseActivity implements Callback<For
         Log.d("WDActivity", "response code: " + statusCode);
         ForecastFullResponse fullResponse = response.body();
         setFields(fullResponse.getCurrently(), fullResponse.getTimezone());
+        try {
+            InternalStorageCache.writeObject(this, fullResponse);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

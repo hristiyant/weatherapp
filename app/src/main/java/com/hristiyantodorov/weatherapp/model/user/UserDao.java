@@ -9,6 +9,7 @@ import java.util.List;
 
 @Dao
 public interface UserDao {
+
     @Query("SELECT * FROM users")
     List<UserDbModel> getAllUsers();
 
@@ -23,4 +24,5 @@ public interface UserDao {
 
     @Delete
     void deleteUser(UserDbModel userDbModel);
+
 }
