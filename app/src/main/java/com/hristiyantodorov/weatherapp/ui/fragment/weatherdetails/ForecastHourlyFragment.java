@@ -81,21 +81,20 @@ public class ForecastHourlyFragment extends BaseFragment implements ForecastHour
     }
 
     @Override
+    public void showLoader(boolean isVisible) {
+        progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void showError(Throwable e) {
+
+    }
+
+    @Override
     public void showForecastHourlyData(List<WeatherDataCurrently> hourlyData) {
         hourlyAdapter.clear();
         hourlyAdapter.addAll(hourlyData);
         hourlyAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void showLoading() {
-        recyclerViewForecast.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideLoading() {
-        recyclerViewForecast.setVisibility(View.VISIBLE);
-        progressBar.setVisibility(View.GONE);
-    }
 }

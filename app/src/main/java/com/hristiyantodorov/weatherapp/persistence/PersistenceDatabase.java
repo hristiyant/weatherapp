@@ -7,7 +7,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.hristiyantodorov.weatherapp.model.AppDatabase;
-import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
 
 import java.util.concurrent.Executors;
 
@@ -28,7 +28,11 @@ public class PersistenceDatabase {
                                     Executors.newSingleThreadExecutor().execute(
                                             () -> appDatabase
                                                     .locationDao()
-                                                    .insertAll(LocationDbModel.prePopulateLocationsList())
+                                                    .insertLocations(new LocationDbModel("Tokyo", 35.652832, 139.839478),
+                                                            new LocationDbModel("New York", 40.730610, -73.935242),
+                                                            new LocationDbModel("Paris", 48.864716, 2.349014),
+                                                            new LocationDbModel("London", 51.509865, -0.118092),
+                                                            new LocationDbModel("Sydney", -33.865143, 151.209900))
                                     );
                                 }
                             })

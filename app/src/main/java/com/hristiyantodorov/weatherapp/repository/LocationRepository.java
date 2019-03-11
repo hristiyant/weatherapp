@@ -1,16 +1,22 @@
 package com.hristiyantodorov.weatherapp.repository;
 
-import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.util.AsyncResponse;
 
 import java.util.List;
 
 public interface LocationRepository {
 
-    LocationDbModel getLocationByName(String name);
+    List<LocationDbModel> getAllLocations(AsyncResponse response);
 
-    LocationDbModel getLocationById(String id);
+    LocationDbModel getLocationByName(String name, AsyncResponse response);
 
-    void insertLocation(LocationDbModel locationDbModel);
+    LocationDbModel getLocationById(int id, AsyncResponse response);
 
-    void insertLocations(List<LocationDbModel> locationDbModels);
+    void insertLocations(LocationDbModel... locations);
+
+    void updateLocations(LocationDbModel... locations);
+
+    void deleteLocations(LocationDbModel... locations);
+
 }

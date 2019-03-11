@@ -64,12 +64,12 @@ public class CurrentLocationPickerUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_NAME, getLocationName(context, location));
+//        SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_NAME, getLocationName(context, location));
         SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_LAT, String.valueOf(location.getLatitude()));
         SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_LON, String.valueOf(location.getLongitude()));
     }
 
-    private static String getLocationName(Context context, Location location) throws IOException {
+    /*private static String getLocationName(Context context, Location location) throws IOException {
         Geocoder gcd = new Geocoder(context, Locale.getDefault());
         List<Address> addresses = gcd.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
         if (addresses.size() > 0) {
@@ -78,5 +78,5 @@ public class CurrentLocationPickerUtil {
             // do your stuff
             return "Current Location";
         }
-    }
+    }*/
 }

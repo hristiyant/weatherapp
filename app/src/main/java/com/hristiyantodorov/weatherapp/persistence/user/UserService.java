@@ -2,6 +2,7 @@ package com.hristiyantodorov.weatherapp.persistence.user;
 
 import android.os.AsyncTask;
 
+import com.hristiyantodorov.weatherapp.repository.UserRepository;
 import com.hristiyantodorov.weatherapp.util.AppExecutorUtil;
 import com.hristiyantodorov.weatherapp.util.AsyncResponse;
 

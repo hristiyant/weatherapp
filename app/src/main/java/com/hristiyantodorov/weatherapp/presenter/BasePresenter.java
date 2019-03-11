@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.temp;
+package com.hristiyantodorov.weatherapp.presenter;
 
 public interface BasePresenter {
 

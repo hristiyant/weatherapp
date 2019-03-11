@@ -26,4 +26,5 @@ public class LocationsListActivity extends BaseActivity {
     protected int getLayoutResId() {
         return R.layout.activity_locations;
     }
+
 }

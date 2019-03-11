@@ -4,9 +4,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.hristiyantodorov.weatherapp.App;
-import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
 import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
+import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.util.SearchFilterAsyncTask;
 
 import java.util.List;
@@ -41,7 +41,7 @@ public class LocationsListPresenter
     @Override
     public void onSuccess(List<LocationDbModel> filteredLocations) {
         view.showLocations(filteredLocations);
-        view.hideLoading();
+        view.showLoader(false);
         Log.d(TAG, "onSuccess: showLocations");
     }
 

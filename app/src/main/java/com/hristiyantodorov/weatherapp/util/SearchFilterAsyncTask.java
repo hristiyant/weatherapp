@@ -6,9 +6,9 @@ import android.util.Log;
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.hristiyantodorov.weatherapp.App;
-import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
 import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
+import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
 
 import java.util.List;
 

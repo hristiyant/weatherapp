@@ -17,13 +17,13 @@ public class ForecastHourlyPresenter implements ForecastHourlyContracts.Presente
 
     @Override
     public void loadForecastHourlyData() {
-        view.showLoading();
+        view.showLoader(true);
         new NetworkingServiceUtil().getWeatherDataHourly(
                 this,
                 SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
                 SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null)
         );
-        view.hideLoading();
+        view.showLoader(false);
     }
 
     @Override

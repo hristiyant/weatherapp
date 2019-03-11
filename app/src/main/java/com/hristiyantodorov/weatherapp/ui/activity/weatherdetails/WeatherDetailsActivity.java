@@ -12,10 +12,10 @@ import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.weatherdetails.WeatherDetailsPagerAdapter;
-import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
 import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
 import com.hristiyantodorov.weatherapp.networking.service.NetworkingServiceUtil;
+import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.ui.activity.BaseActivity;
 import com.hristiyantodorov.weatherapp.util.Constants;
 import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;

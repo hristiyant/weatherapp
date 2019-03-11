@@ -3,7 +3,7 @@ package com.hristiyantodorov.weatherapp.adapter.locations;
 import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
 
-import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
 
 public class LocationsListDiffCallback extends DiffUtil.ItemCallback<LocationDbModel> {
 

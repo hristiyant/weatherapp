@@ -1,10 +1,12 @@
-package com.hristiyantodorov.weatherapp.persistence.user;
+package com.hristiyantodorov.weatherapp.repository;
 
+import com.hristiyantodorov.weatherapp.persistence.user.UserDbModel;
 import com.hristiyantodorov.weatherapp.util.AsyncResponse;
 
 import java.util.List;
 
 public interface UserRepository {
+
     List<UserDbModel> getAllUsers(AsyncResponse response);
 
     UserDbModel getUserByEmail(String email, AsyncResponse response);
@@ -16,4 +18,5 @@ public interface UserRepository {
     void deleteUsers(UserDbModel... users);
 
     void deleteUserById(int id);
+
 }
