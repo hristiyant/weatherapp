@@ -1,24 +1,18 @@
-package com.hristiyantodorov.weatherapp.model.location;
+package com.hristiyantodorov.weatherapp.persistence.location;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-
-import java.util.Arrays;
-import java.util.List;
 
 @Entity(tableName = "locations")
 public class LocationDbModel {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
-
     @ColumnInfo(name = "name")
     private String name;
-
     @ColumnInfo(name = "longitude")
     private double longitude;
-
     @ColumnInfo(name = "latitude")
     private double latitude;
 
@@ -60,13 +54,4 @@ public class LocationDbModel {
         this.latitude = latitude;
     }
 
-    public static List<LocationDbModel> prePopulateLocationsList() {
-        return Arrays.asList(
-                new LocationDbModel("Tokyo", 35.652832, 139.839478),
-                new LocationDbModel("New York", 40.730610, -73.935242),
-                new LocationDbModel("Paris", 48.864716, 2.349014),
-                new LocationDbModel("London", 51.509865, -0.118092),
-                new LocationDbModel("Sydney", -33.865143, 151.209900)
-        );
-    }
 }

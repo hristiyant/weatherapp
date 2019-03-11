@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
 import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
 import com.hristiyantodorov.weatherapp.networking.service.NetworkingServiceUtil;
+import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherIconPickerUtil;
 
@@ -22,7 +22,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-// TODO: 1/22/2019 This is not implemented.
 public class LocationsListAdapter
         extends ListAdapter<LocationDbModel, LocationsListAdapter.LocationsViewHolder> {
 
@@ -109,4 +108,5 @@ public class LocationsListAdapter
     public interface OnLocationClickListener {
         void onClick(LocationDbModel location);
     }
+
 }

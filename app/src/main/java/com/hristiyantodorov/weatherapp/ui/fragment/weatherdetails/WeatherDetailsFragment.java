@@ -20,10 +20,6 @@ import butterknife.BindView;
 
 public class WeatherDetailsFragment extends BaseFragment implements DownloadResponse<WeatherData> {
 
-    public static WeatherDetailsFragment newInstance() {
-        return new WeatherDetailsFragment();
-    }
-
     @BindView(R.id.txt_temperature)
     TextView txtTemperature;
     @BindView(R.id.txt_apparent_temperature)
@@ -34,6 +30,10 @@ public class WeatherDetailsFragment extends BaseFragment implements DownloadResp
     TextView txtPressure;
     @BindView(R.id.txt_wind_speed)
     TextView txtWindSpeed;
+
+    public static WeatherDetailsFragment newInstance() {
+        return new WeatherDetailsFragment();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -56,7 +56,6 @@ public class WeatherDetailsFragment extends BaseFragment implements DownloadResp
 
     @Override
     public void onSuccess(WeatherData result) {
-        // TODO: 2/22/2019 Add presenter method for binding
         //txtTemperature.setText("Temperature: " + String.valueOf(result.getCurrently().getTemperature()));
         txtTemperature.setText(getString(R.string.txt_temperature,
                 WeatherDataFormatterUtil.convertFahrenheitToCelsius(result.getCurrently().getTemperature())));
@@ -78,4 +77,5 @@ public class WeatherDetailsFragment extends BaseFragment implements DownloadResp
     public void onFailure(Exception e) {
 // TODO: 2/15/2019 Add showErrorDialog()
     }
+
 }

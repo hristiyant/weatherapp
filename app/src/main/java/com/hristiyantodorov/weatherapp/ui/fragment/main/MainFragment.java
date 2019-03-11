@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.ui.activity.locations.LocationsListActivity;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
@@ -34,6 +34,7 @@ import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
 public class MainFragment extends BaseFragment implements LocationListener {
+
     @BindView(R.id.img_btn_pick_location)
     ImageButton imgBtnPickLocation;
 
@@ -118,4 +119,5 @@ public class MainFragment extends BaseFragment implements LocationListener {
     public void onProviderDisabled(String provider) {
 // TODO: 2/28/2019 CURRENTLY NOT BEING USED
     }
+
 }

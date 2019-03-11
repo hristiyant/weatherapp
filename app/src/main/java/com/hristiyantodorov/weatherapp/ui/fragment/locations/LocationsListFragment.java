@@ -20,7 +20,7 @@ import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.locations.LocationsListAdapter;
 import com.hristiyantodorov.weatherapp.adapter.locations.LocationsListDiffCallback;
-import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.presenter.locations.LocationsListContracts;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
@@ -44,7 +44,7 @@ public class LocationsListFragment extends BaseFragment
     EditText edtFilter;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
-    @BindView(R.id.rv_locations)
+    @BindView(R.id.recycler_view_locations)
     RecyclerView recyclerViewLocations;
     @BindView(R.id.txt_no_results_found)
     TextView txtNoResultsFound;
@@ -61,7 +61,7 @@ public class LocationsListFragment extends BaseFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        showLoading();
+        showLoader(true);
 
         locationsListAdapter = new LocationsListAdapter(new LocationsListDiffCallback());
         locationsListAdapter.setOnLocationClickListener(this);
@@ -93,13 +93,20 @@ public class LocationsListFragment extends BaseFragment
     }
 
     @Override
-    public void showError(Throwable e) {
-        // TODO: 1/22/2019 Implement
+    public void setPresenter(LocationsListContracts.Presenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override
-    public void setPresenter(LocationsListContracts.Presenter presenter) {
-        this.presenter = presenter;
+    public void showLoader(boolean isVisible) {
+        progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void showError(Throwable e) {
+        if (isAdded()) {
+            showErrorDialog(getContext(), e.getMessage());
+        }
     }
 
     @Override
@@ -108,26 +115,12 @@ public class LocationsListFragment extends BaseFragment
         Log.d(TAG, "onClick: ");
     }
 
-    @Override
-    public void showLoading() {
-        /*recyclerViewLocations.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);*/
-        Log.d(TAG, "showLoading: ");
-    }
-
-    @Override
-    public void hideLoading() {
-       /* progressBar.setVisibility(View.GONE);
-        recyclerViewLocations.setVisibility(View.VISIBLE);*/
-        Log.d(TAG, "hideLoading: ");
-    }
-
     private TextWatcher filterTextWatcher = new TextWatcher() {
         @Override
         public void afterTextChanged(Editable arg0) {
             // user typed: start the timer
             txtNoResultsFound.setVisibility(View.GONE);
-            showLoading();
+            showLoader(true);
             timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
@@ -167,4 +160,5 @@ public class LocationsListFragment extends BaseFragment
         SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_LON, String.valueOf(selectedLocation.getLongitude()));
         startActivity(new Intent(getContext(), WeatherDetailsActivity.class));
     }
+
 }

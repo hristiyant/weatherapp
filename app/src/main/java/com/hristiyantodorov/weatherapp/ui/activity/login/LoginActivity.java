@@ -1,6 +1,7 @@
 package com.hristiyantodorov.weatherapp.ui.activity.login;
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.hristiyantodorov.weatherapp.App;
@@ -25,6 +26,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
+    @LayoutRes
     protected int getLayoutResId() {
         return R.layout.activity_login;
     }
