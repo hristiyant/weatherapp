@@ -12,15 +12,16 @@ public class LocationDbModel {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
-
     @ColumnInfo(name = "name")
     private String name;
-
     @ColumnInfo(name = "longitude")
     private double longitude;
-
     @ColumnInfo(name = "latitude")
     private double latitude;
+    @ColumnInfo
+    private double temperature;
+    @ColumnInfo
+    private String icon;
 
     public LocationDbModel(String name, double latitude, double longitude) {
         this.name = name;
@@ -60,6 +61,22 @@ public class LocationDbModel {
         this.latitude = latitude;
     }
 
+    public double getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(double temperature) {
+        this.temperature = temperature;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
     public static List<LocationDbModel> prePopulateLocationsList() {
         return Arrays.asList(
                 new LocationDbModel("Tokyo", 35.652832, 139.839478),
@@ -69,4 +86,5 @@ public class LocationDbModel {
                 new LocationDbModel("Sydney", -33.865143, 151.209900)
         );
     }
+
 }

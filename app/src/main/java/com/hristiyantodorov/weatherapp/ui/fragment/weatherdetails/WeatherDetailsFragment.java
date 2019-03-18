@@ -47,20 +47,6 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
 
         presenter.requestForecastCurrentlyFromApi();
 
-        //Test forecast object cache
-        /*Context context = App.getInstance().getApplicationContext();
-        try {
-            ForecastFullResponse fullCached = (ForecastFullResponse) InternalStorageCache.readObject(context);
-            Log.d("WDFragment", "timezone: " + fullCached.getTimezone());
-            Toast.makeText(context,fullCached.getTimezone(),Toast.LENGTH_LONG).show();
-            showForecastCurrentlyData(fullCached);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-*/
-
         return view;
     }
 
@@ -71,22 +57,17 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
 
     @Override
     public void showForecastCurrentlyData(ForecastFullResponse response) {
-        //txtTemperature.setText("Temperature: " + String.valueOf(result.getCurrently().getTemperature()));
         txtTemperature.setText(getString(R.string.txt_temperature,
                 WeatherDataFormatterUtil.convertFahrenheitToCelsius(response.getCurrently().getTemperature())));
-//        txtApparentTemperature.setText("Apparent temperature: " + String.valueOf(result.getCurrently().getApparentTemperature()));
         txtApparentTemperature.setText(getString(R.string.txt_apparent_temperature,
                 WeatherDataFormatterUtil.convertFahrenheitToCelsius(response.getCurrently().getApparentTemperature())));
-//        txtHumidity.setText("Humidity: " + String.valueOf(result.getCurrently().getHumidity()));
         txtHumidity.setText(getString(R.string.txt_humidity,
                 WeatherDataFormatterUtil.convertDoubleToPercentage(response.getCurrently().getHumidity())));
-//        txtPressure.setText("Pressure: " + String.valueOf(result.getCurrently().getPressure()));
         txtPressure.setText(getString(R.string.txt_pressure,
                 WeatherDataFormatterUtil.convertRoundedDoubleToString(response.getCurrently().getPressure())));
-//        txtWindSpeed.setText("Wind speed: " + String.valueOf(result.getCurrently().getWindSpeed()));
         txtWindSpeed.setText(getString(R.string.txt_wind_speed,
                 WeatherDataFormatterUtil.convertMphToMs(response.getCurrently().getWindSpeed())));
-        progressBar.setVisibility(View.GONE);
+        showLoader(false);
         constraintLayout.setVisibility(View.VISIBLE);
     }
 
@@ -96,12 +77,13 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
     }
 
     @Override
-    public void showLoading() {
-        //TODO: CURRENTLY NOT BEING USED
+    public void showLoader(boolean isShowing) {
+        progressBar.setVisibility(isShowing ? View.VISIBLE : View.GONE);
     }
 
     @Override
-    public void hideLoading() {
+    public void showError(Throwable e) {
         //TODO: CURRENTLY NOT BEING USED
     }
+
 }

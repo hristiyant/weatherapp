@@ -2,46 +2,51 @@ package com.hristiyantodorov.weatherapp.model.forecast;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "forecast_daily_data",
+        indices = @Index(
+                value = "forecastDailyId",
+                name = "forecastDailyId"
+        ),
         foreignKeys = @ForeignKey(
                 entity = ForecastDailyDbModel.class,
                 parentColumns = "dailyId",
-                childColumns = "dailyId",
+                childColumns = "forecastDailyId",
                 onDelete = ForeignKey.CASCADE
         ))
 public class ForecastDailyDataDbModel {
 
     @PrimaryKey(autoGenerate = true)
-    private int dailyDataId;
-    private Long time;
+    private Long dailyDataId;
+    private String time;
     private String summary;
     private String icon;
-    private Long sunriseTime;
-    private Long sunsetTime;
+    private String sunriseTime;
+    private String sunsetTime;
     private Double humidity;
     private Double pressure;
     private Double windSpeed;
     private Double temperatureMin;
-    private Long temperatureMinTime;
+    private String temperatureMinTime;
     private Double temperatureMax;
-    private Long temperatureMaxTime;
-    private int dailyId;
+    private String temperatureMaxTime;
+    private Long forecastDailyId;
 
-    public int getDailyDataId() {
+    public Long getDailyDataId() {
         return dailyDataId;
     }
 
-    public void setDailyDataId(int dailyDataId) {
+    public void setDailyDataId(Long dailyDataId) {
         this.dailyDataId = dailyDataId;
     }
 
-    public Long getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Long time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -61,19 +66,19 @@ public class ForecastDailyDataDbModel {
         this.icon = icon;
     }
 
-    public Long getSunriseTime() {
+    public String getSunriseTime() {
         return sunriseTime;
     }
 
-    public void setSunriseTime(Long sunriseTime) {
+    public void setSunriseTime(String sunriseTime) {
         this.sunriseTime = sunriseTime;
     }
 
-    public Long getSunsetTime() {
+    public String getSunsetTime() {
         return sunsetTime;
     }
 
-    public void setSunsetTime(Long sunsetTime) {
+    public void setSunsetTime(String sunsetTime) {
         this.sunsetTime = sunsetTime;
     }
 
@@ -109,11 +114,11 @@ public class ForecastDailyDataDbModel {
         this.temperatureMin = temperatureMin;
     }
 
-    public Long getTemperatureMinTime() {
+    public String getTemperatureMinTime() {
         return temperatureMinTime;
     }
 
-    public void setTemperatureMinTime(Long temperatureMinTime) {
+    public void setTemperatureMinTime(String temperatureMinTime) {
         this.temperatureMinTime = temperatureMinTime;
     }
 
@@ -125,20 +130,20 @@ public class ForecastDailyDataDbModel {
         this.temperatureMax = temperatureMax;
     }
 
-    public Long getTemperatureMaxTime() {
+    public String getTemperatureMaxTime() {
         return temperatureMaxTime;
     }
 
-    public void setTemperatureMaxTime(Long temperatureMaxTime) {
+    public void setTemperatureMaxTime(String temperatureMaxTime) {
         this.temperatureMaxTime = temperatureMaxTime;
     }
 
-    public int getDailyId() {
-        return dailyId;
+    public Long getForecastDailyId() {
+        return forecastDailyId;
     }
 
-    public void setDailyId(int dailyId) {
-        this.dailyId = dailyId;
+    public void setForecastDailyId(Long forecastDailyId) {
+        this.forecastDailyId = forecastDailyId;
     }
 
 }

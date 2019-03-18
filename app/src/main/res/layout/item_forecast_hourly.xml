@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/hourly_item"
     android:layout_margin="@dimen/margin_between_elements_default"
     android:background="@drawable/background_item_weather_details">
 
@@ -49,7 +50,7 @@
     <TextView
         android:id="@+id/txt_current_temperature"
         style="@style/WeatherDetailsOverlayText"
-        android:layout_width="@dimen/no_dimens"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:fontFamily="casual"
         android:gravity="end"

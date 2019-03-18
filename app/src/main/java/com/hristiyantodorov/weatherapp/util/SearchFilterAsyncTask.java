@@ -1,19 +1,7 @@
 package com.hristiyantodorov.weatherapp.util;
 
-import android.os.AsyncTask;
-import android.util.Log;
-
-import com.annimon.stream.Collectors;
-import com.annimon.stream.Stream;
-import com.hristiyantodorov.weatherapp.App;
-import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
-import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
-import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
-
-import java.util.List;
-
-public class SearchFilterAsyncTask extends AsyncTask<String, Void, List<LocationDbModel>> {
-    private static final String TAG = "SFAT";
+public class SearchFilterAsyncTask{ //extends AsyncTask<String, Void, List<LocationDbModel>> {
+    /*private static final String TAG = "SFAT";
 
     private DownloadResponse callback;
     private Exception exception;
@@ -45,5 +33,5 @@ public class SearchFilterAsyncTask extends AsyncTask<String, Void, List<Location
                 callback.onFailure(exception);
             }
         }
-    }
+    }*/
 }

@@ -9,4 +9,7 @@
 
     <!--Weather Details Background-->
     <color name="weatherDetailsTransparentBackground">#33000000</color>
+
+    <!--Forecast Dialog Background-->
+    <color name="forecastDialogSlightlyTransparentBackground">#99000000</color>
 </resources>

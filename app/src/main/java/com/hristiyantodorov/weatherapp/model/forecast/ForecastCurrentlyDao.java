@@ -1,24 +1,21 @@
 package com.hristiyantodorov.weatherapp.model.forecast;
 
 import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.Query;
-import android.arch.persistence.room.Update;
-
-import java.util.List;
 
 @Dao
-public interface ForecastCurrentlyDao {
+public interface ForecastCurrentlyDao extends BaseDao<ForecastCurrentlyDbModel>{
 
-    @Insert
-    void insert(ForecastCurrentlyDbModel... forecastCurrentlyDbModels);
+
+
+
+   /* @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(ForecastCurrentlyDbModel... models);
 
     @Update
-    void update(ForecastCurrentlyDbModel... forecastCurrentlyDbModels);
+    void update(ForecastCurrentlyDbModel... models);
 
     @Delete
-    void delete(ForecastCurrentlyDbModel... forecastCurrentlyDbModels);
+    void delete(ForecastCurrentlyDbModel... models);
 
     @Query("SELECT * FROM forecast_currently")
     List<ForecastCurrentlyDbModel> getAllForecastCurrently();
@@ -27,6 +24,6 @@ public interface ForecastCurrentlyDao {
     List<ForecastCurrentlyDbModel> getAllForecastCurrentlyByHourlyId(final int forecastHourlyId);
 
     @Query("SELECT * FROM forecast_currently WHERE forecastFullId = :forecastFullId")
-    List<ForecastCurrentlyDbModel> getAllForecastCurrentlyByFullId(final int forecastFullId);
+    List<ForecastCurrentlyDbModel> getAllForecastCurrentlyByFullId(final int forecastFullId);*/
 
 }

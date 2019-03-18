@@ -2,28 +2,41 @@ package com.hristiyantodorov.weatherapp.model.forecast;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "forecast_currently",
+        indices = {
+                @Index(
+                        value = "forecastHourlyId",
+                        name = "idxForecastHourlyId"
+                ),
+                @Index(
+                        value = "forecastFullId",
+                        name = "idxForecastFullIdCurrently"
+                )
+        },
         foreignKeys = {
                 @ForeignKey(
                         entity = ForecastHourlyDbModel.class,
                         parentColumns = "hourlyId",
                         childColumns = "forecastHourlyId",
+                        onUpdate = ForeignKey.CASCADE,
                         onDelete = ForeignKey.CASCADE
                 ),
                 @ForeignKey(
                         entity = ForecastFullDbModel.class,
                         parentColumns = "id",
                         childColumns = "forecastFullId",
+                        onUpdate = ForeignKey.CASCADE,
                         onDelete = ForeignKey.CASCADE
                 )
         })
 public class ForecastCurrentlyDbModel {
 
     @PrimaryKey(autoGenerate = true)
-    private int currentlyId;
-    private Long time;
+    public Long currentlyId;
+    private String time;
     private String summary;
     private String icon;
     private Double temperature;
@@ -31,22 +44,22 @@ public class ForecastCurrentlyDbModel {
     private Double humidity;
     private Double pressure;
     private Double windSpeed;
-    private int forecastFullId;
-    private int forecastHourlyId;
+    private Long forecastFullId;
+    private Long forecastHourlyId;
 
-    public int getCurrentlyId() {
+    public Long getCurrentlyId() {
         return currentlyId;
     }
 
-    public void setCurrentlyId(int currentlyId) {
+    public void setCurrentlyId(Long currentlyId) {
         this.currentlyId = currentlyId;
     }
 
-    public Long getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Long time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -106,19 +119,19 @@ public class ForecastCurrentlyDbModel {
         this.windSpeed = windSpeed;
     }
 
-    public int getForecastFullId() {
+    public Long getForecastFullId() {
         return forecastFullId;
     }
 
-    public void setForecastFullId(int forecastFullId) {
+    public void setForecastFullId(Long forecastFullId) {
         this.forecastFullId = forecastFullId;
     }
 
-    public int getForecastHourlyId() {
+    public Long getForecastHourlyId() {
         return forecastHourlyId;
     }
 
-    public void setForecastHourlyId(int forecastHourlyId) {
+    public void setForecastHourlyId(Long forecastHourlyId) {
         this.forecastHourlyId = forecastHourlyId;
     }
 

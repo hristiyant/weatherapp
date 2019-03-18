@@ -18,13 +18,11 @@ import com.hristiyantodorov.weatherapp.util.Constants;
 import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherIconPickerUtil;
-import com.hristiyantodorov.weatherapp.util.cache.InternalStorageCache;
 import com.hristiyantodorov.weatherapp.util.retrofit.APIClient;
-import com.hristiyantodorov.weatherapp.util.retrofit.APIInterface;
+import com.hristiyantodorov.weatherapp.util.retrofit.WeatherApiService;
 import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastCurrentlyResponse;
 import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastFullResponse;
 
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -57,19 +55,19 @@ public class WeatherDetailsActivity extends BaseActivity implements Callback<For
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
 
-    private APIInterface apiInterface;
+    private WeatherApiService weatherApiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        String currentLocationName = SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_NAME, "Current location");
+        //String currentLocationName = SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_NAME, "Current location");
         String currentLocationLat = SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null);
         String currentLocationLon = SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null);
 
-        apiInterface = APIClient.getClient().create(APIInterface.class);
+        weatherApiService = APIClient.getClient().create(WeatherApiService.class);
 
-        Call<ForecastFullResponse> call = apiInterface.getForecastCurrently(currentLocationLat, currentLocationLon);
+        Call<ForecastFullResponse> call = weatherApiService.getFullForecastData(currentLocationLat, currentLocationLon);
         call.enqueue(this);
 
         WeatherDetailsPagerAdapter weatherDetailsPagerAdapter =
@@ -133,11 +131,6 @@ public class WeatherDetailsActivity extends BaseActivity implements Callback<For
         Log.d("WDActivity", "response code: " + statusCode);
         ForecastFullResponse fullResponse = response.body();
         setFields(fullResponse.getCurrently(), fullResponse.getTimezone());
-        try {
-            InternalStorageCache.writeObject(this, fullResponse);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

@@ -2,9 +2,14 @@ package com.hristiyantodorov.weatherapp.model.forecast;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "forecast_daily",
+        indices = @Index(
+                value = "forecastFullId",
+                name = "idxForecastFullIdDaily"
+        ),
         foreignKeys = @ForeignKey(
                 entity = ForecastFullDbModel.class,
                 parentColumns = "id",
@@ -13,16 +18,16 @@ import android.arch.persistence.room.PrimaryKey;
 public class ForecastDailyDbModel {
 
     @PrimaryKey(autoGenerate = true)
-    private int dailyId;
+    public Long dailyId;
     private String summary;
     private String icon;
-    private int forecastFullId;
+    private Long forecastFullId;
 
-    public int getDailyId() {
+    public Long getDailyId() {
         return dailyId;
     }
 
-    public void setDailyId(int dailyDataId) {
+    public void setDailyId(Long dailyDataId) {
         this.dailyId = dailyDataId;
     }
 
@@ -42,11 +47,11 @@ public class ForecastDailyDbModel {
         this.icon = icon;
     }
 
-    public int getForecastFullId() {
+    public Long getForecastFullId() {
         return forecastFullId;
     }
 
-    public void setForecastFullId(int forecastFullId) {
+    public void setForecastFullId(Long forecastFullId) {
         this.forecastFullId = forecastFullId;
     }
 

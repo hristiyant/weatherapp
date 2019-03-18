@@ -1,8 +1,6 @@
 package com.hristiyantodorov.weatherapp.presenter.weatherdetails;
 
-import com.hristiyantodorov.weatherapp.model.forecast.ForecastCurrentlyDbModel;
 import com.hristiyantodorov.weatherapp.model.forecast.ForecastFullDbModel;
-import com.hristiyantodorov.weatherapp.presenter.BasePresenter;
 import com.hristiyantodorov.weatherapp.presenter.BaseView;
 import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastFullResponse;
 
@@ -15,11 +13,11 @@ public interface WeatherDetailsContracts {
 
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter {
 
         void requestForecastCurrentlyFromApi();
 
-        void saveForecastApiDataToDb(ForecastFullDbModel fullDbModel, ForecastCurrentlyDbModel currentlyDbModel);
+        void saveForecastApiDataToDb(ForecastFullDbModel fullDbModel);
 
     }
 

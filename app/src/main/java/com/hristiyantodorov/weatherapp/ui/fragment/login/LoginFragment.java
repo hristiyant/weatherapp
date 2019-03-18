@@ -118,4 +118,5 @@ public class LoginFragment extends BaseFragment implements LoginContracts.View {
     public void showError(Throwable e) {
         Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
     }
+
 }

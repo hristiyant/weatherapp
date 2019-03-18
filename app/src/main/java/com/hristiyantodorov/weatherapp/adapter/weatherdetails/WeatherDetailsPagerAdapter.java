@@ -9,6 +9,8 @@ import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.GetForecastDataInteractorImpl;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.WeatherDetailsContracts;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.WeatherDetailsPresenter;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecastdaily.ForecastDailyContracts;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecastdaily.ForecastDailyPresenter;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly.ForecastHourlyContracts;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly.ForecastHourlyPresenter;
 import com.hristiyantodorov.weatherapp.ui.fragment.settings.SettingsFragment;
@@ -28,6 +30,7 @@ public class WeatherDetailsPagerAdapter extends FragmentPagerAdapter {
     }
 
     ForecastHourlyContracts.Presenter forecastHourlyPresenter;
+    ForecastDailyContracts.Presenter forecastDailyPresenter;
     WeatherDetailsContracts.Presenter weatherDetailsPresenter;
 
     @Override
@@ -41,11 +44,13 @@ public class WeatherDetailsPagerAdapter extends FragmentPagerAdapter {
                 );
                 return weatherDetailsFragment;
             case FORECAST_TAB_HOURLY:
-                ForecastHourlyFragment fragment = ForecastHourlyFragment.newInstance();
-                forecastHourlyPresenter = new ForecastHourlyPresenter(fragment);
-                return fragment;
+                ForecastHourlyFragment forecastHourlyFragment = ForecastHourlyFragment.newInstance();
+                forecastHourlyPresenter = new ForecastHourlyPresenter(forecastHourlyFragment);
+                return forecastHourlyFragment;
             case FORECAST_TAB_DAILY:
-                return ForecastDailyFragment.newInstance();
+                ForecastDailyFragment forecastDailyFragment = ForecastDailyFragment.newInstance();
+                forecastDailyPresenter = new ForecastDailyPresenter(forecastDailyFragment);
+                return forecastDailyFragment;
             case FORECAST_TAB_SETTINGS:
                 return SettingsFragment.newInstance();
             default:

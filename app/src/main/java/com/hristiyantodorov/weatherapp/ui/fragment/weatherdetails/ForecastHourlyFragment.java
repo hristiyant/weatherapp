@@ -1,21 +1,22 @@
 package com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.weatherdetails.ForecastHourlyAdapter;
-import com.hristiyantodorov.weatherapp.model.weather.WeatherDataCurrently;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly.ForecastHourlyContracts;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
+import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastCurrentlyResponse;
 
 import java.util.List;
 import java.util.Objects;
@@ -40,8 +41,9 @@ public class ForecastHourlyFragment extends BaseFragment implements ForecastHour
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+
         hourlyAdapter = new ForecastHourlyAdapter();
 
         recyclerViewForecast.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -53,6 +55,8 @@ public class ForecastHourlyFragment extends BaseFragment implements ForecastHour
         swipeRefreshLayout.setOnRefreshListener(this);
         presenter.loadForecastHourlyData();
         ((WeatherDetailsActivity) Objects.requireNonNull(getActivity())).refreshLastUpdated();
+
+        return view;
     }
 
     @Override
@@ -81,21 +85,20 @@ public class ForecastHourlyFragment extends BaseFragment implements ForecastHour
     }
 
     @Override
-    public void showForecastHourlyData(List<WeatherDataCurrently> hourlyData) {
+    public void showForecastHourlyData(List<ForecastCurrentlyResponse> hourlyData) {
         hourlyAdapter.clear();
         hourlyAdapter.addAll(hourlyData);
         hourlyAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void showLoading() {
-        recyclerViewForecast.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
+    public void showLoader(boolean isShowing) {
+        progressBar.setVisibility(isShowing ? View.VISIBLE : View.GONE);
     }
 
     @Override
-    public void hideLoading() {
-        recyclerViewForecast.setVisibility(View.VISIBLE);
-        progressBar.setVisibility(View.GONE);
+    public void showError(Throwable e) {
+        //TODO: NOT CURRENTLY BEING USED
     }
+
 }

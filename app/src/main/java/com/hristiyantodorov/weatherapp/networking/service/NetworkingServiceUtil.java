@@ -3,13 +3,13 @@ package com.hristiyantodorov.weatherapp.networking.service;
 import android.os.AsyncTask;
 import android.util.JsonReader;
 
-import com.hristiyantodorov.weatherapp.model.weather.ForecastDataDaily;
-import com.hristiyantodorov.weatherapp.model.weather.ForecastDataHourly;
-import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
-import com.hristiyantodorov.weatherapp.model.weather.WeatherDataCurrently;
-import com.hristiyantodorov.weatherapp.model.weather.WeatherDataDaily;
 import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
 import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
+import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastCurrentlyResponse;
+import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastDailyDataResponse;
+import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastDailyResponse;
+import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastFullResponse;
+import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastHourlyResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,7 +47,7 @@ public class NetworkingServiceUtil {
         new DownloadTaskCurrently(callback).execute(url);
     }
 
-    public static class DownloadTaskCurrently extends AsyncTask<String, Integer, WeatherData> {
+    public static class DownloadTaskCurrently extends AsyncTask<String, Integer, ForecastFullResponse> {
 
         private DownloadResponse callback;
         private Exception exception;
@@ -62,8 +62,8 @@ public class NetworkingServiceUtil {
         }
 
         @Override
-        protected WeatherData doInBackground(String... urls) {
-            WeatherData finalResult = null;
+        protected ForecastFullResponse doInBackground(String... urls) {
+            ForecastFullResponse finalResult = null;
             if (!isCancelled()) {
                 URL url = null;
                 try {
@@ -82,7 +82,7 @@ public class NetworkingServiceUtil {
         }
 
         @Override
-        protected void onPostExecute(WeatherData result) {
+        protected void onPostExecute(ForecastFullResponse result) {
             if (callback != null) {
                 if (exception == null) {
                     callback.onSuccess(result);
@@ -93,10 +93,10 @@ public class NetworkingServiceUtil {
         }
     }
 
-    private static WeatherData downloadUrl(URL url) throws IOException {
+    private static ForecastFullResponse downloadUrl(URL url) throws IOException {
         InputStream stream = null;
         HttpURLConnection connection = null;
-        WeatherData result = null;
+        ForecastFullResponse result = null;
         try {
             connection = (HttpsURLConnection) url.openConnection();
             connection.setReadTimeout(3000);
@@ -128,48 +128,48 @@ public class NetworkingServiceUtil {
     }
 
     //Converts the contents of an InputStream to the desired data model class
-    private static WeatherData readJsonStream(InputStreamReader inputStreamReader) throws IOException {
+    private static ForecastFullResponse readJsonStream(InputStreamReader inputStreamReader) throws IOException {
         JsonReader jsonReader = new JsonReader(inputStreamReader);
         return readFullData(jsonReader);
     }
 
-    private static WeatherData readFullData(JsonReader reader) throws IOException {
+    private static ForecastFullResponse readFullData(JsonReader reader) throws IOException {
 
-        WeatherData weatherData = new WeatherData();
+        ForecastFullResponse fullResponse = new ForecastFullResponse();
 
         reader.beginObject();
         while (reader.hasNext()) {
             String name = reader.nextName();
             switch (name) {
                 case "latitude":
-                    weatherData.setLatitude(reader.nextDouble());
+                    fullResponse.setLatitude(reader.nextDouble());
                     break;
                 case "longitude":
-                    weatherData.setLongitude(reader.nextDouble());
+                    fullResponse.setLongitude(reader.nextDouble());
                     break;
                 case "timezone":
-                    weatherData.setTimezone(reader.nextString());
+                    fullResponse.setTimezone(reader.nextString());
                     break;
                 case "currently":
-                    weatherData.setCurrently(readItemHourly(reader));
+                    fullResponse.setCurrently(readItemHourly(reader));
                     break;
                 case "hourly":
-                    weatherData.setHourly(readForecastHourly(reader));
+                    fullResponse.setHourly(readForecastHourly(reader));
                     break;
                 case "daily":
-                    weatherData.setDaily(readForecastDaily(reader));
+                    fullResponse.setDaily(readForecastDaily(reader));
                     break;
                 default:
                     reader.skipValue();
             }
         }
         reader.endObject();
-        return weatherData;
+        return fullResponse;
     }
 
-    private static ForecastDataHourly readForecastHourly(JsonReader reader) throws IOException {
+    private static ForecastHourlyResponse readForecastHourly(JsonReader reader) throws IOException {
 
-        ForecastDataHourly result = new ForecastDataHourly();
+        ForecastHourlyResponse result = new ForecastHourlyResponse();
 
         reader.beginObject();
         while (reader.hasNext()) {
@@ -192,9 +192,9 @@ public class NetworkingServiceUtil {
         return result;
     }
 
-    private static List<WeatherDataCurrently> readHourly(JsonReader reader) throws IOException {
+    private static List<ForecastCurrentlyResponse> readHourly(JsonReader reader) throws IOException {
 
-        List<WeatherDataCurrently> result = new ArrayList<>();
+        List<ForecastCurrentlyResponse> result = new ArrayList<>();
 
         reader.beginArray();
         while (reader.hasNext()) {
@@ -204,49 +204,49 @@ public class NetworkingServiceUtil {
         return result;
     }
 
-    private static WeatherDataCurrently readItemHourly(JsonReader reader) throws IOException {
+    private static ForecastCurrentlyResponse readItemHourly(JsonReader reader) throws IOException {
 
-        WeatherDataCurrently forecastDataCurrently = new WeatherDataCurrently();
+        ForecastCurrentlyResponse currentlyResponse = new ForecastCurrentlyResponse();
 
         reader.beginObject();
         while (reader.hasNext()) {
             String name = reader.nextName();
             switch (name) {
                 case "time":
-                    forecastDataCurrently.setTime(reader.nextInt());
+                    currentlyResponse.setTime(reader.nextLong());
                     break;
                 case "summary":
-                    forecastDataCurrently.setSummary(reader.nextString());
+                    currentlyResponse.setSummary(reader.nextString());
                     break;
                 case "icon":
-                    forecastDataCurrently.setIcon(reader.nextString());
+                    currentlyResponse.setIcon(reader.nextString());
                     break;
                 case "temperature":
-                    forecastDataCurrently.setTemperature(reader.nextDouble());
+                    currentlyResponse.setTemperature(reader.nextDouble());
                     break;
                 case "apparentTemperature":
-                    forecastDataCurrently.setApparentTemperature(reader.nextDouble());
+                    currentlyResponse.setApparentTemperature(reader.nextDouble());
                     break;
                 case "humidity":
-                    forecastDataCurrently.setHumidity(reader.nextDouble());
+                    currentlyResponse.setHumidity(reader.nextDouble());
                     break;
                 case "pressure":
-                    forecastDataCurrently.setPressure(reader.nextDouble());
+                    currentlyResponse.setPressure(reader.nextDouble());
                     break;
                 case "windSpeed":
-                    forecastDataCurrently.setWindSpeed(reader.nextDouble());
+                    currentlyResponse.setWindSpeed(reader.nextDouble());
                     break;
                 default:
                     reader.skipValue();
             }
         }
         reader.endObject();
-        return forecastDataCurrently;
+        return currentlyResponse;
     }
 
-    private static ForecastDataDaily readForecastDaily(JsonReader reader) throws IOException {
+    private static ForecastDailyResponse readForecastDaily(JsonReader reader) throws IOException {
 
-        ForecastDataDaily result = new ForecastDataDaily();
+        ForecastDailyResponse result = new ForecastDailyResponse();
 
         reader.beginObject();
         while (reader.hasNext()) {
@@ -269,9 +269,9 @@ public class NetworkingServiceUtil {
         return result;
     }
 
-    private static List<WeatherDataDaily> readDaily(JsonReader reader) throws IOException {
+    private static List<ForecastDailyDataResponse> readDaily(JsonReader reader) throws IOException {
 
-        List<WeatherDataDaily> result = new ArrayList<>();
+        List<ForecastDailyDataResponse> result = new ArrayList<>();
 
         reader.beginArray();
         while (reader.hasNext()) {
@@ -281,52 +281,56 @@ public class NetworkingServiceUtil {
         return result;
     }
 
-    private static WeatherDataDaily readItemDaily(JsonReader reader) throws IOException {
+    private static ForecastDailyDataResponse readItemDaily(JsonReader reader) throws IOException {
 
-        WeatherDataDaily weatherDataCurrently = new WeatherDataDaily();
+        ForecastDailyDataResponse dailyDataResponse = new ForecastDailyDataResponse();
 
         reader.beginObject();
         while (reader.hasNext()) {
             String name = reader.nextName();
             switch (name) {
                 case "time":
-                    weatherDataCurrently.setTime(reader.nextInt());
+                    dailyDataResponse.setTime(reader.nextLong());
                     break;
                 case "summary":
-                    weatherDataCurrently.setSummary(reader.nextString());
+                    dailyDataResponse.setSummary(reader.nextString());
                     break;
                 case "icon":
-                    weatherDataCurrently.setIcon(reader.nextString());
+                    dailyDataResponse.setIcon(reader.nextString());
                     break;
                 case "sunriseTime":
-                    weatherDataCurrently.setSunriseTime(reader.nextLong());
+                    dailyDataResponse.setSunriseTime(reader.nextLong());
                     break;
                 case "sunsetTime":
-                    weatherDataCurrently.setSunsetTime(reader.nextLong());
+                    dailyDataResponse.setSunsetTime(reader.nextLong());
                     break;
                 case "humidity":
-                    weatherDataCurrently.setHumidity(reader.nextDouble());
+                    dailyDataResponse.setHumidity(reader.nextDouble());
                     break;
                 case "windSpeed":
-                    weatherDataCurrently.setWindSpeed(reader.nextDouble());
+                    dailyDataResponse.setWindSpeed(reader.nextDouble());
                     break;
                 case "temperatureMin":
-                    weatherDataCurrently.setTemperatureMin(reader.nextDouble());
+                    dailyDataResponse.setTemperatureMin(reader.nextDouble());
                     break;
                 case "temperatureMax":
-                    weatherDataCurrently.setTemperatureMax(reader.nextDouble());
+                    dailyDataResponse.setTemperatureMax(reader.nextDouble());
                     break;
                 case "temperatureMinTime":
-                    weatherDataCurrently.setTemperatureMinTime(reader.nextLong());
+                    dailyDataResponse.setTemperatureMinTime(reader.nextLong());
                     break;
                 case "temperatureMaxTime":
-                    weatherDataCurrently.setTemperatureMaxTime(reader.nextLong());
+                    dailyDataResponse.setTemperatureMaxTime(reader.nextLong());
                     break;
                 default:
                     reader.skipValue();
             }
         }
         reader.endObject();
-        return weatherDataCurrently;
+        return dailyDataResponse;
     }
+/*
+    public Single<ForecastFullResponse> getForecastFullResponse(String latitude, String longitude){
+        return null;
+    }*/
 }

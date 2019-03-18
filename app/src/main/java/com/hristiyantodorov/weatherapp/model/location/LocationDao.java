@@ -3,14 +3,17 @@ package com.hristiyantodorov.weatherapp.model.location;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import java.util.List;
+
+import io.reactivex.Single;
 
 @Dao
 public interface LocationDao {
 
     @Query("SELECT * FROM locations")
-    List<LocationDbModel> getAllLocations();
+    Single<List<LocationDbModel>> getAllLocations();
 
     @Query("SELECT * FROM locations WHERE id = :id")
     LocationDbModel getLocationById(int id);
@@ -23,5 +26,8 @@ public interface LocationDao {
 
     @Insert
     void insertAll(List<LocationDbModel> locationDbModels);
+
+    @Update
+    void update(LocationDbModel locationDbModel);
 
 }

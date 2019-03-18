@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">WeatherApp</string>
 
     <!-- Login Screen Layout -->
@@ -53,5 +54,8 @@
     <string name="preference_feedback_summary">Our team is at your service MON-SUN 24/7 and will be more than happy to help :)</string>
     <string name="preference_feedback_title">Email us!</string>
     <string name="preference_feedback_key">feedback</string>
+
+    <!--Forecast Hourly Adapter-->
+    <string name="forecast_hourly_adapter_summary_txt_windy">"Windy</string>
 
 </resources>

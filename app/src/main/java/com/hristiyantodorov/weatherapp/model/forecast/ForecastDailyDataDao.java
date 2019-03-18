@@ -23,7 +23,7 @@ public interface ForecastDailyDataDao {
     @Query("SELECT * FROM forecast_daily_data")
     List<ForecastDailyDataDbModel> getAllForecastDailyData();
 
-    @Query("SELECT * FROM forecast_daily_data WHERE dailyId = :dailyId")
-    List<ForecastDailyDataDbModel> getAllForecastDailyDataByDailyId(final int dailyId);
+    @Query("SELECT * FROM forecast_daily_data WHERE forecastDailyId = :forecastDailyId")
+    List<ForecastDailyDataDbModel> getAllForecastDailyDataByDailyId(final int forecastDailyId);
 
 }

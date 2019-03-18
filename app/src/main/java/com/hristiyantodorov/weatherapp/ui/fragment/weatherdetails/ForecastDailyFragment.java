@@ -8,31 +8,35 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.weatherdetails.ForecastDailyAdapter;
-import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
-import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
-import com.hristiyantodorov.weatherapp.networking.service.NetworkingServiceUtil;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecastdaily.ForecastDailyContracts;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 import com.hristiyantodorov.weatherapp.util.Constants;
 import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
+import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastDailyDataResponse;
 
+import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
 
-public class ForecastDailyFragment extends BaseFragment implements DownloadResponse<WeatherData>,
-        SwipeRefreshLayout.OnRefreshListener {
+public class ForecastDailyFragment extends BaseFragment implements ForecastDailyContracts.View,
+        SwipeRefreshLayout.OnRefreshListener, ForecastDailyAdapter.OnDailyItemClickListener {
 
     @BindView(R.id.recycler_view_forecast)
     RecyclerView recyclerViewForecast;
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
 
-    ForecastDailyAdapter dailyAdapter;
+    private ForecastDailyAdapter dailyAdapter;
+    private ForecastDailyContracts.Presenter presenter;
 
     public static ForecastDailyFragment newInstance() {
         return new ForecastDailyFragment();
@@ -43,6 +47,7 @@ public class ForecastDailyFragment extends BaseFragment implements DownloadRespo
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         dailyAdapter = new ForecastDailyAdapter();
+        dailyAdapter.setOnDailyItemClickListener(this);
 
         recyclerViewForecast.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewForecast.setAdapter(dailyAdapter);
@@ -50,15 +55,19 @@ public class ForecastDailyFragment extends BaseFragment implements DownloadRespo
                 App.getInstance().getApplicationContext(), DividerItemDecoration.VERTICAL
         ));
 
-        new NetworkingServiceUtil().getWeatherDataDaily(
-                this,
+        presenter.loadForecastDailyData(
                 SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
                 SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null)
         );
-
         swipeRefreshLayout.setOnRefreshListener(this);
 
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.clearResources();
     }
 
     @Override
@@ -67,25 +76,42 @@ public class ForecastDailyFragment extends BaseFragment implements DownloadRespo
     }
 
     @Override
-    public void onSuccess(WeatherData result) {
-        dailyAdapter.addAll(result.getDaily().getData());
-        dailyAdapter.notifyDataSetChanged();
+    public void onRefresh() {
+        swipeRefreshLayout.setRefreshing(true);
 
+        presenter.loadForecastDailyData(
+                SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
+                SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null)
+        );
+
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void showForecastDailyData(List<ForecastDailyDataResponse> result) {
+        dailyAdapter.addAll(result);
+        dailyAdapter.notifyDataSetChanged();
         ((WeatherDetailsActivity) Objects.requireNonNull(getActivity())).refreshLastUpdated();
     }
 
     @Override
-    public void onFailure(Exception e) {
-// TODO: 3/1/2019 CURRENTLY NOT BEING USED
+    public void setPresenter(ForecastDailyContracts.Presenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override
-    public void onRefresh() {
-        swipeRefreshLayout.setRefreshing(true);
-        new NetworkingServiceUtil().getWeatherDataDaily(this,
-                SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
-                SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null)
-        );
-        swipeRefreshLayout.setRefreshing(false);
+    public void showLoader(boolean isShowing) {
+        progressBar.setVisibility(isShowing ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void showError(Throwable e) {
+        //TODO:CURRENTLY NOT BEING USED
+    }
+
+    @Override
+    public void onClick(ForecastDailyDataResponse item) {
+
+        //dialog.show();
     }
 }

@@ -1,23 +1,37 @@
 package com.hristiyantodorov.weatherapp.model.forecast;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+
+import java.util.List;
 
 @Entity(tableName = "forecast_data")
 public class ForecastFullDbModel {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    public Long id;
     private Double latitude;
     private Double longitude;
     private String timezone;
-    private Long lastUpdatedTimestamp;
+    private String lastUpdatedTimestamp;
 
-    public int getId() {
+    @Ignore
+    private ForecastCurrentlyDbModel currentlyDbModel;
+    @Ignore
+    private ForecastHourlyDbModel hourlyDbModel;
+    @Ignore
+    private ForecastDailyDbModel dailyDbModel;
+    @Ignore
+    private List<ForecastCurrentlyDbModel> hourlyDataDbModels;
+    @Ignore
+    private List<ForecastDailyDataDbModel> dailyDataDbModels;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -45,12 +59,52 @@ public class ForecastFullDbModel {
         this.timezone = timezone;
     }
 
-    public Long getLastUpdatedTimestamp() {
+    public String getLastUpdatedTimestamp() {
         return lastUpdatedTimestamp;
     }
 
-    public void setLastUpdatedTimestamp(Long lastUpdatedTimestamp) {
+    public void setLastUpdatedTimestamp(String lastUpdatedTimestamp) {
         this.lastUpdatedTimestamp = lastUpdatedTimestamp;
     }
-    
+
+    public ForecastCurrentlyDbModel getCurrentlyDbModel() {
+        return currentlyDbModel;
+    }
+
+    public void setCurrentlyDbModel(ForecastCurrentlyDbModel currentlyDbModel) {
+        this.currentlyDbModel = currentlyDbModel;
+    }
+
+    public ForecastHourlyDbModel getHourlyDbModel() {
+        return hourlyDbModel;
+    }
+
+    public void setHourlyDbModel(ForecastHourlyDbModel hourlyDbModel) {
+        this.hourlyDbModel = hourlyDbModel;
+    }
+
+    public ForecastDailyDbModel getDailyDbModel() {
+        return dailyDbModel;
+    }
+
+    public void setDailyDbModel(ForecastDailyDbModel dailyDbModel) {
+        this.dailyDbModel = dailyDbModel;
+    }
+
+    public List<ForecastCurrentlyDbModel> getHourlyDataDbModels() {
+        return hourlyDataDbModels;
+    }
+
+    public void setHourlyDataDbModels(List<ForecastCurrentlyDbModel> hourlyDataDbModels) {
+        this.hourlyDataDbModels = hourlyDataDbModels;
+    }
+
+    public List<ForecastDailyDataDbModel> getDailyDataDbModels() {
+        return dailyDataDbModels;
+    }
+
+    public void setDailyDataDbModels(List<ForecastDailyDataDbModel> dailyDataDbModels) {
+        this.dailyDataDbModels = dailyDataDbModels;
+    }
+
 }

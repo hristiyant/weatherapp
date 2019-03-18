@@ -1,6 +1,5 @@
 package com.hristiyantodorov.weatherapp.ui.fragment.locations;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,12 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.locations.LocationsListAdapter;
 import com.hristiyantodorov.weatherapp.adapter.locations.LocationsListDiffCallback;
@@ -25,6 +22,7 @@ import com.hristiyantodorov.weatherapp.presenter.locations.LocationsListContract
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 import com.hristiyantodorov.weatherapp.util.Constants;
+import com.hristiyantodorov.weatherapp.util.DisposableManagerUtil;
 import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 import com.hristiyantodorov.weatherapp.view.DividerItemDecoration;
 
@@ -61,18 +59,24 @@ public class LocationsListFragment extends BaseFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        showLoading();
-
         locationsListAdapter = new LocationsListAdapter(new LocationsListDiffCallback());
         locationsListAdapter.setOnLocationClickListener(this);
 
         edtFilter.addTextChangedListener(filterTextWatcher);
         recyclerViewLocations.setAdapter(locationsListAdapter);
         recyclerViewLocations.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerViewLocations.addItemDecoration(new DividerItemDecoration(getActivity(), R.drawable.divider));
+        recyclerViewLocations.addItemDecoration(new DividerItemDecoration(
+                getActivity(), R.drawable.divider
+        ));
         getLocationsFromDatabase();
 
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        DisposableManagerUtil.dispose();
+        super.onDestroy();
     }
 
     @Override
@@ -81,45 +85,63 @@ public class LocationsListFragment extends BaseFragment
     }
 
     @Override
-    public void showLocations(List<LocationDbModel> locations) {
-        locationsListAdapter.submitList(locations);
-        Log.d(TAG, "showLocations ");
-    }
-
-    @Override
-    public void getLocationsFromDatabase() {
-        presenter.loadLocationsFromDatabase();
-        Log.d(TAG, "getLocationsFromDatabase: ");
-    }
-
-    @Override
-    public void showError(Throwable e) {
-        // TODO: 1/22/2019 Implement
-    }
-
-    @Override
     public void setPresenter(LocationsListContracts.Presenter presenter) {
         this.presenter = presenter;
     }
 
     @Override
+    public void showLoader(boolean isShowing) {
+        progressBar.setVisibility(isShowing ? View.VISIBLE : View.GONE);
+//        recyclerViewLocations.setVisibility(isShowing ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    public void showError(Throwable e) {
+        // TODO: 1/22/2019 CURRENTLY NOT BEING USED
+    }
+
+    @Override
+    public void showLocations(List<LocationDbModel> locations) {
+        locationsListAdapter.submitList(locations);
+        locationsListAdapter.notifyDataSetChanged();
+        recyclerViewLocations.setVisibility(View.VISIBLE);
+        showLoader(false);
+    }
+
+    @Override
+    public void getLocationsFromDatabase() {
+        showLoader(true);
+
+        //TODO: check for info in the db and then get from API
+        presenter.downloadApiDataForDbModels(getContext());
+    }
+
+    @Override
+    public void getBasicForecastInfo(List<LocationDbModel> locations) {
+        for (LocationDbModel location : locations) {
+            presenter.getBasicForecastInfo(location);
+        }
+        //TODO: GET DATA FROM DB AND PASS TO VIEW TO SHOW
+        presenter.loadDbData(getContext());
+    }
+
+    @Override
+    public void showEmptyLocationsList() {
+        recyclerViewLocations.setVisibility(View.GONE);
+        txtNoResultsFound.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void updateApiInfo(LocationDbModel location) {
+        presenter.updateLocationDbInfo(location);
+    }
+
+    @Override
     public void onClick(LocationDbModel location) {
-        presenter.selectLocation(location);
-        Log.d(TAG, "onClick: ");
-    }
-
-    @Override
-    public void showLoading() {
-        /*recyclerViewLocations.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);*/
-        Log.d(TAG, "showLoading: ");
-    }
-
-    @Override
-    public void hideLoading() {
-       /* progressBar.setVisibility(View.GONE);
-        recyclerViewLocations.setVisibility(View.VISIBLE);*/
-        Log.d(TAG, "hideLoading: ");
+//        presenter.selectLocation(location);
+        SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_LAT, String.valueOf(location.getLatitude()));
+        SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_LON, String.valueOf(location.getLongitude()));
+        startActivity(new Intent(getContext(), WeatherDetailsActivity.class));
     }
 
     private TextWatcher filterTextWatcher = new TextWatcher() {
@@ -127,20 +149,19 @@ public class LocationsListFragment extends BaseFragment
         public void afterTextChanged(Editable arg0) {
             // user typed: start the timer
             txtNoResultsFound.setVisibility(View.GONE);
-            showLoading();
+            showLoader(true);
             timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    // do your actual work here
                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
                         String pattern = edtFilter.getText().toString().toLowerCase();
-                        presenter.filterLocations(pattern);
+                        presenter.filterLocations(pattern, getContext());
                         Log.d(TAG, "run: presenter.filterLocations");
                     });
-                    // hide keyboard when recyclerView is visible
+                    /*// hide keyboard when recyclerView is visible
                     InputMethodManager in = (InputMethodManager) App.getInstance().getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    in.hideSoftInputFromWindow(edtFilter.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    in.hideSoftInputFromWindow(edtFilter.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);*/
                 }
             }, 300); // 300ms delay before the timer executes the "run" method from TimerTask
         }
@@ -159,12 +180,4 @@ public class LocationsListFragment extends BaseFragment
             }
         }
     };
-
-    @Override
-    public void showLocationWeatherDetails(LocationDbModel selectedLocation) {
-        SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_NAME, selectedLocation.getName());
-        SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_LAT, String.valueOf(selectedLocation.getLatitude()));
-        SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_LON, String.valueOf(selectedLocation.getLongitude()));
-        startActivity(new Intent(getContext(), WeatherDetailsActivity.class));
-    }
 }
