@@ -53,5 +53,4 @@ public class LocationDbModel {
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
-
 }

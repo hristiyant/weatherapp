@@ -14,17 +14,18 @@ import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.ForecastHourly
 import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.WeatherDetailsFragment;
 
 public class WeatherDetailsPagerAdapter extends FragmentPagerAdapter {
+
     private static final int FORECAST_TAB_DETAILED = 0;
     private static final int FORECAST_TAB_HOURLY = 1;
     private static final int FORECAST_TAB_DAILY = 2;
     private static final int FORECAST_TAB_SETTINGS = 3;
     private static final int NUMBER_OF_ELEMENTS = 4;
 
+    private ForecastHourlyContracts.Presenter forecastHourlyPresenter;
+
     public WeatherDetailsPagerAdapter(FragmentManager manager) {
         super(manager);
     }
-
-    ForecastHourlyContracts.Presenter forecastHourlyPresenter;
 
     @Override
     public Fragment getItem(int position) {

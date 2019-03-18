@@ -73,18 +73,11 @@ public class ForecastDailyAdapter extends RecyclerView.Adapter<ForecastDailyAdap
             String timeStamp = new SimpleDateFormat("EEEE")
                     .format(new java.util.Date(item.getTime() * 1000));
             txtTime.setText(timeStamp.substring(0, 3));
-
             txtTemperature.setText(
                     Html.fromHtml(WeatherDataFormatterUtil.convertFahrenheitToCelsius(item.getTemperatureMax())
                             + "<sup>\u00B0c</sup>")
             );
-
-            if (item.getIcon().equals("wind")) {
-                txtSummary.setText(R.string.txt_summary_windy);
-            } else {
-                txtSummary.setText(item.getSummary());
-            }
-
+            txtSummary.setText(item.getSummary());
             imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(item.getIcon()));
         }
     }

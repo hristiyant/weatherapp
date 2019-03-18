@@ -29,5 +29,4 @@ public interface LocationsListContracts {
         void selectLocation(LocationDbModel location);
 
     }
-
 }
