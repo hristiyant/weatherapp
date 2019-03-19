@@ -1,27 +1,32 @@
 package com.hristiyantodorov.weatherapp.presenter.weatherdetails;
 
+import com.hristiyantodorov.weatherapp.model.forecast.ForecastCurrentlyDbModel;
 import com.hristiyantodorov.weatherapp.model.forecast.ForecastFullDbModel;
 import com.hristiyantodorov.weatherapp.presenter.BaseView;
-import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastFullResponse;
 
-public interface WeatherDetailsContracts {
+public interface WeatherDetailsFragmentContracts {
 
     interface View extends BaseView<Presenter> {
 
-        void showForecastCurrentlyData(ForecastFullResponse forecastFullResponse);
-        //TODO: show/hide loading, empty, error
+        void showForecastCurrentlyData(ForecastCurrentlyDbModel data);
 
     }
 
     interface Presenter {
 
-        void requestForecastCurrentlyFromApi();
+        void getData();
 
-        void saveForecastApiDataToDb(ForecastFullDbModel fullDbModel);
+        void requestDataFromApi();
+
+        void loadDataFromDb();
+
+        void saveApiDataToDb(ForecastFullDbModel fullDbModel);
+
+        void presentForecastToView(ForecastCurrentlyDbModel data);
 
     }
 
-    interface GetForecastDataInteractor {
+    /*interface GetForecastDataInteractor {
 
         interface OnFinishedListener {
 
@@ -33,5 +38,5 @@ public interface WeatherDetailsContracts {
 
         void getForecastCurrentlyResponse(OnFinishedListener onFinishedListener);
 
-    }
+    }*/
 }

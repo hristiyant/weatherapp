@@ -55,10 +55,10 @@ public class ForecastDailyFragment extends BaseFragment implements ForecastDaily
                 App.getInstance().getApplicationContext(), DividerItemDecoration.VERTICAL
         ));
 
-        presenter.loadForecastDailyData(
+        /*presenter.requestForecastDailyDataFromApi(
                 SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
                 SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null)
-        );
+        );*/
         swipeRefreshLayout.setOnRefreshListener(this);
 
         return view;
@@ -79,7 +79,7 @@ public class ForecastDailyFragment extends BaseFragment implements ForecastDaily
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
 
-        presenter.loadForecastDailyData(
+        presenter.requestForecastDailyDataFromApi(
                 SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
                 SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null)
         );
@@ -95,6 +95,11 @@ public class ForecastDailyFragment extends BaseFragment implements ForecastDaily
     }
 
     @Override
+    public void showEmptyForecast() {
+
+    }
+
+    @Override
     public void setPresenter(ForecastDailyContracts.Presenter presenter) {
         this.presenter = presenter;
     }
@@ -102,6 +107,11 @@ public class ForecastDailyFragment extends BaseFragment implements ForecastDaily
     @Override
     public void showLoader(boolean isShowing) {
         progressBar.setVisibility(isShowing ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void showEmptyScreen(boolean isShowing) {
+        //TODO: IMPLEMENT !!!!
     }
 
     @Override

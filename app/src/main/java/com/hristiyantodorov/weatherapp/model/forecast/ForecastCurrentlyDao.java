@@ -3,7 +3,7 @@ package com.hristiyantodorov.weatherapp.model.forecast;
 import android.arch.persistence.room.Dao;
 
 @Dao
-public interface ForecastCurrentlyDao extends BaseDao<ForecastCurrentlyDbModel>{
+public interface ForecastCurrentlyDao{
 
 
 

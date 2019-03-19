@@ -3,6 +3,7 @@ package com.hristiyantodorov.weatherapp.presenter.weatherdetails;
 import android.content.Context;
 
 import com.hristiyantodorov.weatherapp.App;
+import com.hristiyantodorov.weatherapp.model.forecast.ForecastCurrentlyDbModel;
 import com.hristiyantodorov.weatherapp.model.forecast.ForecastFullDbModel;
 import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
 import com.hristiyantodorov.weatherapp.presenter.BasePresenter;
@@ -18,30 +19,25 @@ import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class WeatherDetailsPresenter extends BasePresenter
-        implements WeatherDetailsContracts.Presenter {
+public class WeatherDetailsActivityPresenter extends BasePresenter
+        implements WeatherDetailsActivityContracts.Presenter {
 
-    private static final String TAG = "WDPresenter";
+    private static final String TAG = "WDAPresenter";
 
-    private WeatherDetailsContracts.View view;
-    private WeatherDetailsContracts.GetForecastDataInteractor getForecastDataInteractor;
+    private WeatherDetailsActivityContracts.View view;
     private WeatherApiService service;
 
-    public WeatherDetailsPresenter(WeatherDetailsContracts.View view,
-                                   WeatherDetailsContracts.GetForecastDataInteractor getForecastDataInteractor) {
+    public WeatherDetailsActivityPresenter(WeatherDetailsActivityContracts.View view) {
         this.view = view;
         view.setPresenter(this);
-        this.getForecastDataInteractor = getForecastDataInteractor;
         this.service = APIClient.getClient().create(WeatherApiService.class);
     }
 
     @Override
-    public void requestForecastCurrentlyFromApi() {
+    public void downloadForecastFromApi() {
         view.showLoader(true);
-
-        //getForecastDataInteractor.getForecastCurrentlyResponse(this);
         subscribeSingle(
-                service.getForecastCurrently(
+                service.getForecastFullResponse(
                         SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
                         SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null)
                 ), new SingleObserver<ForecastFullResponse>() {
@@ -52,8 +48,9 @@ public class WeatherDetailsPresenter extends BasePresenter
 
                     @Override
                     public void onSuccess(ForecastFullResponse forecastFullResponse) {
-                        view.showForecastCurrentlyData(forecastFullResponse);
-                        saveForecastApiDataToDb(
+                        presentForecastToView(ForecastResponseToForecastDbModelConverterUtil
+                                .convertCurrentlyResponseToDbModel(forecastFullResponse.getCurrently()));
+                        saveApiDataToDb(
                                 ForecastResponseToForecastDbModelConverterUtil
                                         .convertResponseToDbModel(forecastFullResponse)
                         );
@@ -67,10 +64,7 @@ public class WeatherDetailsPresenter extends BasePresenter
         );
     }
 
-    @Override
-    public void saveForecastApiDataToDb(ForecastFullDbModel fullDbModel) {
-
-        //TODO: SHOW PROGRESSBAR
+    public void saveApiDataToDb(ForecastFullDbModel fullDbModel) {
         Context context = App.getInstance().getApplicationContext();
         Completable.fromRunnable(
                 () -> PersistenceDatabase
@@ -78,10 +72,13 @@ public class WeatherDetailsPresenter extends BasePresenter
                         .forecastFullDao().updateDb(fullDbModel)
         ).subscribeOn(Schedulers.io())
                 .subscribe();
-        //TODO: DISPOSE
-
     }
 
-
-
+    public void presentForecastToView(ForecastCurrentlyDbModel data) {
+        if (data == null) {
+            view.showEmptyScreen(true);
+        } else {
+            view.showForecast(data);
+        }
+    }
 }

@@ -6,9 +6,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.GetForecastDataInteractorImpl;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.WeatherDetailsContracts;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.WeatherDetailsPresenter;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.WeatherDetailsFragmentContracts;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.WeatherDetailsFragmentPresenter;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecastdaily.ForecastDailyContracts;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecastdaily.ForecastDailyPresenter;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly.ForecastHourlyContracts;
@@ -29,19 +28,16 @@ public class WeatherDetailsPagerAdapter extends FragmentPagerAdapter {
         super(manager);
     }
 
-    ForecastHourlyContracts.Presenter forecastHourlyPresenter;
-    ForecastDailyContracts.Presenter forecastDailyPresenter;
-    WeatherDetailsContracts.Presenter weatherDetailsPresenter;
+   private ForecastHourlyContracts.Presenter forecastHourlyPresenter;
+   private ForecastDailyContracts.Presenter forecastDailyPresenter;
+   private WeatherDetailsFragmentContracts.Presenter weatherDetailsPresenter;
 
     @Override
     public Fragment getItem(int position) {
         switch (position) {
             case FORECAST_TAB_DETAILED:
                 WeatherDetailsFragment weatherDetailsFragment = WeatherDetailsFragment.newInstance();
-                weatherDetailsPresenter = new WeatherDetailsPresenter(
-                        weatherDetailsFragment,
-                        new GetForecastDataInteractorImpl()
-                );
+                weatherDetailsPresenter = new WeatherDetailsFragmentPresenter(weatherDetailsFragment);
                 return weatherDetailsFragment;
             case FORECAST_TAB_HOURLY:
                 ForecastHourlyFragment forecastHourlyFragment = ForecastHourlyFragment.newInstance();

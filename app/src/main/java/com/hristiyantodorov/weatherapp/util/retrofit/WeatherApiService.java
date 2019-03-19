@@ -2,7 +2,6 @@ package com.hristiyantodorov.weatherapp.util.retrofit;
 
 import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastFullResponse;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -36,7 +35,7 @@ public interface WeatherApiService {
 
     //TODO: ADD "daily,hourly" to excluded fields. !!!!!!!!!!!!!!
     @GET("{latitude},{longitude}?exclude=minutely,alerts,flags")
-    Observable<ForecastFullResponse> getForecastFullResponse(@Path("latitude") String latitude,
+    Single<ForecastFullResponse> getForecastFullResponse(@Path("latitude") String latitude,
                                                              @Path("longitude") String longitude);
 
 

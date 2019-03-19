@@ -1,9 +1,11 @@
 package com.hristiyantodorov.weatherapp.ui.activity.weatherdetails;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -13,33 +15,27 @@ import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.weatherdetails.WeatherDetailsPagerAdapter;
+import com.hristiyantodorov.weatherapp.model.forecast.ForecastCurrentlyDbModel;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.WeatherDetailsActivityContracts;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.WeatherDetailsActivityPresenter;
 import com.hristiyantodorov.weatherapp.ui.activity.BaseActivity;
-import com.hristiyantodorov.weatherapp.util.Constants;
-import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherIconPickerUtil;
-import com.hristiyantodorov.weatherapp.util.retrofit.APIClient;
-import com.hristiyantodorov.weatherapp.util.retrofit.WeatherApiService;
-import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastCurrentlyResponse;
-import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastFullResponse;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import butterknife.BindView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class WeatherDetailsActivity extends BaseActivity implements Callback<ForecastFullResponse> {
+public class WeatherDetailsActivity extends BaseActivity
+        implements WeatherDetailsActivityContracts.View,
+        SwipeRefreshLayout.OnRefreshListener{
 
-    @BindView(R.id.view_pager_forecasts_holder)
-    ViewPager viewPager;
-    @BindView(R.id.tab_layout_forecast_categories)
-    TabLayout tabLayout;
-    @BindView(R.id.img_current_weather_icon)
-    ImageView imgWeatherIcon;
+    private static final String TAG = "WDActivity";
+
+    @BindView(R.id.txt_forecast_not_available)
+    TextView txtForecastNotAvailable;
     @BindView(R.id.txt_current_temperature)
     TextView txtCurrentTemp;
     @BindView(R.id.txt_summary)
@@ -50,25 +46,31 @@ public class WeatherDetailsActivity extends BaseActivity implements Callback<For
     TextView txtLocationName;
     @BindView(R.id.txt_wind_speed)
     TextView txtWindSpeed;
+    @BindView(R.id.img_current_weather_icon)
+    ImageView imgWeatherIcon;
+    @BindView(R.id.view_pager_forecasts_holder)
+    ViewPager viewPager;
+    @BindView(R.id.tab_layout_forecast_categories)
+    TabLayout tabLayout;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
+//    @BindView(R.id.swipe_container)
+//    SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
+    @BindView(R.id.app_bar_basic_forecast)
+    AppBarLayout appBarLayout;
 
-    private WeatherApiService weatherApiService;
+    private WeatherDetailsActivityContracts.Presenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //String currentLocationName = SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_NAME, "Current location");
-        String currentLocationLat = SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null);
-        String currentLocationLon = SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null);
+//        swipeRefreshLayout.setOnRefreshListener(this);
 
-        weatherApiService = APIClient.getClient().create(WeatherApiService.class);
-
-        Call<ForecastFullResponse> call = weatherApiService.getFullForecastData(currentLocationLat, currentLocationLon);
-        call.enqueue(this);
+        new WeatherDetailsActivityPresenter(this);
+        presenter.downloadForecastFromApi();
 
         WeatherDetailsPagerAdapter weatherDetailsPagerAdapter =
                 new WeatherDetailsPagerAdapter(getSupportFragmentManager());
@@ -97,7 +99,55 @@ public class WeatherDetailsActivity extends BaseActivity implements Callback<For
         return R.layout.activity_weather_details;
     }
 
-    private void setFields(ForecastCurrentlyResponse response, String timezone) {
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        appBarLayout.addOnOffsetChangedListener(this);
+        refreshLastUpdated();
+    }
+
+    /*@Override
+    protected void onPause() {
+        super.onPause();
+        appBarLayout.removeOnOffsetChangedListener(this);
+    }*/
+
+    @Override
+    public void onRefresh() {
+//        swipeRefreshLayout.setRefreshing(true);
+        presenter.downloadForecastFromApi();
+//        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void setPresenter(WeatherDetailsActivityContracts.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void showLoader(boolean isShowing) {
+        progressBar.setVisibility(isShowing ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void showEmptyScreen(boolean isShowing) {
+        txtForecastNotAvailable.setVisibility(isShowing ? View.VISIBLE : View.GONE);
+        coordinatorLayout.setVisibility(isShowing ? View.GONE : View.VISIBLE);
+        showLoader(false);
+    }
+
+    @Override
+    public void showError(Throwable e) {
+// TODO: 3/19/2019
+    }
+
+    @Override
+    public void showForecast(ForecastCurrentlyDbModel data) {
+        setFields(data, "ToBeChanged");
+        Log.d(TAG, "timestamp " + data.getTime());
+    }
+
+    public void setFields(ForecastCurrentlyDbModel response, String timezone) {
         txtLocationName.setText(timezone);
         txtSummary.setText(response.getSummary());
         txtCurrentTemp.setText(Html.fromHtml(
@@ -114,8 +164,7 @@ public class WeatherDetailsActivity extends BaseActivity implements Callback<For
                 .format(new java.util.Date());
         txtLastUpdated.setText(getString(R.string.txt_last_updated, currentTimeStamp));
         imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(response.getIcon()));
-        progressBar.setVisibility(View.GONE);
-        coordinatorLayout.setVisibility(View.VISIBLE);
+        showEmptyScreen(false);
     }
 
     public void refreshLastUpdated() {
@@ -125,17 +174,8 @@ public class WeatherDetailsActivity extends BaseActivity implements Callback<For
         txtLastUpdated.setText(getString(R.string.txt_last_updated, timeStamp));
     }
 
-    @Override
-    public void onResponse(Call<ForecastFullResponse> call, Response<ForecastFullResponse> response) {
-        int statusCode = response.code();
-        Log.d("WDActivity", "response code: " + statusCode);
-        ForecastFullResponse fullResponse = response.body();
-        setFields(fullResponse.getCurrently(), fullResponse.getTimezone());
-    }
-
-    @Override
-    public void onFailure(Call<ForecastFullResponse> call, Throwable t) {
-        Log.e("WDActivity", "onFailure: ");
-    }
-
+    /*@Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+        swipeRefreshLayout.setEnabled(i == 0);
+    }*/
 }

@@ -1,5 +1,6 @@
 package com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecastdaily;
 
+import com.hristiyantodorov.weatherapp.model.forecast.ForecastFullDbModel;
 import com.hristiyantodorov.weatherapp.util.retrofit.APIClient;
 import com.hristiyantodorov.weatherapp.util.retrofit.WeatherApiService;
 import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastDailyDataResponse;
@@ -24,7 +25,7 @@ public class ForecastDailyPresenter implements ForecastDailyContracts.Presenter 
     }
 
     @Override
-    public void loadForecastDailyData(String latitude, String longitude) {
+    public void requestForecastDailyDataFromApi(String latitude, String longitude) {
         disposable.add(
                 weatherApiService.getForecastDaily(latitude, longitude)
                         .doOnSubscribe(disposable -> view.showLoader(true))
@@ -43,6 +44,16 @@ public class ForecastDailyPresenter implements ForecastDailyContracts.Presenter 
                                 //TODO: CURRENTLY NOT BEING USED
                             }
                         }));
+    }
+
+    @Override
+    public void saveForecastApiDataToDb(ForecastFullDbModel fullDbModel) {
+
+    }
+
+    @Override
+    public void presentForecastToView(List<ForecastDailyDataResponse> response) {
+
     }
 
     @Override

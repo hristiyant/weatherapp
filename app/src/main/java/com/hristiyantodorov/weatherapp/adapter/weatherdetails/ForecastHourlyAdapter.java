@@ -10,11 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.R;
+import com.hristiyantodorov.weatherapp.model.forecast.ForecastCurrentlyDbModel;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherIconPickerUtil;
-import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastCurrentlyResponse;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +22,7 @@ import butterknife.ButterKnife;
 
 public class ForecastHourlyAdapter extends RecyclerView.Adapter<ForecastHourlyAdapter.WeatherDetailsItemHolder> {
 
-    private List<ForecastCurrentlyResponse> itemsList;
+    private List<ForecastCurrentlyDbModel> itemsList;
 
     public ForecastHourlyAdapter() {
         itemsList = new ArrayList<>();
@@ -46,7 +45,7 @@ public class ForecastHourlyAdapter extends RecyclerView.Adapter<ForecastHourlyAd
         return itemsList.size();
     }
 
-    public void addAll(List<ForecastCurrentlyResponse> list) {
+    public void addAll(List<ForecastCurrentlyDbModel> list) {
         if (!itemsList.isEmpty()) {
             itemsList.clear();
         }
@@ -73,10 +72,10 @@ public class ForecastHourlyAdapter extends RecyclerView.Adapter<ForecastHourlyAd
             ButterKnife.bind(this, itemView);
         }
 
-        void bind(ForecastCurrentlyResponse item) {
-            String timeStamp = new SimpleDateFormat("HH:mm")
-                    .format(new java.util.Date(item.getTime() * 1000));
-            txtTime.setText(timeStamp);
+        void bind(ForecastCurrentlyDbModel item) {
+            /*String timeStamp = new SimpleDateFormat("HH:mm")
+                    .format(new java.util.Date(item.getTime() * 1000));*/
+            txtTime.setText(item.getTime());
             txtTemperature.setText(Html.fromHtml(WeatherDataFormatterUtil.convertFahrenheitToCelsius(item.getTemperature())
                     + "<sup>\u00B0c</sup>"));
             if (item.getIcon().equals("wind")) {

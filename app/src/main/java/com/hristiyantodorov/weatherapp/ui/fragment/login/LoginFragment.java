@@ -115,6 +115,11 @@ public class LoginFragment extends BaseFragment implements LoginContracts.View {
     }
 
     @Override
+    public void showEmptyScreen(boolean isShowing) {
+        // TODO: 3/18/2019 ADD IMPLEMENTATION
+    }
+
+    @Override
     public void showError(Throwable e) {
         Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
     }

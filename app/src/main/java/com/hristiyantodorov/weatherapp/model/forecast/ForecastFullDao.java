@@ -7,14 +7,27 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
+import io.reactivex.Single;
+
 @Dao
-public abstract class ForecastFullDao implements BaseDao<ForecastFullDbModel> {
+public abstract class ForecastFullDao {
+
+    @Query("SELECT * FROM forecast_data LIMIT 1")
+    public abstract Single<ForecastFullDbModel> getForecastFullRx();
 
     @Query("SELECT * FROM forecast_data LIMIT 1")
     public abstract ForecastFullDbModel getForecastFull();
 
+    @Query("SELECT * FROM forecast_currently WHERE forecastFullId = :id")
+    public abstract Single<List<ForecastCurrentlyDbModel>> getForecastCurrentlyByFullId(long id);
+
+    @Query("SELECT * FROM forecast_currently WHERE forecastHourlyId = :id")
+    public abstract Single<List<ForecastCurrentlyDbModel>> getForecastCurrentlyByHourlyId(long id);
     @Query("SELECT * FROM forecast_hourly LIMIT 1")
     public abstract ForecastHourlyDbModel getForecastHourly();
+
+    @Query("SELECT * FROM forecast_hourly WHERE forecastFullId = :id")
+    public abstract Single<ForecastHourlyDbModel> getForecastHourlyById(long id);
 
     @Query("SELECT * FROM forecast_daily LIMIT 1")
     public abstract ForecastDailyDbModel getForecastDaily();
@@ -234,4 +247,8 @@ public abstract class ForecastFullDao implements BaseDao<ForecastFullDbModel> {
         }
     }
 
+    /*public void loadFullModelFromDb(){
+        Observable.zip(PersistenceDatabase.getAppDatabase(App.getInstance().getApplicationContext()).forecastFullDao().getForecastFull(),
+                PersistenceDatabase.getAppDatabase(App.getInstance().getApplicationContext()).forecastFullDao().ge)
+    }*/
 }

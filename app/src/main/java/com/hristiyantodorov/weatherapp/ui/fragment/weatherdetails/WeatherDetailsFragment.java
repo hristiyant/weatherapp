@@ -10,19 +10,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.WeatherDetailsContracts;
+import com.hristiyantodorov.weatherapp.model.forecast.ForecastCurrentlyDbModel;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.WeatherDetailsFragmentContracts;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
-import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastFullResponse;
 
 import butterknife.BindView;
 
-public class WeatherDetailsFragment extends BaseFragment implements WeatherDetailsContracts.View {
+public class WeatherDetailsFragment extends BaseFragment implements WeatherDetailsFragmentContracts.View {
 
-    public static WeatherDetailsFragment newInstance() {
-        return new WeatherDetailsFragment();
-    }
-
+    @BindView(R.id.txt_forecast_not_available)
+    TextView txtForecastNotAvailable;
     @BindView(R.id.txt_temperature)
     TextView txtTemperature;
     @BindView(R.id.txt_apparent_temperature)
@@ -38,14 +36,18 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
     @BindView(R.id.fragment_weather_details)
     ConstraintLayout constraintLayout;
 
-    private WeatherDetailsContracts.Presenter presenter;
+    private WeatherDetailsFragmentContracts.Presenter presenter;
+
+    public static WeatherDetailsFragment newInstance() {
+        return new WeatherDetailsFragment();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        presenter.requestForecastCurrentlyFromApi();
+        presenter.loadDataFromDb();
 
         return view;
     }
@@ -56,23 +58,7 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
     }
 
     @Override
-    public void showForecastCurrentlyData(ForecastFullResponse response) {
-        txtTemperature.setText(getString(R.string.txt_temperature,
-                WeatherDataFormatterUtil.convertFahrenheitToCelsius(response.getCurrently().getTemperature())));
-        txtApparentTemperature.setText(getString(R.string.txt_apparent_temperature,
-                WeatherDataFormatterUtil.convertFahrenheitToCelsius(response.getCurrently().getApparentTemperature())));
-        txtHumidity.setText(getString(R.string.txt_humidity,
-                WeatherDataFormatterUtil.convertDoubleToPercentage(response.getCurrently().getHumidity())));
-        txtPressure.setText(getString(R.string.txt_pressure,
-                WeatherDataFormatterUtil.convertRoundedDoubleToString(response.getCurrently().getPressure())));
-        txtWindSpeed.setText(getString(R.string.txt_wind_speed,
-                WeatherDataFormatterUtil.convertMphToMs(response.getCurrently().getWindSpeed())));
-        showLoader(false);
-        constraintLayout.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void setPresenter(WeatherDetailsContracts.Presenter presenter) {
+    public void setPresenter(WeatherDetailsFragmentContracts.Presenter presenter) {
         this.presenter = presenter;
     }
 
@@ -82,8 +68,29 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
     }
 
     @Override
+    public void showEmptyScreen(boolean isShowing) {
+        txtForecastNotAvailable.setVisibility(isShowing ? View.VISIBLE : View.GONE);
+        constraintLayout.setVisibility(isShowing ? View.GONE : View.VISIBLE);
+        showLoader(false);
+    }
+
+    @Override
     public void showError(Throwable e) {
         //TODO: CURRENTLY NOT BEING USED
     }
 
+    @Override
+    public void showForecastCurrentlyData(ForecastCurrentlyDbModel data) {
+        txtTemperature.setText(getString(R.string.txt_temperature,
+                WeatherDataFormatterUtil.convertFahrenheitToCelsius(data.getTemperature())));
+        txtApparentTemperature.setText(getString(R.string.txt_apparent_temperature,
+                WeatherDataFormatterUtil.convertFahrenheitToCelsius(data.getApparentTemperature())));
+        txtHumidity.setText(getString(R.string.txt_humidity,
+                WeatherDataFormatterUtil.convertDoubleToPercentage(data.getHumidity())));
+        txtPressure.setText(getString(R.string.txt_pressure,
+                WeatherDataFormatterUtil.convertRoundedDoubleToString(data.getPressure())));
+        txtWindSpeed.setText(getString(R.string.txt_wind_speed,
+                WeatherDataFormatterUtil.convertMphToMs(data.getWindSpeed())));
+        showEmptyScreen(false);
+    }
 }

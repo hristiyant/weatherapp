@@ -21,7 +21,6 @@ public class ForecastResponseToForecastDbModelConverterUtil {
 
     public static ForecastFullDbModel convertResponseToDbModel(ForecastFullResponse fullResponse) {
         ForecastFullDbModel fullDbModel = new ForecastFullDbModel();
-
         fullDbModel.setLatitude(fullResponse.getLatitude());
         fullDbModel.setLongitude(fullResponse.getLongitude());
         fullDbModel.setTimezone(fullResponse.getTimezone());

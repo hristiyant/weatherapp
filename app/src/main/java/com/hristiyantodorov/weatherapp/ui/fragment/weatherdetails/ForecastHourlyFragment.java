@@ -9,14 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.weatherdetails.ForecastHourlyAdapter;
+import com.hristiyantodorov.weatherapp.model.forecast.ForecastCurrentlyDbModel;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly.ForecastHourlyContracts;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
-import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastCurrentlyResponse;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,12 +27,14 @@ import butterknife.BindView;
 public class ForecastHourlyFragment extends BaseFragment implements ForecastHourlyContracts.View,
         SwipeRefreshLayout.OnRefreshListener {
 
-    @BindView(R.id.recycler_view_forecast)
-    RecyclerView recyclerViewForecast;
-    @BindView(R.id.swipe_container)
-    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.txt_forecast_not_available)
+    TextView txtForecastNotAvailable;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
+    @BindView(R.id.swipe_container)
+    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.recycler_view_forecast)
+    RecyclerView recyclerViewForecast;
 
     private ForecastHourlyAdapter hourlyAdapter;
     private ForecastHourlyContracts.Presenter presenter;
@@ -53,8 +56,9 @@ public class ForecastHourlyFragment extends BaseFragment implements ForecastHour
         ));
 
         swipeRefreshLayout.setOnRefreshListener(this);
-        presenter.loadForecastHourlyData();
-        ((WeatherDetailsActivity) Objects.requireNonNull(getActivity())).refreshLastUpdated();
+        presenter.loadDataFromDb();
+        //presenter.requestForecastHourlyDataFromApi();
+//        ((WeatherDetailsActivity) Objects.requireNonNull(getActivity())).refreshLastUpdated();
 
         return view;
     }
@@ -67,14 +71,13 @@ public class ForecastHourlyFragment extends BaseFragment implements ForecastHour
     @Override
     public void onResume() {
         super.onResume();
-        presenter.loadForecastHourlyData();
-        ((WeatherDetailsActivity) Objects.requireNonNull(getActivity())).refreshLastUpdated();
+        //((WeatherDetailsActivity) Objects.requireNonNull(getActivity())).refreshLastUpdated();
     }
 
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        presenter.loadForecastHourlyData();
+        presenter.requestForecastHourlyDataFromApi();
         ((WeatherDetailsActivity) Objects.requireNonNull(getActivity())).refreshLastUpdated();
         swipeRefreshLayout.setRefreshing(false);
     }
@@ -85,10 +88,21 @@ public class ForecastHourlyFragment extends BaseFragment implements ForecastHour
     }
 
     @Override
-    public void showForecastHourlyData(List<ForecastCurrentlyResponse> hourlyData) {
+    public void showForecast(List<ForecastCurrentlyDbModel> hourlyData) {
         hourlyAdapter.clear();
         hourlyAdapter.addAll(hourlyData);
         hourlyAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showEmptyForecast() {
+        // TODO: 3/19/2019  
+    }
+
+    @Override
+    public void showEmptyScreen(boolean isShowing) {
+        txtForecastNotAvailable.setVisibility(isShowing ? View.VISIBLE : View.GONE);
+        recyclerViewForecast.setVisibility(isShowing ? View.GONE : View.VISIBLE);
     }
 
     @Override

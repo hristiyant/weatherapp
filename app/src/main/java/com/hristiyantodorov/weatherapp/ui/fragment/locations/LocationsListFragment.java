@@ -96,6 +96,11 @@ public class LocationsListFragment extends BaseFragment
     }
 
     @Override
+    public void showEmptyScreen(boolean isShowing) {
+        // TODO: 3/18/2019 ADD IMPLEMENTATION !!!!
+    }
+
+    @Override
     public void showError(Throwable e) {
         // TODO: 1/22/2019 CURRENTLY NOT BEING USED
     }

@@ -1,7 +1,8 @@
 package com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly;
 
+import com.hristiyantodorov.weatherapp.model.forecast.ForecastCurrentlyDbModel;
+import com.hristiyantodorov.weatherapp.model.forecast.ForecastFullDbModel;
 import com.hristiyantodorov.weatherapp.presenter.BaseView;
-import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastCurrentlyResponse;
 
 import java.util.List;
 
@@ -9,13 +10,21 @@ public interface ForecastHourlyContracts {
 
     interface View extends BaseView<Presenter> {
 
-        void showForecastHourlyData(List<ForecastCurrentlyResponse> hourlyData);
+        void showForecast(List<ForecastCurrentlyDbModel> hourlyData);
+
+        void showEmptyForecast();
 
     }
 
     interface Presenter {
 
-        void loadForecastHourlyData();
+        void loadDataFromDb();
+
+        void requestForecastHourlyDataFromApi();
+
+        void saveForecastApiDataToDb(ForecastFullDbModel fullDbModel);
+
+        void presentForecastToView(List<ForecastCurrentlyDbModel> hourlyData);
 
     }
 }
