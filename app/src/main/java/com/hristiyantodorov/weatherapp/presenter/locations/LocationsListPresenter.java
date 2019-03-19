@@ -1,5 +1,6 @@
 package com.hristiyantodorov.weatherapp.presenter.locations;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -7,6 +8,7 @@ import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
 import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
 import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.ui.ExceptionHandlerUtil;
 import com.hristiyantodorov.weatherapp.util.SearchFilterAsyncTask;
 
 import java.util.List;
@@ -25,12 +27,12 @@ public class LocationsListPresenter
 
     @Override
     public void loadLocationsFromDatabase() {
-        new LoadLocationsAsyncTask(this).execute();
+        new LoadLocationsAsyncTask(this, App.getInstance().getApplicationContext()).execute();
     }
 
     @Override
     public void filterLocations(String pattern) {
-        new SearchFilterAsyncTask(this).execute(pattern);
+        new SearchFilterAsyncTask(this, App.getInstance().getApplicationContext()).execute(pattern);
     }
 
     @Override
@@ -47,17 +49,21 @@ public class LocationsListPresenter
 
     @Override
     public void onFailure(Exception e) {
-        Log.d(TAG, "onFailure: ");
+        ExceptionHandlerUtil.throwException(e);
+        ExceptionHandlerUtil.logStackTrace(e);
     }
 
     static class LoadLocationsAsyncTask extends AsyncTask<Void, Void, List<LocationDbModel>> {
+
         private static final String TAG = "LLAT";
 
         private DownloadResponse callback;
         private Exception exception;
+        private Context context;
 
-        LoadLocationsAsyncTask(DownloadResponse callback) {
+        LoadLocationsAsyncTask(DownloadResponse callback, Context context) {
             this.callback = callback;
+            this.context = context;
         }
 
         @Override
@@ -76,8 +82,7 @@ public class LocationsListPresenter
         @Override
         protected List<LocationDbModel> doInBackground(Void... voids) {
             return PersistenceDatabase
-                    .getAppDatabase(App.getInstance()
-                            .getApplicationContext()).locationDao().getAllLocations();
+                    .getAppDatabase(context).locationDao().getAllLocations();
         }
     }
 }

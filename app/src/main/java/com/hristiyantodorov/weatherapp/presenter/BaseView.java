@@ -6,6 +6,6 @@ public interface BaseView<T> {
 
     void showLoader(boolean isVisible);
 
-    void showError(Throwable e);
+    void showError(Exception e);
 
 }

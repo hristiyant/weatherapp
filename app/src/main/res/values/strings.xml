@@ -68,4 +68,15 @@
     <string name="shared_pref_def_value_empty">empty</string>
     <string name="forecast_hourly_summary_windy_txt">Windy</string>
 
+    <string name="all_timestamp_format_full_day_name">EEEE</string>
+    <string name="all_timestamp_format_hours_minutes">HH:mm</string>
+    <string name="forecast_hourly_icon_wind_text">wind</string>
+
+    <!--PersistenceDatabase-->
+    <string name="persistence_database_city_name_tokyo">Tokyo</string>
+    <string name="persistence_database_city_name_new_york">New York</string>
+    <string name="persistence_database_city_name_paris">Paris</string>
+    <string name="persistence_database_city_name_london">London</string>
+    <string name="persistence_database_city_name_sydney">Sydney</string>
+
 </resources>

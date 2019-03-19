@@ -22,7 +22,7 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class NetworkingServiceUtil {
+public class NetworkingService {
 
     private static final String URL_PREFIX = "https://api.darksky.net/forecast/09ab310ab4796f158888f52a6b5fa900/";
     private static final String URL_SUFFIX_CURRENTLY = "?exclude=minutely,hourly,daily,alerts,flags";
@@ -104,17 +104,14 @@ public class NetworkingServiceUtil {
             connection.setRequestMethod("GET");
             connection.setDoInput(true);
             connection.connect();
-            // publishProgress(DownloadCallback.Progress.CONNECT_SUCCESS);
             int responseCode = connection.getResponseCode();
 
             if (responseCode != HttpURLConnection.HTTP_OK) {
                 throw new IOException("Http error code: " + responseCode);
             }
             stream = connection.getInputStream();
-            // publishProgress(DownloadCallback.Progress.GET_INPUT_STREAM_SUCCESS, 0);
             if (stream != null) {
                 result = readJsonStream(new InputStreamReader(stream, "UTF-8"));
-                //publishProgress(DownloadCallback.Progress.PROCESS_INPUT_STREAM_SUCCESS, 0);
             }
         } finally {
             if (stream != null) {
@@ -127,7 +124,12 @@ public class NetworkingServiceUtil {
         return result;
     }
 
-    //Converts the contents of an InputStream to the desired data model class
+    /**Converts the contents of an InputStream to the desired data model class
+     *
+     * @param inputStreamReader
+     * @return
+     * @throws IOException
+     */
     private static WeatherData readJsonStream(InputStreamReader inputStreamReader) throws IOException {
         JsonReader jsonReader = new JsonReader(inputStreamReader);
         return readFullData(jsonReader);

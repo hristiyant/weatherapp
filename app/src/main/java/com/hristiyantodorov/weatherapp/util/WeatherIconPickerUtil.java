@@ -15,25 +15,25 @@ public class WeatherIconPickerUtil {
     @DrawableRes
     public static int pickWeatherIcon(String icon) {
         switch (icon) {
-            case "clear-day":
+            case Constants.ICON_CLEAR_DAY:
                 return R.drawable.ic_clear_day;
-            case "clear-night":
+            case Constants.ICON_CLEAR_NIGHT:
                 return R.drawable.ic_clear_night;
-            case "rain":
+            case Constants.ICON_RAIN:
                 return R.drawable.ic_rain;
-            case "snow":
+            case Constants.ICON_SNOW:
                 return R.drawable.ic_snow;
-            case "sleet":
+            case Constants.ICON_SLEET:
                 return R.drawable.ic_sleet;
-            case "wind":
+            case Constants.ICON_WIND:
                 return R.drawable.ic_wind;
-            case "fog":
+            case Constants.ICON_FOG:
                 return R.drawable.ic_fog;
-            case "cloudy":
+            case Constants.ICON_CLOUDY:
                 return R.drawable.ic_cloudy;
-            case "partly-cloudy-day":
+            case Constants.ICON_PARTLY_CLOUDY_DAY:
                 return R.drawable.ic_partly_cloudy_day;
-            case "partly-cloudy-night":
+            case Constants.ICON_PARTLY_CLOUDY_NIGHT:
                 return R.drawable.ic_partly_cloudy_night;
             default:
                 return 0;

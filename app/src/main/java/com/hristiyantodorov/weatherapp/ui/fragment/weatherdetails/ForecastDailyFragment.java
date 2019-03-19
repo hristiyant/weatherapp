@@ -14,7 +14,8 @@ import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.weatherdetails.ForecastDailyAdapter;
 import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
 import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
-import com.hristiyantodorov.weatherapp.networking.service.NetworkingServiceUtil;
+import com.hristiyantodorov.weatherapp.networking.service.NetworkingService;
+import com.hristiyantodorov.weatherapp.ui.ExceptionHandlerUtil;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 import com.hristiyantodorov.weatherapp.util.Constants;
@@ -32,7 +33,7 @@ public class ForecastDailyFragment extends BaseFragment implements DownloadRespo
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    ForecastDailyAdapter dailyAdapter;
+    private ForecastDailyAdapter dailyAdapter;
 
     public static ForecastDailyFragment newInstance() {
         return new ForecastDailyFragment();
@@ -50,7 +51,7 @@ public class ForecastDailyFragment extends BaseFragment implements DownloadRespo
                 App.getInstance().getApplicationContext(), DividerItemDecoration.VERTICAL
         ));
 
-        new NetworkingServiceUtil().getWeatherDataDaily(
+        new NetworkingService().getWeatherDataDaily(
                 this,
                 SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
                 SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null)
@@ -76,13 +77,14 @@ public class ForecastDailyFragment extends BaseFragment implements DownloadRespo
 
     @Override
     public void onFailure(Exception e) {
-// TODO: 3/1/2019 CURRENTLY NOT BEING USED
+        ExceptionHandlerUtil.throwException(e);
+        ExceptionHandlerUtil.logStackTrace(e);
     }
 
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        new NetworkingServiceUtil().getWeatherDataDaily(this,
+        new NetworkingService().getWeatherDataDaily(this,
                 SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
                 SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null)
         );

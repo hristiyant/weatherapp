@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.model.weather.WeatherDataCurrently;
+import com.hristiyantodorov.weatherapp.util.Constants;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherIconPickerUtil;
 
@@ -24,6 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ForecastHourlyAdapter extends RecyclerView.Adapter<ForecastHourlyAdapter.WeatherDetailsItemHolder> {
+
     private List<WeatherDataCurrently> itemsList;
 
     public ForecastHourlyAdapter() {
@@ -77,12 +79,12 @@ public class ForecastHourlyAdapter extends RecyclerView.Adapter<ForecastHourlyAd
         @SuppressLint("SetTextI18n")
         void bind(WeatherDataCurrently item) {
 
-            String timeStamp = new SimpleDateFormat("HH:mm")
-                    .format(new java.util.Date(item.getTime() * 1000));
+            String timeStamp = new SimpleDateFormat(App.getInstance().getString(R.string.all_timestamp_format_hours_minutes))
+                    .format(new java.util.Date(item.getTime() * Constants.TIMESTAMP_MILLIS_MULTIPLIER));
             txtTime.setText(timeStamp);
             txtTemperature.setText(Html.fromHtml(WeatherDataFormatterUtil
                     .convertFahrenheitToCelsius(item.getTemperature()) + "<sup>\u00B0c</sup>"));
-            if (item.getIcon().equals("wind")) {
+            if (item.getIcon().equals(App.getInstance().getString(R.string.forecast_hourly_icon_wind_text))) {
                 txtSummary.setText(App.getInstance().getString(R.string.forecast_hourly_summary_windy_txt));
             } else {
                 txtSummary.setText(item.getSummary());

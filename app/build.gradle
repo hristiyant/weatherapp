@@ -38,6 +38,8 @@ android {
 ext {
     room_version = "1.1.1"
     glide_version = "4.9.0"
+    picasso_version = "2.71828"
+    stream_version = "1.2.1"
 }
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -86,8 +88,8 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 
     //Picasso
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation "com.squareup.picasso:picasso:$picasso_version"
 
     //StreamOf
-    implementation 'com.annimon:stream:1.2.1'
+    implementation "com.annimon:stream:$stream_version"
 }

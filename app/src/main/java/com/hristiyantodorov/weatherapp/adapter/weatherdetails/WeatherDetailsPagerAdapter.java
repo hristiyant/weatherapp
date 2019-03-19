@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly.ForecastHourlyContracts;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly.ForecastHourlyPresenter;
 import com.hristiyantodorov.weatherapp.ui.fragment.settings.SettingsFragment;
 import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.ForecastDailyFragment;
 import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.ForecastHourlyFragment;
@@ -33,9 +32,7 @@ public class WeatherDetailsPagerAdapter extends FragmentPagerAdapter {
             case FORECAST_TAB_DETAILED:
                 return WeatherDetailsFragment.newInstance();
             case FORECAST_TAB_HOURLY:
-                ForecastHourlyFragment fragment = ForecastHourlyFragment.newInstance();
-                forecastHourlyPresenter = new ForecastHourlyPresenter(fragment);
-                return fragment;
+                return ForecastHourlyFragment.newInstance();
             case FORECAST_TAB_DAILY:
                 return ForecastDailyFragment.newInstance();
             case FORECAST_TAB_SETTINGS:

@@ -13,6 +13,7 @@ public class UserService implements UserRepository {
 
     private static UserDao userDao;
     private Executor executor;
+
     public UserService(UserDao userDao) {
         UserService.userDao = userDao;
         executor = AppExecutorUtil.getInstance();

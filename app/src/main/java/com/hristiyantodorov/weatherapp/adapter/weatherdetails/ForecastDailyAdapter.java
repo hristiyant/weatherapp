@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.model.weather.WeatherDataDaily;
+import com.hristiyantodorov.weatherapp.util.Constants;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherIconPickerUtil;
 
@@ -22,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ForecastDailyAdapter extends RecyclerView.Adapter<ForecastDailyAdapter.WeatherDetailsItemHolder> {
+    
     private List<WeatherDataDaily> itemsList;
 
     public ForecastDailyAdapter() {
@@ -70,8 +73,8 @@ public class ForecastDailyAdapter extends RecyclerView.Adapter<ForecastDailyAdap
 
         void bind(WeatherDataDaily item) {
 
-            String timeStamp = new SimpleDateFormat("EEEE")
-                    .format(new java.util.Date(item.getTime() * 1000));
+            String timeStamp = new SimpleDateFormat(App.getInstance().getString(R.string.all_timestamp_format_full_day_name))
+                    .format(new java.util.Date(item.getTime() * Constants.TIMESTAMP_MILLIS_MULTIPLIER));
             txtTime.setText(timeStamp.substring(0, 3));
             txtTemperature.setText(
                     Html.fromHtml(WeatherDataFormatterUtil.convertFahrenheitToCelsius(item.getTemperatureMax())

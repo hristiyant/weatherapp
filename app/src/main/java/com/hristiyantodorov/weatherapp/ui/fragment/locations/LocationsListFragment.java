@@ -118,24 +118,21 @@ public class LocationsListFragment extends BaseFragment
     private TextWatcher filterTextWatcher = new TextWatcher() {
         @Override
         public void afterTextChanged(Editable arg0) {
-            // user typed: start the timer
             txtNoResultsFound.setVisibility(View.GONE);
             showLoader(true);
             timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    // do your actual work here
                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
                         String pattern = edtFilter.getText().toString().toLowerCase();
                         presenter.filterLocations(pattern);
                         Log.d(TAG, "run: presenter.filterLocations");
                     });
-                    // hide keyboard when recyclerView is visible
                     InputMethodManager in = (InputMethodManager) App.getInstance().getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     in.hideSoftInputFromWindow(edtFilter.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 }
-            }, 300); // 300ms delay before the timer executes the "run" method from TimerTask
+            }, Constants.DEBOUNCE_DELAY_MILLIS);
         }
 
         @Override
@@ -145,7 +142,6 @@ public class LocationsListFragment extends BaseFragment
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            // user is typing: reset already started timer (if existing)
             if (timer != null) {
                 timer.cancel();
                 Log.d(TAG, "onTextChanged: resetting timer");

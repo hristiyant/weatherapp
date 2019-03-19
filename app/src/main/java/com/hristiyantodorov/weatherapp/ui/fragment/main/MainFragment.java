@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.ui.ExceptionHandlerUtil;
 import com.hristiyantodorov.weatherapp.ui.activity.locations.LocationsListActivity;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
@@ -63,7 +64,8 @@ public class MainFragment extends BaseFragment implements LocationListener {
         try {
             CurrentLocationPickerUtil.getCurrentLocation(App.getInstance().getApplicationContext(), this);
         } catch (IOException e) {
-            e.printStackTrace();
+            ExceptionHandlerUtil.logStackTrace(e);
+            ExceptionHandlerUtil.logStackTrace(e);
         }
         startActivity(new Intent(getActivity(), WeatherDetailsActivity.class));
     }
@@ -107,17 +109,17 @@ public class MainFragment extends BaseFragment implements LocationListener {
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-// TODO: 2/28/2019 CURRENTLY NOT BEING USED
+        // TODO: 2/28/2019 CURRENTLY NOT BEING USED
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-// TODO: 2/28/2019 CURRENTLY NOT BEING USED
+        // TODO: 2/28/2019 CURRENTLY NOT BEING USED
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-// TODO: 2/28/2019 CURRENTLY NOT BEING USED
+        // TODO: 2/28/2019 CURRENTLY NOT BEING USED
     }
 
 }

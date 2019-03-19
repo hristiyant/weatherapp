@@ -19,7 +19,7 @@
 
     <!-- Login Screen Layout -->
     <dimen name="login_screen_icon_padding">10dp</dimen>
-    <dimen name="login_screen_line_text_text_size_">16sp</dimen>
+    <dimen name="login_screen_line_text_text_size">16sp</dimen>
 
     <!-- Main Screen Layout -->
     <dimen name="main_screen_labels_size">30sp</dimen>
@@ -48,5 +48,6 @@
 
     <!--Locations List Item-->
     <dimen name="item_locations_list_height">100dp</dimen>
-
+    
+    <dimen name="rows_item_forecast_summary">3</dimen>
 </resources>

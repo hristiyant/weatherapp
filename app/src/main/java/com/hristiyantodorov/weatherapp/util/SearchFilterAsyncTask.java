@@ -1,11 +1,11 @@
 package com.hristiyantodorov.weatherapp.util;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
-import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
 import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
 import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
@@ -13,18 +13,21 @@ import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
 import java.util.List;
 
 public class SearchFilterAsyncTask extends AsyncTask<String, Void, List<LocationDbModel>> {
+
     private static final String TAG = "SFAT";
 
     private DownloadResponse callback;
     private Exception exception;
+    private Context context;
 
-    public SearchFilterAsyncTask(DownloadResponse callback) {
+    public SearchFilterAsyncTask(DownloadResponse callback,Context context) {
         this.callback = callback;
+        this.context = context;
     }
 
     @Override
     protected List<LocationDbModel> doInBackground(String... strings) {
-        List<LocationDbModel> locations = PersistenceDatabase.getAppDatabase(App.getInstance().getApplicationContext())
+        List<LocationDbModel> locations = PersistenceDatabase.getAppDatabase(context)
                 .locationDao().getAllLocations();
 
         List<LocationDbModel> filteredLocations = Stream.of(locations)

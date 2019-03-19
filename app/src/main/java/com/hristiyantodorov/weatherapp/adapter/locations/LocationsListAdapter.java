@@ -13,7 +13,7 @@ import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
 import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
-import com.hristiyantodorov.weatherapp.networking.service.NetworkingServiceUtil;
+import com.hristiyantodorov.weatherapp.networking.service.NetworkingService;
 import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherIconPickerUtil;
@@ -34,9 +34,8 @@ public class LocationsListAdapter
     @NonNull
     @Override
     public LocationsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_locations_list, viewGroup, false);
-        return new LocationsViewHolder(view);
+        return new LocationsViewHolder(LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.item_locations_list, viewGroup, false));
     }
 
     @Override
@@ -68,7 +67,7 @@ public class LocationsListAdapter
         }
 
         void bind(LocationDbModel location) {
-            new NetworkingServiceUtil().getWeatherDataCurrently(this,
+            new NetworkingService().getWeatherDataCurrently(this,
                     String.valueOf(location.getLatitude()),
                     String.valueOf(location.getLongitude())
             );
@@ -86,17 +85,21 @@ public class LocationsListAdapter
 
         @Override
         public void onSuccess(WeatherData result) {
-            txtCurrentTemperature
-                    .setText(App.getInstance().getApplicationContext()
-                            .getString(R.string.txt_current_temp_celsius,
-                                    WeatherDataFormatterUtil.convertFahrenheitToCelsius(result
-                                            .getCurrently()
-                                            .getTemperature())));
-            imgWeatherIcon
-                    .setImageResource(WeatherIconPickerUtil.pickWeatherIcon(result
-                            .getCurrently()
-                            .getIcon()));
-            txtCityName.setText(location.getName());
+            if(result == null) {
+
+            } else {
+                txtCurrentTemperature
+                        .setText(App.getInstance().getApplicationContext()
+                                .getString(R.string.txt_current_temp_celsius,
+                                        WeatherDataFormatterUtil.convertFahrenheitToCelsius(result
+                                                .getCurrently()
+                                                .getTemperature())));
+                imgWeatherIcon
+                        .setImageResource(WeatherIconPickerUtil.pickWeatherIcon(result
+                                .getCurrently()
+                                .getIcon()));
+                txtCityName.setText(location.getName());
+            }
         }
 
         @Override

@@ -14,6 +14,8 @@ import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.weatherdetails.ForecastHourlyAdapter;
 import com.hristiyantodorov.weatherapp.model.weather.WeatherDataCurrently;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly.ForecastHourlyContracts;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly.ForecastHourlyPresenter;
+import com.hristiyantodorov.weatherapp.ui.ExceptionHandlerUtil;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 
@@ -41,6 +43,7 @@ public class ForecastHourlyFragment extends BaseFragment implements ForecastHour
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        new ForecastHourlyPresenter(this);
         super.onViewCreated(view, savedInstanceState);
         hourlyAdapter = new ForecastHourlyAdapter();
 
@@ -86,8 +89,9 @@ public class ForecastHourlyFragment extends BaseFragment implements ForecastHour
     }
 
     @Override
-    public void showError(Throwable e) {
-
+    public void showError(Exception e) {
+        ExceptionHandlerUtil.throwException(e);
+        ExceptionHandlerUtil.logStackTrace(e);
     }
 
     @Override
