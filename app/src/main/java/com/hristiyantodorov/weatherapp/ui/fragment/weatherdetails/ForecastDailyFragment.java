@@ -65,15 +65,20 @@ public class ForecastDailyFragment extends BaseFragment implements DownloadRespo
 
     @Override
     public void onSuccess(WeatherData result) {
-        dailyAdapter.addAll(result.getDaily().getData());
-        dailyAdapter.notifyDataSetChanged();
+        if (result == null) {
+            showErrorDialog(getContext(), App.getInstance()
+                    .getString(R.string.all_alert_dialog_not_found_message));
+        } else {
+            dailyAdapter.addAll(result.getDaily().getData());
+            dailyAdapter.notifyDataSetChanged();
 
-        ((WeatherDetailsActivity) Objects.requireNonNull(getActivity())).refreshLastUpdated();
+            ((WeatherDetailsActivity) Objects.requireNonNull(getActivity())).refreshLastUpdated();
+        }
     }
 
     @Override
     public void onFailure(Exception e) {
-        showErrorDialog(getContext(),e.getMessage());
+        showErrorDialog(getContext(), e.getMessage());
         ExceptionHandlerUtil.logStackTrace(e);
     }
 

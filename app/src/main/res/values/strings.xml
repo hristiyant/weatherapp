@@ -79,4 +79,6 @@
     <string name="persistence_database_city_name_london">London</string>
     <string name="persistence_database_city_name_sydney">Sydney</string>
 
+    <string name="all_alert_dialog_not_found_message">No data found.</string>
+
 </resources>

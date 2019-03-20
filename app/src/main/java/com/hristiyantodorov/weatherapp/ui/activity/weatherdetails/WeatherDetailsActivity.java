@@ -9,6 +9,7 @@ import android.text.Html;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.weatherdetails.WeatherDetailsPagerAdapter;
 import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
@@ -84,20 +85,24 @@ public class WeatherDetailsActivity extends BaseActivity implements DownloadResp
 
     @Override
     public void onSuccess(WeatherData result) {
-        weatherData = result;
-        txtLocationName.setText(SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_NAME,
-                "Current Location"));
-        txtSummary.setText(weatherData.getCurrently().getSummary());
-        txtCurrentTemp.setText(Html.fromHtml(WeatherDataFormatterUtil
-                .convertFahrenheitToCelsius(result.getCurrently().getTemperature()))
-                + "<sup>\u00B0c</sup>");
-        String currentTimeStamp = DateFormat
-                .getTimeInstance(SimpleDateFormat.MEDIUM, Locale.getDefault())
-                .format(new java.util.Date());
-        txtLastUpdated.setText(getString(R.string.txt_last_updated, currentTimeStamp));
-        txtWindSpeed.setText(getString(R.string.txt_current_wind_speed, WeatherDataFormatterUtil.convertMphToMs(result.getCurrently().getWindSpeed())));
-        imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(result.getCurrently()
-                .getIcon()));
+        if (result == null) {
+            showErrorDialog(this, App.getInstance().getString(R.string.all_alert_dialog_not_found_message));
+        } else {
+            weatherData = result;
+            txtLocationName.setText(SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_NAME,
+                    "Current Location"));
+            txtSummary.setText(weatherData.getCurrently().getSummary());
+            txtCurrentTemp.setText(Html.fromHtml(WeatherDataFormatterUtil
+                    .convertFahrenheitToCelsius(result.getCurrently().getTemperature()))
+                    + "<sup>\u00B0c</sup>");
+            String currentTimeStamp = DateFormat
+                    .getTimeInstance(SimpleDateFormat.MEDIUM, Locale.getDefault())
+                    .format(new java.util.Date());
+            txtLastUpdated.setText(getString(R.string.txt_last_updated, currentTimeStamp));
+            txtWindSpeed.setText(getString(R.string.txt_current_wind_speed, WeatherDataFormatterUtil.convertMphToMs(result.getCurrently().getWindSpeed())));
+            imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(result.getCurrently()
+                    .getIcon()));
+        }
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
 import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
@@ -54,7 +55,8 @@ public class WeatherDetailsFragment extends BaseFragment implements DownloadResp
     @Override
     public void onSuccess(WeatherData result) {
         if (result == null) {
-            // TODO: 19.3.2019 HANDLE NULL CASE
+            showErrorDialog(getContext(), App.getInstance()
+                    .getString(R.string.all_alert_dialog_not_found_message));
         } else {
             txtTemperature.setText(getString(R.string.txt_temperature,
                     WeatherDataFormatterUtil.convertFahrenheitToCelsius(result.getCurrently().getTemperature())));

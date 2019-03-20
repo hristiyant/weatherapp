@@ -1,5 +1,7 @@
 package com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly;
 
+import com.hristiyantodorov.weatherapp.App;
+import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
 import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
 import com.hristiyantodorov.weatherapp.networking.service.NetworkingService;
@@ -24,6 +26,10 @@ public class ForecastHourlyPresenter implements ForecastHourlyContracts.Presente
 
     @Override
     public void onSuccess(WeatherData object) {
+        if(object == null){
+            view.showErrorDialog( App.getInstance()
+                    .getString(R.string.all_alert_dialog_not_found_message));
+        }
         view.showForecastHourlyData(object.getHourly().getData());
     }
 

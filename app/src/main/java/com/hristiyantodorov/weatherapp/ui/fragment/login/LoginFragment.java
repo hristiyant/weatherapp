@@ -149,7 +149,12 @@ public class LoginFragment extends BaseFragment
     @Override
     public void onSuccess(List<LocationDbModel> output) {
         if (isAdded()) {
-            results.addAll(output);
+            if (output == null) {
+                showErrorDialog(getContext(), App.getInstance()
+                        .getString(R.string.all_alert_dialog_not_found_message));
+            } else {
+                results.addAll(output);
+            }
         }
     }
 
