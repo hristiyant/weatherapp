@@ -32,17 +32,17 @@ public class NetworkingService {
     private String latitude = SharedPrefUtil.read("MY_LATITUDE", null);
     private String longitude = SharedPrefUtil.read("MY_LONGITUDE", null);
 
-    public void getWeatherDataCurrently(DownloadResponse callback, String latitude, String longitude) {
+    public void getWeatherDataCurrently(DownloadResponse callback) {
         String url = URL_PREFIX + latitude + "," + longitude + URL_SUFFIX_CURRENTLY;
         new DownloadTaskCurrently(callback).execute(url);
     }
 
-    public void getWeatherDataHourly(DownloadResponse callback, String latitude, String longitude) {
+    public void getWeatherDataHourly(DownloadResponse callback) {
         String url = URL_PREFIX + latitude + "," + longitude + URL_SUFFIX_HOURLY;
         new DownloadTaskCurrently(callback).execute(url);
     }
 
-    public void getWeatherDataDaily(DownloadResponse callback, String latitude, String longitude) {
+    public void getWeatherDataDaily(DownloadResponse callback) {
         String url = URL_PREFIX + latitude + "," + longitude + URL_SUFFIX_DAILY;
         new DownloadTaskCurrently(callback).execute(url);
     }

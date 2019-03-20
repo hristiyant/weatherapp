@@ -52,9 +52,7 @@ public class WeatherDetailsActivity extends BaseActivity implements DownloadResp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String currentLocationLat = SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null);
-        String currentLocationLon = SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null);
-        new NetworkingService().getWeatherDataCurrently(WeatherDetailsActivity.this, currentLocationLat, currentLocationLon);
+        new NetworkingService().getWeatherDataCurrently(WeatherDetailsActivity.this);
 
         WeatherDetailsPagerAdapter weatherDetailsPagerAdapter =
                 new WeatherDetailsPagerAdapter(getSupportFragmentManager());

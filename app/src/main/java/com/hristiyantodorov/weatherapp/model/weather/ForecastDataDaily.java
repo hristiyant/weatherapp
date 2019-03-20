@@ -10,6 +10,8 @@ public class ForecastDataDaily extends ForecastData implements Parcelable {
 
     private List<WeatherDataDaily> data = new ArrayList<>();
 
+    public ForecastDataDaily(){}
+
     public List<WeatherDataDaily> getData() {
         return data;
     }

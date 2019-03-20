@@ -15,6 +15,9 @@ public class WeatherData implements Parcelable {
     private ForecastDataHourly hourly;
     private ForecastDataDaily daily;
 
+    public WeatherData(){
+    }
+
     public double getLatitude() {
         return latitude;
     }

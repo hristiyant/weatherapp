@@ -18,6 +18,8 @@ public class ForecastDataHourly extends ForecastData implements Parcelable {
         this.data = data;
     }
 
+    public ForecastDataHourly(){}
+
     @Override
     public int describeContents() {
         return 0;

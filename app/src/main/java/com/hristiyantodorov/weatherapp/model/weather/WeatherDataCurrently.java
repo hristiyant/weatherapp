@@ -17,6 +17,8 @@ public class WeatherDataCurrently implements Parcelable {
     private double pressure;
     private double windSpeed;
 
+    public WeatherDataCurrently(){}
+
     public long getTime() {
         return time;
     }

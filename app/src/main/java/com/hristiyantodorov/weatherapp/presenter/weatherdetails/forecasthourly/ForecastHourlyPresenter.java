@@ -4,8 +4,6 @@ import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
 import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
 import com.hristiyantodorov.weatherapp.networking.service.NetworkingService;
 import com.hristiyantodorov.weatherapp.ui.ExceptionHandlerUtil;
-import com.hristiyantodorov.weatherapp.util.Constants;
-import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 
 public class ForecastHourlyPresenter implements ForecastHourlyContracts.Presenter, DownloadResponse<WeatherData> {
 
@@ -20,9 +18,7 @@ public class ForecastHourlyPresenter implements ForecastHourlyContracts.Presente
     public void loadForecastHourlyData() {
         view.showLoader(true);
         new NetworkingService().getWeatherDataHourly(
-                this,
-                SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
-                SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null)
+                this
         );
     }
 

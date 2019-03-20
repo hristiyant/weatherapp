@@ -17,6 +17,8 @@ public class WeatherDataDaily implements Parcelable {
     private long temperatureMinTime;
     private long temperatureMaxTime;
 
+    public WeatherDataDaily(){}
+
     public long getTime() {
         return time;
     }
