@@ -103,7 +103,7 @@ public class LocationsListFragment extends BaseFragment
     }
 
     @Override
-    public void showError(Throwable e) {
+    public void showError(Exception e) {
         if (isAdded()) {
             showErrorDialog(getContext(), e.getMessage());
         }

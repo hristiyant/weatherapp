@@ -77,7 +77,7 @@ public class ForecastDailyFragment extends BaseFragment implements DownloadRespo
 
     @Override
     public void onFailure(Exception e) {
-        ExceptionHandlerUtil.throwException(e);
+        showErrorDialog(getContext(),e.getMessage());
         ExceptionHandlerUtil.logStackTrace(e);
     }
 

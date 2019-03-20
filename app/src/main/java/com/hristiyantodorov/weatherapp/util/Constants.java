@@ -1,6 +1,7 @@
 package com.hristiyantodorov.weatherapp.util;
 
 public class Constants {
+
     public static final String EXTRA_KEY_LATITUDE = "EXTRA_LATITUDE";
     public static final String EXTRA_KEY_LONGITUDE = "EXTRA_LONGITUDE";
 

@@ -49,7 +49,7 @@ public class LocationsListPresenter
 
     @Override
     public void onFailure(Exception e) {
-        ExceptionHandlerUtil.throwException(e);
+        view.showError(e);
         ExceptionHandlerUtil.logStackTrace(e);
     }
 

@@ -1,6 +1,9 @@
 package com.hristiyantodorov.weatherapp.model.weather;
 
-public class WeatherDataDaily {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class WeatherDataDaily implements Parcelable {
 
     private long time;
     private String summary;
@@ -101,4 +104,52 @@ public class WeatherDataDaily {
     public void setTemperatureMaxTime(long temperatureMaxTime) {
         this.temperatureMaxTime = temperatureMaxTime;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(time);
+        dest.writeString(summary);
+        dest.writeString(icon);
+        dest.writeLong(sunriseTime);
+        dest.writeLong(sunsetTime);
+        dest.writeDouble(humidity);
+        dest.writeDouble(windSpeed);
+        dest.writeDouble(temperatureMin);
+        dest.writeDouble(temperatureMax);
+        dest.writeLong(temperatureMinTime);
+        dest.writeLong(temperatureMaxTime);
+    }
+
+    protected WeatherDataDaily(Parcel in) {
+        this.time = in.readLong();
+        this.summary = in.readString();
+        this.icon = in.readString();
+        this.sunriseTime = in.readLong();
+        this.sunsetTime = in.readLong();
+        this.humidity = in.readDouble();
+        this.windSpeed = in.readDouble();
+        this.temperatureMin = in.readDouble();
+        this.temperatureMax = in.readDouble();
+        this.temperatureMinTime = in.readLong();
+        this.temperatureMaxTime = in.readLong();
+    }
+
+    public static final Parcelable.Creator<WeatherDataDaily> CREATOR =
+            new Parcelable.Creator<WeatherDataDaily>() {
+
+                @Override
+                public WeatherDataDaily createFromParcel(Parcel source) {
+                    return new WeatherDataDaily(source);
+                }
+
+                @Override
+                public WeatherDataDaily[] newArray(int size) {
+                    return new WeatherDataDaily[size];
+                }
+            };
 }

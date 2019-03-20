@@ -104,7 +104,7 @@ public class WeatherDetailsActivity extends BaseActivity implements DownloadResp
 
     @Override
     public void onFailure(Exception e) {
-        ExceptionHandlerUtil.throwException(e);
+        showErrorDialog(this, e.getMessage());
         ExceptionHandlerUtil.logStackTrace(e);
     }
 

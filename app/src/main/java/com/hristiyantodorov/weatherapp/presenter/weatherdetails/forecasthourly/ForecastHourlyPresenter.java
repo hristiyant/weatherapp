@@ -33,7 +33,7 @@ public class ForecastHourlyPresenter implements ForecastHourlyContracts.Presente
 
     @Override
     public void onFailure(Exception e) {
-        ExceptionHandlerUtil.throwException(e);
+        view.showError(e);
         ExceptionHandlerUtil.logStackTrace(e);
     }
 }

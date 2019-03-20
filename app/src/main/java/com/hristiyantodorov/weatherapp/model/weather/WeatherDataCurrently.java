@@ -1,11 +1,12 @@
 package com.hristiyantodorov.weatherapp.model.weather;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Model class for storing ONLY the current weather data received from the API
  */
-public class WeatherDataCurrently implements Serializable {
+public class WeatherDataCurrently implements Parcelable {
 
     private long time;
     private String summary;
@@ -79,4 +80,46 @@ public class WeatherDataCurrently implements Serializable {
     public void setWindSpeed(double windSpeed) {
         this.windSpeed = windSpeed;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(time);
+        dest.writeString(summary);
+        dest.writeString(icon);
+        dest.writeDouble(temperature);
+        dest.writeDouble(apparentTemperature);
+        dest.writeDouble(humidity);
+        dest.writeDouble(pressure);
+        dest.writeDouble(windSpeed);
+    }
+
+    protected WeatherDataCurrently(Parcel in) {
+        this.time = in.readLong();
+        this.summary = in.readString();
+        this.icon = in.readString();
+        this.temperature = in.readDouble();
+        this.apparentTemperature = in.readDouble();
+        this.humidity = in.readDouble();
+        this.pressure = in.readDouble();
+        this.windSpeed = in.readDouble();
+    }
+
+    public static final Parcelable.Creator<WeatherDataCurrently> CREATOR =
+            new Parcelable.Creator<WeatherDataCurrently>() {
+
+                @Override
+                public WeatherDataCurrently createFromParcel(Parcel source) {
+                    return new WeatherDataCurrently(source);
+                }
+
+                @Override
+                public WeatherDataCurrently[] newArray(int size) {
+                    return new WeatherDataCurrently[size];
+                }
+            };
 }

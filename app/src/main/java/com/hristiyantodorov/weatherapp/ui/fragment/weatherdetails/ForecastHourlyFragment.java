@@ -90,7 +90,7 @@ public class ForecastHourlyFragment extends BaseFragment implements ForecastHour
 
     @Override
     public void showError(Exception e) {
-        ExceptionHandlerUtil.throwException(e);
+        showErrorDialog(getContext(),e.getMessage());
         ExceptionHandlerUtil.logStackTrace(e);
     }
 

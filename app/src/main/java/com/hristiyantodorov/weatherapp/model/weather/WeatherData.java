@@ -1,11 +1,12 @@
 package com.hristiyantodorov.weatherapp.model.weather;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Model class for storing the entire data received from the API
  */
-public class WeatherData implements Serializable {
+public class WeatherData implements Parcelable {
 
     private double latitude;
     private double longitude;
@@ -61,4 +62,41 @@ public class WeatherData implements Serializable {
     public void setDaily(ForecastDataDaily daily) {
         this.daily = daily;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
+        dest.writeParcelable(currently, flags);
+        dest.writeParcelable(hourly, flags);
+        dest.writeParcelable(daily, flags);
+    }
+
+    protected WeatherData(Parcel in) {
+        this.latitude = in.readDouble();
+        this.longitude = in.readDouble();
+        this.timezone = in.readString();
+        this.currently = in.readParcelable(WeatherDataCurrently.class.getClassLoader());
+        this.hourly = in.readParcelable(ForecastDataHourly.class.getClassLoader());
+        this.daily = in.readParcelable(ForecastDataDaily.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<WeatherData> CREATOR =
+            new Parcelable.Creator<WeatherData>() {
+
+                @Override
+                public WeatherData createFromParcel(Parcel source) {
+                    return new WeatherData(source);
+                }
+
+                @Override
+                public WeatherData[] newArray(int size) {
+                    return new WeatherData[size];
+                }
+            };
 }

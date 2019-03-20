@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
-import com.hristiyantodorov.weatherapp.ui.ExceptionHandlerUtil;
 import com.hristiyantodorov.weatherapp.ui.activity.locations.LocationsListActivity;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
@@ -64,8 +63,7 @@ public class MainFragment extends BaseFragment implements LocationListener {
         try {
             CurrentLocationPickerUtil.getCurrentLocation(App.getInstance().getApplicationContext(), this);
         } catch (IOException e) {
-            ExceptionHandlerUtil.logStackTrace(e);
-            ExceptionHandlerUtil.logStackTrace(e);
+            showErrorDialog(getContext(), e.getMessage());
         }
         startActivity(new Intent(getActivity(), WeatherDetailsActivity.class));
     }

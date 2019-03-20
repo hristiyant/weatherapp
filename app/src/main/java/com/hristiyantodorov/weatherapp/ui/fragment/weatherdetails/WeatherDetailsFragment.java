@@ -75,7 +75,7 @@ public class WeatherDetailsFragment extends BaseFragment implements DownloadResp
 
     @Override
     public void onFailure(Exception e) {
-        ExceptionHandlerUtil.throwException(e);
+        showErrorDialog(getContext(),e.getMessage());
         ExceptionHandlerUtil.logStackTrace(e);
     }
 
