@@ -26,17 +26,12 @@ public interface LocationsListContracts {
 
     interface Presenter {
 
+        void loadDbData();
+
         void filterLocations(String pattern, Context context);
 
         void presentLocationsToView(List<LocationDbModel> locations);
 
-        void downloadApiDataForDbModels(Context context);
-
-        void getBasicForecastInfo(LocationDbModel location);
-
-        void updateLocationDbInfo(LocationDbModel location);
-
-        void loadDbData(Context context);
+        void updateLocationDbInfo(LocationDbModel locationDbModel);
     }
-
 }
