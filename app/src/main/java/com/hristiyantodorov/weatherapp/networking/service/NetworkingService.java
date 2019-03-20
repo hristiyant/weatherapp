@@ -3,12 +3,14 @@ package com.hristiyantodorov.weatherapp.networking.service;
 import android.os.AsyncTask;
 import android.util.JsonReader;
 
+import com.hristiyantodorov.weatherapp.BuildConfig;
 import com.hristiyantodorov.weatherapp.model.weather.ForecastDataDaily;
 import com.hristiyantodorov.weatherapp.model.weather.ForecastDataHourly;
 import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
 import com.hristiyantodorov.weatherapp.model.weather.WeatherDataCurrently;
 import com.hristiyantodorov.weatherapp.model.weather.WeatherDataDaily;
 import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
+import com.hristiyantodorov.weatherapp.util.Constants;
 import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 
 import java.io.IOException;
@@ -24,26 +26,21 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class NetworkingService {
 
-    private static final String URL_PREFIX = "https://api.darksky.net/forecast/09ab310ab4796f158888f52a6b5fa900/";
-    private static final String URL_SUFFIX_CURRENTLY = "?exclude=minutely,hourly,daily,alerts,flags";
-    private static final String URL_SUFFIX_HOURLY = "?exclude=currently,minutely,daily,alerts,flags";
-    private static final String URL_SUFFIX_DAILY = "?exclude=currently,minutely,hourly,alerts,flags";
-
-    private String latitude = SharedPrefUtil.read("MY_LATITUDE", null);
-    private String longitude = SharedPrefUtil.read("MY_LONGITUDE", null);
+    private String latitude = SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null);
+    private String longitude = SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null);
 
     public void getWeatherDataCurrently(DownloadResponse callback) {
-        String url = URL_PREFIX + latitude + "," + longitude + URL_SUFFIX_CURRENTLY;
+        String url = BuildConfig.BaseUrl + BuildConfig.ApiKey + latitude + "," + longitude + BuildConfig.UrlSuffixCurrently;
         new DownloadTaskCurrently(callback).execute(url);
     }
 
     public void getWeatherDataHourly(DownloadResponse callback) {
-        String url = URL_PREFIX + latitude + "," + longitude + URL_SUFFIX_HOURLY;
+        String url = BuildConfig.BaseUrl + BuildConfig.ApiKey + latitude + "," + longitude + BuildConfig.UrlSuffixHourly;
         new DownloadTaskCurrently(callback).execute(url);
     }
 
     public void getWeatherDataDaily(DownloadResponse callback) {
-        String url = URL_PREFIX + latitude + "," + longitude + URL_SUFFIX_DAILY;
+        String url = BuildConfig.BaseUrl + BuildConfig.ApiKey + latitude + "," + longitude + BuildConfig.UrlSuffixDaily;
         new DownloadTaskCurrently(callback).execute(url);
     }
 
@@ -143,22 +140,22 @@ public class NetworkingService {
         while (reader.hasNext()) {
             String name = reader.nextName();
             switch (name) {
-                case "latitude":
+                case Constants.LATITUDE:
                     weatherData.setLatitude(reader.nextDouble());
                     break;
-                case "longitude":
+                case Constants.LONGITUDE:
                     weatherData.setLongitude(reader.nextDouble());
                     break;
-                case "timezone":
+                case Constants.TIMEZONE:
                     weatherData.setTimezone(reader.nextString());
                     break;
-                case "currently":
+                case Constants.CURRENTLY:
                     weatherData.setCurrently(readItemHourly(reader));
                     break;
-                case "hourly":
+                case Constants.HOURLY:
                     weatherData.setHourly(readForecastHourly(reader));
                     break;
-                case "daily":
+                case Constants.DAILY:
                     weatherData.setDaily(readForecastDaily(reader));
                     break;
                 default:
@@ -177,13 +174,13 @@ public class NetworkingService {
         while (reader.hasNext()) {
             String name = reader.nextName();
             switch (name) {
-                case "summary":
+                case Constants.SUMMARY:
                     result.setSummary(reader.nextString());
                     break;
-                case "icon":
+                case Constants.ICON:
                     result.setIcon(reader.nextString());
                     break;
-                case "data":
+                case Constants.DATA:
                     result.setData(readHourly(reader));
                     break;
                 default:
@@ -214,28 +211,28 @@ public class NetworkingService {
         while (reader.hasNext()) {
             String name = reader.nextName();
             switch (name) {
-                case "time":
+                case Constants.TIME:
                     forecastDataCurrently.setTime(reader.nextInt());
                     break;
-                case "summary":
+                case Constants.SUMMARY:
                     forecastDataCurrently.setSummary(reader.nextString());
                     break;
-                case "icon":
+                case Constants.ICON:
                     forecastDataCurrently.setIcon(reader.nextString());
                     break;
-                case "temperature":
+                case Constants.TEMPERATURE:
                     forecastDataCurrently.setTemperature(reader.nextDouble());
                     break;
-                case "apparentTemperature":
+                case Constants.APP_TEMPERATURE:
                     forecastDataCurrently.setApparentTemperature(reader.nextDouble());
                     break;
-                case "humidity":
+                case Constants.HUMIDITY:
                     forecastDataCurrently.setHumidity(reader.nextDouble());
                     break;
-                case "pressure":
+                case Constants.PRESSURE:
                     forecastDataCurrently.setPressure(reader.nextDouble());
                     break;
-                case "windSpeed":
+                case Constants.WIND_SPEED:
                     forecastDataCurrently.setWindSpeed(reader.nextDouble());
                     break;
                 default:
@@ -254,13 +251,13 @@ public class NetworkingService {
         while (reader.hasNext()) {
             String name = reader.nextName();
             switch (name) {
-                case "summary":
+                case Constants.SUMMARY:
                     result.setSummary(reader.nextString());
                     break;
-                case "icon":
+                case Constants.ICON:
                     result.setIcon(reader.nextString());
                     break;
-                case "data":
+                case Constants.DATA:
                     result.setData(readDaily(reader));
                     break;
                 default:
@@ -291,37 +288,37 @@ public class NetworkingService {
         while (reader.hasNext()) {
             String name = reader.nextName();
             switch (name) {
-                case "time":
+                case Constants.TIMEZONE:
                     weatherDataCurrently.setTime(reader.nextInt());
                     break;
-                case "summary":
+                case Constants.SUMMARY:
                     weatherDataCurrently.setSummary(reader.nextString());
                     break;
-                case "icon":
+                case Constants.ICON:
                     weatherDataCurrently.setIcon(reader.nextString());
                     break;
-                case "sunriseTime":
+                case Constants.SUNRISE_TIME:
                     weatherDataCurrently.setSunriseTime(reader.nextLong());
                     break;
-                case "sunsetTime":
+                case Constants.SUNSET_TIME:
                     weatherDataCurrently.setSunsetTime(reader.nextLong());
                     break;
-                case "humidity":
+                case Constants.HUMIDITY:
                     weatherDataCurrently.setHumidity(reader.nextDouble());
                     break;
-                case "windSpeed":
+                case Constants.WIND_SPEED:
                     weatherDataCurrently.setWindSpeed(reader.nextDouble());
                     break;
-                case "temperatureMin":
+                case Constants.TEMP_MIN:
                     weatherDataCurrently.setTemperatureMin(reader.nextDouble());
                     break;
-                case "temperatureMax":
+                case Constants.TEMP_MAX:
                     weatherDataCurrently.setTemperatureMax(reader.nextDouble());
                     break;
-                case "temperatureMinTime":
+                case Constants.TEMP_MIN_TIME:
                     weatherDataCurrently.setTemperatureMinTime(reader.nextLong());
                     break;
-                case "temperatureMaxTime":
+                case Constants.TEMP_MAX_TIME:
                     weatherDataCurrently.setTemperatureMaxTime(reader.nextLong());
                     break;
                 default:

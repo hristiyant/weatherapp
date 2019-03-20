@@ -78,7 +78,6 @@ public class ForecastHourlyAdapter extends RecyclerView.Adapter<ForecastHourlyAd
 
         @SuppressLint("SetTextI18n")
         void bind(WeatherDataCurrently item) {
-
             String timeStamp = new SimpleDateFormat(App.getInstance().getString(R.string.all_timestamp_format_hours_minutes))
                     .format(new java.util.Date(item.getTime() * Constants.TIMESTAMP_MILLIS_MULTIPLIER));
             txtTime.setText(timeStamp);

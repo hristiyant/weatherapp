@@ -49,9 +49,7 @@ public class ForecastDailyFragment extends BaseFragment implements DownloadRespo
                 App.getInstance().getApplicationContext(), DividerItemDecoration.VERTICAL
         ));
 
-        new NetworkingService().getWeatherDataDaily(
-                this
-        );
+        new NetworkingService().getWeatherDataDaily(this);
 
         swipeRefreshLayout.setOnRefreshListener(this);
 

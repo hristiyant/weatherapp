@@ -19,15 +19,13 @@ public class ForecastHourlyPresenter implements ForecastHourlyContracts.Presente
     @Override
     public void loadForecastHourlyData() {
         view.showLoader(true);
-        new NetworkingService().getWeatherDataHourly(
-                this
-        );
+        new NetworkingService().getWeatherDataHourly(this);
     }
 
     @Override
     public void onSuccess(WeatherData object) {
-        if(object == null){
-            view.showErrorDialog( App.getInstance()
+        if (object == null) {
+            view.showErrorDialog(App.getInstance()
                     .getString(R.string.all_alert_dialog_not_found_message));
         }
         view.showForecastHourlyData(object.getHourly().getData());
