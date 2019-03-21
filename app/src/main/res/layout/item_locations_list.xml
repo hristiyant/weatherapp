@@ -3,33 +3,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_locations_list_height"
-    android:layout_margin="@dimen/margin_between_elements_default">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_between_elements_default"
+    android:background="@color/weatherDetailsTransparentBackground">
 
     <ImageView
-        android:id="@+id/img_city_image"
-        android:layout_width="@dimen/no_dimens"
-        android:layout_height="match_parent"
+        android:id="@+id/img_weather_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/no_dimens"
         android:adjustViewBounds="true"
         android:contentDescription="@null"
-        android:scaleType="center"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="@dimen/margin_between_elements_default"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/sydney" />
+        tools:srcCompat="@drawable/ic_clear_day" />
 
     <TextView
         android:id="@+id/txt_city_name"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
-        android:background="@drawable/image_label_background"
-        android:gravity="center"
-        android:text="@string/details_fragment_txt_city_name"
-        android:textColor="@color/white"
-        android:textSize="@dimen/fragment_locations_list_image_labels_size"
+        android:fontFamily="casual"
+        android:textSize="@dimen/main_screen_labels_size"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/img_weather_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="New York" />
+
+    <TextView
+        android:id="@+id/txt_current_temperature"
+        style="@style/WeatherDetailsOverlayText"
+        android:layout_width="@dimen/no_dimens"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/margin_between_elements_default"
+        android:layout_marginRight="@dimen/margin_between_elements_default"
+        android:fontFamily="casual"
+        android:gravity="end"
+        android:textSize="@dimen/main_screen_labels_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/txt_city_name"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="47\u00B0C" />
 
 </android.support.constraint.ConstraintLayout>

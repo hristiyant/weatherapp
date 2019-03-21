@@ -22,6 +22,7 @@
         android:layout_margin="@dimen/margin_between_elements_default"
         android:adjustViewBounds="true"
         android:background="@drawable/animated_button"
+        android:contentDescription="@null"
         android:padding="@dimen/activity_horizontal_margin"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/txt_pick_location"
@@ -61,7 +62,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline_half_screen"
         app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@drawable/ic_book" />
+        app:srcCompat="@drawable/ic_book"
+        android:contentDescription="@null" />
 
     <TextView
         android:id="@+id/txt_pick_from_list"

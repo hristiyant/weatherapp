@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimaryLight">#FFF9C4</color>
-    <color name="colorPrimary">#FFEB3B</color>
+    <color name="colorPrimary">#F7BE54</color>
     <color name="colorPrimaryDark">#1A000000</color>
     <color name="colorAccent">#444EAE</color>
     <color name="textColorPrimary">#000000</color>
@@ -17,4 +17,7 @@
     <color name="transparentBlack">#80000000</color>
     <color name="transparentBlackLight">#1A000000</color>
     <color name="transparentDarkGray">#B3000000</color>
+
+    <!--Weather Details Background-->
+    <color name="weatherDetailsTransparentBackground">#33FFFFFF</color>
 </resources>

@@ -39,9 +39,9 @@ public class LocationDatabaseTests {
     @Test
     public void When_InsertLocations_Expect_DatabaseNotEmpty() {
         locationDao.insertLocations(
-                new LocationDbModel("test1", 1.2, 1.3, "url1"),
-                new LocationDbModel("test2", 2.2, 2.3, "url2"),
-                new LocationDbModel("test3", 3.2, 3.3, "url3")
+                new LocationDbModel("test1", 1.2, 1.3),
+                new LocationDbModel("test2", 2.2, 2.3),
+                new LocationDbModel("test3", 3.2, 3.3)
         );
         List<LocationDbModel> locations = locationDao.getAllLocations();
         Assert.assertEquals(3, locations.size());
@@ -50,7 +50,7 @@ public class LocationDatabaseTests {
     @Test
     public void When_DeleteLocations_Expect_DatabaseEmpty() {
         LocationDbModel testLocation =
-                new LocationDbModel("test1", 1.2, 1.3, "url1");
+                new LocationDbModel("test1", 1.2, 1.3);
         locationDao.insertLocations(testLocation);
         List<LocationDbModel> locationsBeforeDelete = locationDao.getAllLocations();
         locationDao.deleteLocations(locationsBeforeDelete.get(0));
@@ -61,7 +61,7 @@ public class LocationDatabaseTests {
     @Test
     public void When_GetLocationByName_Expect_NotNull() {
         LocationDbModel testLocation =
-                new LocationDbModel("test1", 1.2, 1.3, "url1");
+                new LocationDbModel("test1", 1.2, 1.3);
         locationDao.insertLocations(testLocation);
         LocationDbModel testLocationToCompare = locationDao.getLocationByName("test1");
         Assert.assertEquals(testLocation.getName(), testLocationToCompare.getName());

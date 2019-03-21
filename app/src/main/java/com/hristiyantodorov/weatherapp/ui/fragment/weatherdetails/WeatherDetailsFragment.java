@@ -1,39 +1,35 @@
 package com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails;
 
-import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
+import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
+import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
+import com.hristiyantodorov.weatherapp.networking.service.NetworkingService;
+import com.hristiyantodorov.weatherapp.ui.ExceptionHandlerUtil;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
+import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 
 import butterknife.BindView;
 
-import static android.support.constraint.Constraints.TAG;
+public class WeatherDetailsFragment extends BaseFragment implements DownloadResponse<WeatherData> {
 
-public class WeatherDetailsFragment extends BaseFragment {
-
-    @BindView(R.id.txt_city_name)
-    TextView txtCityName;
-    @BindView(R.id.txt_area_name)
-    TextView txtAreaName;
-
-    private double longitude;
-    private double latitude;
-    private Geocoder geocoder;
+    @BindView(R.id.txt_temperature)
+    TextView txtTemperature;
+    @BindView(R.id.txt_apparent_temperature)
+    TextView txtApparentTemperature;
+    @BindView(R.id.txt_humidity)
+    TextView txtHumidity;
+    @BindView(R.id.txt_pressure)
+    TextView txtPressure;
+    @BindView(R.id.txt_wind_speed)
+    TextView txtWindSpeed;
 
     public static WeatherDetailsFragment newInstance() {
         return new WeatherDetailsFragment();
@@ -44,24 +40,9 @@ public class WeatherDetailsFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        //FIXME Test implementation - get location info
-        getLongAndLat();
-        geocoder = new Geocoder(getContext(), Locale.getDefault());
-        List<Address> addresses = null;
-        try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (addresses.size() > 0) {
-            String cityName = addresses.get(0).getLocality();
-            String areaName = addresses.get(0).getCountryName();
-
-            Log.d(TAG, "location info: " + cityName + "//" + areaName);
-
-            txtCityName.setText(cityName);
-            txtAreaName.setText(areaName);
-        }
+        new NetworkingService().getWeatherDataCurrently(
+                WeatherDetailsFragment.this
+        );
 
         return view;
     }
@@ -71,11 +52,29 @@ public class WeatherDetailsFragment extends BaseFragment {
         return R.layout.fragment_weather_details;
     }
 
-    //FIXME Test implementation - get location info
-    public void getLongAndLat() {
-        LocationManager lm = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
-        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        longitude = location.getLongitude();
-        latitude = location.getLatitude();
+    @Override
+    public void onSuccess(WeatherData result) {
+        if (result == null) {
+            showErrorDialog(getContext(), App.getInstance()
+                    .getString(R.string.all_alert_dialog_not_found_message));
+        } else {
+            txtTemperature.setText(getString(R.string.txt_temperature,
+                    WeatherDataFormatterUtil.convertFahrenheitToCelsius(result.getCurrently().getTemperature())));
+            txtApparentTemperature.setText(getString(R.string.txt_apparent_temperature,
+                    WeatherDataFormatterUtil.convertFahrenheitToCelsius(result.getCurrently().getApparentTemperature())));
+            txtHumidity.setText(getString(R.string.txt_humidity,
+                    WeatherDataFormatterUtil.convertDoubleToPercentage(result.getCurrently().getHumidity())));
+            txtPressure.setText(getString(R.string.txt_pressure,
+                    WeatherDataFormatterUtil.convertRoundedDoubleToString(result.getCurrently().getPressure())));
+            txtWindSpeed.setText(getString(R.string.txt_wind_speed,
+                    WeatherDataFormatterUtil.convertMphToMs(result.getCurrently().getWindSpeed())));
+        }
     }
+
+    @Override
+    public void onFailure(Exception e) {
+        showErrorDialog(getContext(),e.getMessage());
+        ExceptionHandlerUtil.logStackTrace(e);
+    }
+
 }

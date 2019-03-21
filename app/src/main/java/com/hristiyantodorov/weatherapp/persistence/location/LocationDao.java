@@ -10,6 +10,7 @@ import java.util.List;
 
 @Dao
 public interface LocationDao {
+
     @Query("SELECT * FROM locations")
     List<LocationDbModel> getAllLocations();
 

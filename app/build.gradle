@@ -25,9 +25,18 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String", "ApiKey", '"09ab310ab4796f158888f52a6b5fa900"')
+            buildConfigField("String", "BaseUrl", '"https://api.darksky.net/forecast/"')
+            buildConfigField("String", "UrlSuffixCurrently", '"?exclude=minutely,hourly,daily,alerts,flags"')
+            buildConfigField("String", "UrlSuffixHourly", '"?exclude=currently,minutely,daily,alerts,flags"')
+            buildConfigField("String", "UrlSuffixDaily", '"?exclude=currently,minutely,hourly,alerts,flags"')
+
         }
         debug {
             buildConfigField("String", "ApiKey", '"09ab310ab4796f158888f52a6b5fa900"')
+            buildConfigField("String", "BaseUrl", '"https://api.darksky.net/forecast/"')
+            buildConfigField("String", "UrlSuffixCurrently", '"?exclude=minutely,hourly,daily,alerts,flags"')
+            buildConfigField("String", "UrlSuffixHourly", '"?exclude=currently,minutely,daily,alerts,flags"')
+            buildConfigField("String", "UrlSuffixDaily", '"?exclude=currently,minutely,hourly,alerts,flags"')
         }
     }
     compileOptions {
@@ -37,6 +46,9 @@ android {
 }
 ext {
     room_version = "1.1.1"
+    glide_version = "4.9.0"
+    picasso_version = "2.71828"
+    stream_version = "1.2.1"
 }
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -81,9 +93,12 @@ dependencies {
     testImplementation 'org.powermock:powermock-api-mockito2:1.7.0RC2'
 
     //Glide
-    /*implementation 'com.github.bumptech.glide:glide:4.8.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'*/
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 
     //Picasso
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation "com.squareup.picasso:picasso:$picasso_version"
+
+    //StreamOf
+    implementation "com.annimon:stream:$stream_version"
 }

@@ -35,10 +35,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+
 public class LoginFragment extends BaseFragment
         implements LoginContracts.View, AsyncResponse<List<LocationDbModel>> {
 
-    @BindView(R.id.progressbar)
+    @BindView(R.id.progress_bar)
     ProgressBar progressBar;
     @BindView(R.id.edt_email)
     EditText edtEmail;
@@ -93,6 +94,7 @@ public class LoginFragment extends BaseFragment
                 circleMenuLogin.setVisibility(View.GONE);
             }
         });
+
         return view;
     }
 
@@ -118,7 +120,7 @@ public class LoginFragment extends BaseFragment
         AppDatabase testDB =
                 Room.inMemoryDatabaseBuilder(App.getInstance().getApplicationContext(), AppDatabase.class).build();
         LocationDbModel testLoc =
-                new LocationDbModel("testLoc", 1.1, 1.2, "url");
+                new LocationDbModel("testLoc", 1.1, 1.2);
         LocationDao dao = testDB.locationDao();
         LocationService service = new LocationService(dao);
         service.insertLocations(testLoc);
@@ -133,12 +135,12 @@ public class LoginFragment extends BaseFragment
     }
 
     @Override
-    public void showLoader(boolean isShowing) {
-        progressBar.setVisibility(isShowing ? View.GONE : View.VISIBLE);
+    public void showLoader(boolean isVisible) {
+        progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 
     @Override
-    public void showError(Throwable e) {
+    public void showError(Exception e) {
         if (isAdded()) {
             showErrorDialog(getContext(), e.getMessage());
         }
@@ -147,7 +149,12 @@ public class LoginFragment extends BaseFragment
     @Override
     public void onSuccess(List<LocationDbModel> output) {
         if (isAdded()) {
-            results.addAll(output);
+            if (output == null) {
+                showErrorDialog(getContext(), App.getInstance()
+                        .getString(R.string.all_alert_dialog_not_found_message));
+            } else {
+                results.addAll(output);
+            }
         }
     }
 

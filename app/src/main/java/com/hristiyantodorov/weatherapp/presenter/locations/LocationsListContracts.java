@@ -1,32 +1,32 @@
 package com.hristiyantodorov.weatherapp.presenter.locations;
 
 import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.presenter.BasePresenter;
+import com.hristiyantodorov.weatherapp.presenter.BaseView;
 
 import java.util.List;
 
 public interface LocationsListContracts {
-    interface View {
-        void showLoader(boolean isShowing);
 
-        // TODO: 1/22/2019 Change <String> to the model when ready.
-        void showLocations(List<String> locations);
+    interface View extends BaseView<Presenter> {
 
-        void showDefaultLocationsList();
+        void showLocations(List<LocationDbModel> locations);
 
-        void showError(Throwable e);
+        void getLocationsFromDatabase();
 
         void setPresenter(Presenter presenter);
 
-        void showLocationWeatherDetails();
+        void showLocationWeatherDetails(LocationDbModel selectedLocation);
+
     }
 
-    interface Presenter {
-        void subscribe(View view);
+    interface Presenter extends BasePresenter {
 
-        List<LocationDbModel> loadLocations();
+        void loadLocationsFromDatabase();
 
-        void filterLocations();
+        void filterLocations(String pattern);
 
-        void selectLocation();
+        void selectLocation(LocationDbModel location);
+
     }
 }

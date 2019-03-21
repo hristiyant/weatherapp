@@ -6,26 +6,20 @@ import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "locations")
 public class LocationDbModel {
+
     @PrimaryKey(autoGenerate = true)
     private int id;
-
     @ColumnInfo(name = "name")
     private String name;
-
     @ColumnInfo(name = "longitude")
     private double longitude;
-
     @ColumnInfo(name = "latitude")
     private double latitude;
 
-    @ColumnInfo(name = "image_url")
-    private String imageUrl;
-
-    public LocationDbModel(String name, double longitude, double latitude, String imageUrl) {
+    public LocationDbModel(String name, double latitude, double longitude) {
         this.name = name;
-        this.longitude = longitude;
         this.latitude = latitude;
-        this.imageUrl = imageUrl;
+        this.longitude = longitude;
     }
 
     public String getName() {
@@ -58,13 +52,5 @@ public class LocationDbModel {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 }

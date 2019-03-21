@@ -2,6 +2,7 @@ package com.hristiyantodorov.weatherapp.persistence.location;
 
 import android.os.AsyncTask;
 
+import com.hristiyantodorov.weatherapp.repository.LocationRepository;
 import com.hristiyantodorov.weatherapp.util.AppExecutorUtil;
 import com.hristiyantodorov.weatherapp.util.AsyncResponse;
 
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 
 public class LocationService implements LocationRepository {
+
     private static LocationDao locationDao;
     private Executor executor;
 

@@ -1,11 +1,12 @@
-package com.hristiyantodorov.weatherapp.persistence.location;
+package com.hristiyantodorov.weatherapp.repository;
 
-
+import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.util.AsyncResponse;
 
 import java.util.List;
 
 public interface LocationRepository {
+
     List<LocationDbModel> getAllLocations(AsyncResponse response);
 
     LocationDbModel getLocationByName(String name, AsyncResponse response);
@@ -17,4 +18,5 @@ public interface LocationRepository {
     void updateLocations(LocationDbModel... locations);
 
     void deleteLocations(LocationDbModel... locations);
+
 }

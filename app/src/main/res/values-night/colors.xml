@@ -6,4 +6,7 @@
     <color name="colorAccent">#FBC02D</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="textColorShadow">#000000</color>
+
+    <!--Weather Details Background-->
+    <color name="weatherDetailsTransparentBackground">#33000000</color>
 </resources>
