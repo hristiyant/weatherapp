@@ -43,5 +43,4 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract ForecastDailyDao forecastDailyDao();
 
     public abstract ForecastDailyDataDao forecastDailyDataDao();
-
 }

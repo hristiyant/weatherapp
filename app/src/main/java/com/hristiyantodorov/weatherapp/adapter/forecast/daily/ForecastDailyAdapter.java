@@ -141,7 +141,6 @@ public class ForecastDailyAdapter
         String temperatureMax = String.valueOf(item.getTemperatureMax());
         String temperatureMaxTime = String.valueOf(item.getTemperatureMaxTime());
         TextView txtSummary = (TextView) dialog.findViewById(R.id.txt_dialog_summary);
-        //TextView txtIcon = (TextView) dialog.findViewById(R.id.txt_dialog_icon);
         ImageView imgWeatherIcon = (ImageView) dialog.findViewById(R.id.img_dialog_weather_icon);
         txtSummary.setText(time + "\n" +
                 summary + "\n\n" +
@@ -154,7 +153,6 @@ public class ForecastDailyAdapter
                 "temperatureMinTime:\n " + temperatureMinTime + "\n\n" +
                 "temperatureMax:\n " + temperatureMax + "\n\n" +
                 "temperatureMaxTime:\n " + temperatureMaxTime);
-        //txtIcon.setText(itemsList.get(viewHolder.getAdapterPosition()).getIcon());
         imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(item.getIcon()));
     }
 }

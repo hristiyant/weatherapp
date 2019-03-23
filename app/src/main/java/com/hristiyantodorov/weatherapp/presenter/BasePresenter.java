@@ -19,6 +19,4 @@ public abstract class BasePresenter {
     protected  <T> void subscribeSingle(Single<T> singleObservable, SingleObserver<T> singleObserver) {
         singleObservable.compose(RxUtils.applySingleSchedulers()).subscribe(singleObserver);
     }
-
-
 }

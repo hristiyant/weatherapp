@@ -20,6 +20,8 @@ public interface LocationsListContracts {
         void getBasicForecastInfo(List<LocationDbModel> locations);
 
         void updateApiInfo(LocationDbModel location);
+
+        void showLocationWeatherDetails(LocationDbModel selectedLocation);
     }
 
     interface Presenter {

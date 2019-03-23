@@ -19,7 +19,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-// TODO: 1/22/2019 This is not implemented.
 public class LocationsListAdapter
         extends ListAdapter<LocationDbModel, LocationsListAdapter.LocationsViewHolder> {
 

@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastCurrentlyDbModel;
 import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastFullDbModel;
-import com.hristiyantodorov.weatherapp.presenter.BaseView;
 import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
+import com.hristiyantodorov.weatherapp.presenter.BaseView;
 
 import java.util.List;
 

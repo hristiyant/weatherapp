@@ -2,12 +2,21 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/background"
+    android:id="@+id/container"
     style="@style/WeatherDetailsOverlayText"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/activity_horizontal_margin"
     tools:context=".ui.fragment.login.LoginFragment">
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.ramotion.circlemenu.CircleMenuView
         android:id="@+id/circle_menu_login"
@@ -29,7 +38,7 @@
         android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:gravity="center_horizontal"
         android:text="@string/login_screen_line_text_view_text"
-        android:textSize="@dimen/login_screen_line_text_text_size_"
+        android:textSize="@dimen/login_screen_line_text_text_size"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@id/text_input_username"
         app:layout_constraintEnd_toEndOf="@+id/text_input_username"
@@ -91,17 +100,6 @@
             android:paddingEnd="@dimen/login_screen_icon_padding" />
 
     </android.support.design.widget.TextInputLayout>
-
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_sign_in"

@@ -2,6 +2,9 @@
 
     <string name="app_name">WeatherApp</string>
 
+    <!--Base Fragment-->
+    <string name="base_fragment_error_dialog_title">Error!</string>
+
     <!-- Login Screen Layout -->
     <string name="login_screen_btn_sign_in">Sign in</string>
     <string name="login_screen_username_hint">Username: </string>
@@ -55,6 +58,29 @@
         24/7 and will be more than happy to help :)</string>
     <string name="preference_feedback_title">Email us!</string>
     <string name="preference_feedback_key">feedback</string>
+    <string name="preference_feedback_sample_email_one">hrisko_drisko@vba.com</string>
+    <string name="preference_feedback_sample_email_two">drisko_hrisko@blabla.com</string>
+    <string name="preference_feedback_subject_text">About WeatherApp</string>
+    <string name="preference_feedback_subject_extra_text">-->Enter text here</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="shared_pref_key_logged_user_email">Logged User Email Address</string>
+    <string name="shared_pref_def_value_empty">empty</string>
+    <string name="forecast_hourly_summary_windy_txt">Windy</string>
+
+    <string name="all_timestamp_format_full_day_name">EEEE</string>
+    <string name="all_timestamp_format_hours_minutes">HH:mm</string>
+    <string name="forecast_hourly_icon_wind_text">wind</string>
+
+    <!--PersistenceDatabase-->
+    <string name="persistence_database_city_name_tokyo">Tokyo</string>
+    <string name="persistence_database_city_name_new_york">New York</string>
+    <string name="persistence_database_city_name_paris">Paris</string>
+    <string name="persistence_database_city_name_london">London</string>
+    <string name="persistence_database_city_name_sydney">Sydney</string>
+
+    <string name="all_alert_dialog_not_found_message">No data found.</string>
 
     <!--Forecast Hourly Adapter-->
     <string name="forecast_hourly_adapter_summary_txt_windy">Windy</string>

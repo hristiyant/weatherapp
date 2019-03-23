@@ -18,6 +18,7 @@ import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.ForecastHourly
 import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.WeatherDetailsFragment;
 
 public class WeatherDetailsPagerAdapter extends FragmentPagerAdapter {
+
     private static final int FORECAST_TAB_DETAILED = 0;
     private static final int FORECAST_TAB_HOURLY = 1;
     private static final int FORECAST_TAB_DAILY = 2;
@@ -28,7 +29,7 @@ public class WeatherDetailsPagerAdapter extends FragmentPagerAdapter {
         super(manager);
     }
 
-       private ForecastHourlyContracts.Presenter forecastHourlyPresenter;
+    private ForecastHourlyContracts.Presenter forecastHourlyPresenter;
     private ForecastDailyContracts.Presenter forecastDailyPresenter;
     private WeatherDetailsFragmentContracts.Presenter weatherDetailsPresenter;
 

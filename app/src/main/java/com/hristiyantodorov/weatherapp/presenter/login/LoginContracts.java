@@ -7,7 +7,6 @@ public interface LoginContracts {
     interface View extends BaseView<Presenter> {
 
         void setPresenter(LoginContracts.Presenter presenter);
-
     }
 
     interface Presenter {
@@ -15,7 +14,5 @@ public interface LoginContracts {
         void subscribe(LoginContracts.View view);
 
         void loginUser(String email);
-
     }
-
 }

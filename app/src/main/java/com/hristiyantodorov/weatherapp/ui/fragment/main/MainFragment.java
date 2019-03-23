@@ -42,6 +42,7 @@ import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
 public class MainFragment extends BaseFragment implements LocationListener {
+
     @BindView(R.id.img_btn_pick_location)
     ImageButton imgBtnPickLocation;
 
@@ -77,12 +78,6 @@ public class MainFragment extends BaseFragment implements LocationListener {
     void openWeatherDetails() {
         Location location = appLocationService
                 .getLocation(LocationManager.GPS_PROVIDER);
-
-        //you can hard-code the lat & long if you have issues with getting it
-        //remove the below if-condition and use the following couple of lines
-        //double latitude = 37.422005;
-        //double longitude = -122.084095
-
         if (location != null) {
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
@@ -95,7 +90,7 @@ public class MainFragment extends BaseFragment implements LocationListener {
         try {
             CurrentLocationPickerUtil.getCurrentLocation(getContext(), this);
         } catch (IOException e) {
-            e.printStackTrace();
+            showErrorDialog(getContext(), e.getMessage());
         }
         startActivity(new Intent(getActivity(), WeatherDetailsActivity.class));
     }
@@ -140,17 +135,17 @@ public class MainFragment extends BaseFragment implements LocationListener {
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-// TODO: 2/28/2019 CURRENTLY NOT BEING USED
+        // TODO: 2/28/2019 CURRENTLY NOT BEING USED
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-// TODO: 2/28/2019 CURRENTLY NOT BEING USED
+        // TODO: 2/28/2019 CURRENTLY NOT BEING USED
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-// TODO: 2/28/2019 CURRENTLY NOT BEING USED
+        // TODO: 2/28/2019 CURRENTLY NOT BEING USED
     }
 
     public void showSettingsAlert() {

@@ -90,7 +90,7 @@ public class ForecastHourlyFragment extends BaseFragment
 
     @Override
     public void showError(Throwable e) {
-        //TODO: NOT CURRENTLY BEING USED
+        showErrorDialog(getContext(), e.getMessage());
     }
 
     @Override

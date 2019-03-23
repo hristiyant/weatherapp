@@ -6,14 +6,14 @@ import android.util.Log;
 import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastCurrentlyDbModel;
 import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastFullDbModel;
 import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastHourlyDbModel;
+import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
 import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
 import com.hristiyantodorov.weatherapp.presenter.BasePresenter;
+import com.hristiyantodorov.weatherapp.retrofit.APIClient;
+import com.hristiyantodorov.weatherapp.retrofit.WeatherApiService;
 import com.hristiyantodorov.weatherapp.util.Constants;
 import com.hristiyantodorov.weatherapp.util.ForecastResponseToForecastDbModelConverterUtil;
 import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
-import com.hristiyantodorov.weatherapp.retrofit.APIClient;
-import com.hristiyantodorov.weatherapp.retrofit.WeatherApiService;
-import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
 
 import java.util.List;
 
@@ -111,7 +111,7 @@ public class ForecastHourlyPresenter extends BasePresenter
         subscribeSingle(weatherApiService.getForecastFullResponse(
                 SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
                 SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null),
-                SharedPrefUtil.read("shared_pred_api_content_lang_key", "en")
+                SharedPrefUtil.read("shared_pref_api_content_lang_key", "en")
         ), new SingleObserver<ForecastFullResponse>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -144,7 +144,7 @@ public class ForecastHourlyPresenter extends BasePresenter
                         .forecastFullDao().updateDb(fullDbModel)
         ).subscribeOn(Schedulers.io())
                 .subscribe();
-        Log.d(TAG, "saveForecastApiDataToDb" );
+        Log.d(TAG, "saveForecastApiDataToDb");
     }
 
     @Override

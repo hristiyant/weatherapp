@@ -31,7 +31,7 @@ import java.util.Locale;
 import butterknife.BindView;
 
 public class WeatherDetailsActivity extends BaseActivity
-        implements WeatherDetailsActivityContracts.View{
+        implements WeatherDetailsActivityContracts.View {
 
     private static final String TAG = "WDActivity";
 
@@ -78,7 +78,7 @@ public class WeatherDetailsActivity extends BaseActivity
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
-                // TODO: 3/6/2019 CURRENTLY NOT BEING USED
+                // TODO: 19.3.2019 CURRENTLY NOT BEING USED
             }
 
             @Override
@@ -88,7 +88,7 @@ public class WeatherDetailsActivity extends BaseActivity
 
             @Override
             public void onPageScrollStateChanged(int i) {
-                // TODO: 3/6/2019 CURRENTLY NOT BEING USED
+                // TODO: 19.3.2019 CURRENTLY NOT BEING USED
             }
         });
         tabLayout.setupWithViewPager(viewPager);
@@ -145,7 +145,7 @@ public class WeatherDetailsActivity extends BaseActivity
         showEmptyScreen(false);
     }
 
-    public void updateView(ForecastFullResponse response){
+    public void updateView(ForecastFullResponse response) {
         refreshLastUpdated();
         showForecast(
                 ForecastResponseToForecastDbModelConverterUtil

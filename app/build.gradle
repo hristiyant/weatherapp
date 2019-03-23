@@ -25,11 +25,18 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String", "ApiKey", '"09ab310ab4796f158888f52a6b5fa900"')
-            buildConfigField("String", "ApiBaseUrl", '"https://api.darksky.net/forecast/"')
+            buildConfigField("String", "BaseUrl", '"https://api.darksky.net/forecast/"')
+            buildConfigField("String", "UrlSuffixCurrently", '"?exclude=minutely,hourly,daily,alerts,flags"')
+            buildConfigField("String", "UrlSuffixHourly", '"?exclude=currently,minutely,daily,alerts,flags"')
+            buildConfigField("String", "UrlSuffixDaily", '"?exclude=currently,minutely,hourly,alerts,flags"')
+
         }
         debug {
             buildConfigField("String", "ApiKey", '"09ab310ab4796f158888f52a6b5fa900"')
-            buildConfigField("String", "ApiBaseUrl", '"https://api.darksky.net/forecast/"')
+            buildConfigField("String", "BaseUrl", '"https://api.darksky.net/forecast/"')
+            buildConfigField("String", "UrlSuffixCurrently", '"?exclude=minutely,hourly,daily,alerts,flags"')
+            buildConfigField("String", "UrlSuffixHourly", '"?exclude=currently,minutely,daily,alerts,flags"')
+            buildConfigField("String", "UrlSuffixDaily", '"?exclude=currently,minutely,hourly,alerts,flags"')
         }
     }
     compileOptions {
@@ -38,8 +45,23 @@ android {
     }
 }
 ext {
+    permission_dispatcher_version = "3.1.0"
+    location_service_version = "16.0.0"
+    butter_knife_version = "8.8.1"
     room_version = "1.1.1"
+    mockito_version = "2.4.0"
+    powermock_version = "1.7.0RC2"
+    okhttp_version = "3.11.0"
+    okhttp_logging_interceptor_version = "3.4.1"
+    retrofit2_version = "2.1.0"
+    retrofit_adapter_version = "1.0.0"
+    gson_veresion = "2.8.5"
+    chuck_version = "1.1.0"
+    rxandroid_version = "2.0.1"
+    rxjava_version = "2.2.0"
     glide_version = "4.9.0"
+    picasso_version = "2.71828"
+    stream_version = "1.2.1"
 }
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -51,26 +73,21 @@ dependencies {
     implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.android.support:preference-v7:28.0.0'
     implementation 'com.android.support:preference-v14:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    //Design Library
-    implementation 'com.android.support:design:28.0.0'
-
     //PermissionsDispatcher
-    implementation 'com.github.hotchemi:permissionsdispatcher:3.1.0'
-    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.1.0'
+    implementation "com.github.hotchemi:permissionsdispatcher:$permission_dispatcher_version"
+    annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:$permission_dispatcher_version"
 
     //AndroidLocationAPI
-    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation "com.google.android.gms:play-services-location:$location_service_version"
 
     //ButterKnife
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
-    //CircleMenu
-    implementation 'com.ramotion.circlemenu:circle-menu:0.3.1'
+    implementation "com.jakewharton:butterknife:$butter_knife_version"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butter_knife_version"
 
     //Room
     implementation "android.arch.persistence.room:runtime:$room_version"
@@ -78,39 +95,42 @@ dependencies {
     implementation "android.arch.persistence.room:rxjava2:$room_version"
     testImplementation "android.arch.persistence.room:testing:$room_version"
 
-    testImplementation 'org.mockito:mockito-core:2.4.0'
-    testImplementation 'org.powermock:powermock-core:1.7.0RC2'
-    testImplementation 'org.powermock:powermock-module-junit4:1.7.0RC2'
-    testImplementation 'org.powermock:powermock-api-mockito2:1.7.0RC2'
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+    testImplementation "org.powermock:powermock-module-junit4:$powermock_version"
+    testImplementation "org.powermock:powermock-core:$powermock_version"
+    testImplementation "org.powermock:powermock-api-mockito2:$powermock_version"
+
+    //OkHttp
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_logging_interceptor_version"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava:$retrofit2_version"
+    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$retrofit_adapter_version"
+
+    //Gson
+    implementation "com.google.code.gson:gson:$gson_veresion"
+
+    //Chuck
+    debugImplementation "com.readystatesoftware.chuck:library:$chuck_version"
+    releaseImplementation "com.readystatesoftware.chuck:library-no-op:$chuck_version"
+
+    //Rx
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
+
+    //StreamOf
+    implementation "com.annimon:stream:$stream_version"
 
     //Glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
     annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 
-    implementation 'com.annimon:stream:1.2.1'
-
-    //OkHttp
-    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-
-    //Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
-    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0"
-
-    //Gson
-    implementation 'com.google.code.gson:gson:2.8.5'
-
     //Picasso
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation "com.squareup.picasso:picasso:$picasso_version"
 
-    //Chuck
-    debugImplementation 'com.readystatesoftware.chuck:library:1.1.0'
-    releaseImplementation 'com.readystatesoftware.chuck:library-no-op:1.1.0'
-
-    //Rx
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
-
+    //CircleMenu
+    implementation 'com.ramotion.circlemenu:circle-menu:0.3.1'
 }

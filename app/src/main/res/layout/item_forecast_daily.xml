@@ -34,7 +34,7 @@
         android:layout_marginEnd="@dimen/margin_between_elements_default"
         android:fontFamily="casual"
         android:gravity="center"
-        android:lines="3"
+        android:lines="@dimen/rows_item_forecast_summary"
         android:textSize="@dimen/material_design_body_txt_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

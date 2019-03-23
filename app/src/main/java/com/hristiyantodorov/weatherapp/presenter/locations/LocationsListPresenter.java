@@ -113,7 +113,7 @@ public class LocationsListPresenter extends BasePresenter
                         weatherApiService.getForecastCurrently(
                                 String.valueOf(locationDbModel.getLatitude()),
                                 String.valueOf(locationDbModel.getLongitude()),
-                                SharedPrefUtil.read("shared_pred_api_content_lang_key", "en")
+                                SharedPrefUtil.read("shared_pref_api_content_lang_key", "en")
                         ))
                 .toList()
                 .subscribeOn(Schedulers.io())
@@ -127,77 +127,6 @@ public class LocationsListPresenter extends BasePresenter
                     presentLocationsToView(locationDbModels);
                 });
     }
-
-//    public void getApiData(LocationDbModel location) {
-//        subscribeSingle(weatherApiService.getForecastCurrently(
-//                String.valueOf(location.getLatitude()),
-//                String.valueOf(location.getLongitude())
-//        ), new SingleObserver<ForecastFullResponse>() {
-//            @Override
-//            public void onSubscribe(Disposable d) {
-//                // TODO: 20.3.2019 CURRENTLY NOT BEING USED
-//            }
-//
-//            @Override
-//            public void onSuccess(ForecastFullResponse forecastFullResponse) {
-//                location.setIcon(forecastFullResponse.getCurrently().getIcon());
-//                updateLocationDbInfo(location);
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//        });
-//    }
-
-    /*public void downloadApiDataForDbModels(Context context) {
-        subscribeSingle(service.getAllLocationsList(), new SingleObserver<List<LocationDbModel>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                //TODO: CURRENTLY NOT BEING USED
-            }
-
-            @Override
-            public void onSuccess(List<LocationDbModel> locationDbModels) {
-                //TODO: CHECK IF RETURNED VALUE IS NULL AND SHOW ERROR IF SO
-                if (!locationDbModels.isEmpty()) {
-                    view.getBasicForecastInfo(locationDbModels);
-                } else {
-                    presentLocationsToView(locationDbModels);
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                //TODO: HANDLE ERROR
-            }
-        });
-    }
-
-    @Override
-    public void getBasicForecastInfo(LocationDbModel location) {
-        subscribeSingle(weatherApiService.getForecastCurrently(
-                String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude())
-        ), new SingleObserver<ForecastFullResponse>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(ForecastFullResponse forecastFullResponse) {
-                location.setTemperature(forecastFullResponse.getCurrently().getTemperature());
-                location.setIcon(forecastFullResponse.getCurrently().getIcon());
-                view.updateApiInfo(location);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-        });
-    }*/
 
     @Override
     public void updateLocationDbInfo(LocationDbModel locationDbModel) {

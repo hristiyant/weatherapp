@@ -1,5 +1,6 @@
 package com.hristiyantodorov.weatherapp.ui.fragment.login;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,10 +19,14 @@ import com.hristiyantodorov.weatherapp.ui.activity.main.MainActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 import com.ramotion.circlemenu.CircleMenuView;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class LoginFragment extends BaseFragment implements LoginContracts.View {
+
+public class LoginFragment extends BaseFragment
+        implements LoginContracts.View {
 
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
@@ -29,7 +34,7 @@ public class LoginFragment extends BaseFragment implements LoginContracts.View {
     EditText edtEmail;
     @BindView(R.id.edt_password)
     EditText edtPassword;
-    @BindView(R.id.background)
+    @BindView(R.id.container)
     ConstraintLayout constraintLayout;
     @BindView(R.id.circle_menu_login)
     CircleMenuView circleMenuLogin;
@@ -41,7 +46,7 @@ public class LoginFragment extends BaseFragment implements LoginContracts.View {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         circleMenuLogin.setEventListener(new CircleMenuView.EventListener() {
@@ -90,7 +95,7 @@ public class LoginFragment extends BaseFragment implements LoginContracts.View {
     public void onSignInButtonClick() {
         /*
         SharedPrefUtil.init(getContext());
-        SharedPrefUtil.read("shared_pred_api_content_lang_key", "en");*/
+        SharedPrefUtil.read("shared_pref_api_content_lang_key", "en");*/
         startActivity(new Intent(getContext(), MainActivity.class));
     }
 
@@ -100,8 +105,8 @@ public class LoginFragment extends BaseFragment implements LoginContracts.View {
     }
 
     @Override
-    public void showLoader(boolean isShowing) {
-        progressBar.setVisibility(isShowing ? View.VISIBLE : View.GONE);
+    public void showLoader(boolean isVisible) {
+        progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -111,7 +116,6 @@ public class LoginFragment extends BaseFragment implements LoginContracts.View {
 
     @Override
     public void showError(Throwable e) {
-        Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        showErrorDialog(getContext(),e.getMessage());
     }
-
 }
