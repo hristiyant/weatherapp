@@ -15,8 +15,8 @@ import java.util.Objects;
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     private static final String FEEDBACK_KEY = "feedback";
+    private static final String LANGUAGE_KEY = "shared_pref_api_content_lang_key";
 
-    private Preference emailPreference;
     ListPreference list;
 
     public static SettingsFragment newInstance() {
@@ -27,11 +27,12 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle bundle, String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
 
-        list = (ListPreference) findPreference(this.getResources().getString(R.string.shared_pred_api_content_lang_key));
+        list = (ListPreference) findPreference(this.getResources().getString(R.string.shared_pref_api_content_lang_key));
+//        list = (ListPreference) getPreferenceManager().findPreference(LANGUAGE_KEY);
         list.setEntries(R.array.api_content_language_names);
         list.setEntryValues(R.array.api_content_language_values);
         list.setOnPreferenceChangeListener((preference, o) -> {
-            SharedPrefUtil.write("shared_pred_api_content_lang_key", o.toString());
+            SharedPrefUtil.write("shared_pref_api_content_lang_key", o.toString());
             list.setValue(o.toString());
             Intent intent = Objects.requireNonNull(getActivity()).getIntent();
             getActivity().finish();
@@ -39,12 +40,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             return false;
         });
 
-
-
-
-
-
-        emailPreference = getPreferenceManager().findPreference(FEEDBACK_KEY);
+        Preference emailPreference = getPreferenceManager().findPreference(FEEDBACK_KEY);
         emailPreference.setOnPreferenceClickListener(preference -> {
 
             if (preference.getKey().equals(FEEDBACK_KEY)) {

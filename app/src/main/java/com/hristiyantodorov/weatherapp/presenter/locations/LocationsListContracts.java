@@ -21,7 +21,6 @@ public interface LocationsListContracts {
 
         void updateApiInfo(LocationDbModel location);
 
-        void showLocationWeatherDetails(LocationDbModel selectedLocation);
     }
 
     interface Presenter {

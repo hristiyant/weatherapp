@@ -30,7 +30,7 @@ public class APIClient {
                     .build();
 
             retrofit = new Retrofit.Builder()
-                    .baseUrl(BuildConfig.ApiBaseUrl + BuildConfig.ApiKey + "/")
+                    .baseUrl(BuildConfig.BaseUrl + BuildConfig.ApiKey + "/")
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(okHttpClient)

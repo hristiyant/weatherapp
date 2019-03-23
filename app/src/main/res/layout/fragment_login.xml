@@ -38,7 +38,7 @@
         android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:gravity="center_horizontal"
         android:text="@string/login_screen_line_text_view_text"
-        android:textSize="@dimen/login_screen_line_text_text_size"
+        android:textSize="@dimen/login_screen_line_text_size"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@id/text_input_username"
         app:layout_constraintEnd_toEndOf="@+id/text_input_username"

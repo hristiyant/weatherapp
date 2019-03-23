@@ -11,7 +11,7 @@ import retrofit2.http.Query;
 
 public interface WeatherApiService {
 
-    String language = SharedPrefUtil.read("shared_pred_api_content_lang_key", "en");
+    String language = SharedPrefUtil.read("shared_pref_api_content_lang_key", "en");
 
     /**
      * Downloads the full forecast data (currently, hourly and daily) from the API.

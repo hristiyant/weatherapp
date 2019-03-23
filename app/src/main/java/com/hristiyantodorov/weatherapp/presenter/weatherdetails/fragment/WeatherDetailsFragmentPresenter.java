@@ -49,7 +49,7 @@ public class WeatherDetailsFragmentPresenter extends BasePresenter
                 service.getForecastFullResponse(
                         SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
                         SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null),
-                        SharedPrefUtil.read("shared_pred_api_content_lang_key", "en")
+                        SharedPrefUtil.read("shared_pref_api_content_lang_key", "en")
                 ), new SingleObserver<ForecastFullResponse>() {
                     @Override
                     public void onSubscribe(Disposable d) {

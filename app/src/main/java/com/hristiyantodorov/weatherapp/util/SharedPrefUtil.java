@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class SharedPrefUtil {
-    
+
     public static final String LOGGED_USER = "LOGGED_USER";
 
     private static SharedPreferences sharedPref;

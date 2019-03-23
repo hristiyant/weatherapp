@@ -63,11 +63,12 @@
     <string name="preference_feedback_subject_text">About WeatherApp</string>
     <string name="preference_feedback_subject_extra_text">-->Enter text here</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="shared_pref_key_logged_user_email">Logged User Email Address</string>
     <string name="shared_pref_def_value_empty">empty</string>
     <string name="forecast_hourly_summary_windy_txt">Windy</string>
+
+    <string name="shared_pref_api_content_lang_key">apiContentLang</string>
+    <string name="English">en</string>
 
     <string name="all_timestamp_format_full_day_name">EEEE</string>
     <string name="all_timestamp_format_hours_minutes">HH:mm</string>
@@ -86,10 +87,5 @@
     <string name="forecast_hourly_adapter_summary_txt_windy">Windy</string>
     <string name="txt_forecast_not_available">Forecast not available
         \nPull down to refresh…</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="shared_pred_api_content_lang_key">apiContentLang</string>
-    <string name="English">en</string>
 
 </resources>
