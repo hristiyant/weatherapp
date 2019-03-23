@@ -48,11 +48,17 @@
                 android:id="@+id/collapsing_bar_basic_forecast"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
+                android:background="@color/forecastDialogSlightlyTransparentBackground"
                 android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimaryDark"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:layout_scrollFlags="scroll|snap"
                 app:titleEnabled="false">
+
+                <ImageView
+                    android:id="@+id/background_weather_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@null" />
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
@@ -166,8 +172,7 @@
                 android:id="@+id/tab_layout_forecast_categories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
-                app:layout_collapseMode="pin" />
+                android:background="@color/colorPrimaryDark" />
 
         </android.support.design.widget.AppBarLayout>
 
@@ -176,11 +181,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">-->
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/view_pager_forecasts_holder"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager_forecasts_holder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         <!--</android.support.v4.widget.SwipeRefreshLayout>-->
 
     </android.support.design.widget.CoordinatorLayout>

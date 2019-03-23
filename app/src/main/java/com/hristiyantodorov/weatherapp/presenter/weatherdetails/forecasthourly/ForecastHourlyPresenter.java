@@ -3,22 +3,24 @@ package com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly;
 import android.content.Context;
 import android.util.Log;
 
-import com.hristiyantodorov.weatherapp.App;
-import com.hristiyantodorov.weatherapp.model.forecast.ForecastCurrentlyDbModel;
-import com.hristiyantodorov.weatherapp.model.forecast.ForecastFullDbModel;
-import com.hristiyantodorov.weatherapp.model.forecast.ForecastHourlyDbModel;
+import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastCurrentlyDbModel;
+import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastFullDbModel;
+import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastHourlyDbModel;
 import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
 import com.hristiyantodorov.weatherapp.presenter.BasePresenter;
 import com.hristiyantodorov.weatherapp.util.Constants;
+import com.hristiyantodorov.weatherapp.util.ForecastResponseToForecastDbModelConverterUtil;
 import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
-import com.hristiyantodorov.weatherapp.util.retrofit.APIClient;
-import com.hristiyantodorov.weatherapp.util.retrofit.WeatherApiService;
-import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastFullResponse;
+import com.hristiyantodorov.weatherapp.retrofit.APIClient;
+import com.hristiyantodorov.weatherapp.retrofit.WeatherApiService;
+import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class ForecastHourlyPresenter extends BasePresenter
         implements ForecastHourlyContracts.Presenter {
@@ -35,58 +37,60 @@ public class ForecastHourlyPresenter extends BasePresenter
     }
 
     @Override
-    public void loadDataFromDb() {
-        Context context = App.getInstance().getApplicationContext();
+    public void subscribe(ForecastHourlyContracts.View view) {
+        this.view = view;
+    }
+
+    @Override
+    public void loadDataFromDb(Context context) {
         subscribeSingle(PersistenceDatabase.getAppDatabase(context).forecastFullDao().getForecastFullRx(),
                 new SingleObserver<ForecastFullDbModel>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        // TODO: 3/18/2019 CURRENTLY NOT BEING USED
                     }
 
                     @Override
                     public void onSuccess(ForecastFullDbModel fullDbModel) {
                         long fullId = fullDbModel.getId();
-                        loadHourlyFromDb(fullId);
+                        loadHourlyFromDb(fullId, context);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        // TODO: 3/18/2019 CURRENTLY NOT BEING USED
                     }
                 });
     }
 
-    public void loadHourlyFromDb(long fullId) {
-        Context context = App.getInstance().getApplicationContext();
+    private void loadHourlyFromDb(long fullId, Context context) {
         subscribeSingle(PersistenceDatabase.getAppDatabase(context).forecastFullDao().getForecastHourlyById(fullId),
                 new SingleObserver<ForecastHourlyDbModel>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        // TODO: 3/18/2019 CURRENTLY NOT BEING USED
                     }
 
                     @Override
                     public void onSuccess(ForecastHourlyDbModel forecastHourlyDbModel) {
                         long hourlyId = forecastHourlyDbModel.hourlyId;
-                        loadHourlyDataFromDb(hourlyId);
+                        loadHourlyDataFromDb(hourlyId, context);
                         Log.d(TAG, "hourlyId: " + hourlyId);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        // TODO: 3/18/2019 CURRENTLY NOT BEING USED
                     }
                 });
     }
 
-    public void loadHourlyDataFromDb(long hourlyId) {
-        Context context = App.getInstance().getApplicationContext();
-        subscribeSingle(PersistenceDatabase.getAppDatabase(context).forecastFullDao().getForecastCurrentlyByHourlyId(hourlyId),
+    private void loadHourlyDataFromDb(long hourlyId, Context context) {
+        subscribeSingle(PersistenceDatabase.getAppDatabase(context).forecastFullDao().getForecastHourlyDataByHourlyId(hourlyId),
                 new SingleObserver<List<ForecastCurrentlyDbModel>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        // TODO: 3/18/2019 CURRENTLY NOT BEING USED
                     }
 
                     @Override
@@ -97,49 +101,59 @@ public class ForecastHourlyPresenter extends BasePresenter
 
                     @Override
                     public void onError(Throwable e) {
-
+                        // TODO: 3/18/2019 CURRENTLY NOT BEING USED
                     }
                 });
-
     }
 
     @Override
-    public void requestForecastHourlyDataFromApi() {
-        view.showLoader(true);
-
-        subscribeSingle(weatherApiService.getForecastHourly(
+    public void updateForecastHourlyDataFromApi(Context context) {
+        subscribeSingle(weatherApiService.getForecastFullResponse(
                 SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
-                SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null)
+                SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null),
+                SharedPrefUtil.read("shared_pred_api_content_lang_key", "en")
         ), new SingleObserver<ForecastFullResponse>() {
             @Override
             public void onSubscribe(Disposable d) {
-
+                // TODO: 3/18/2019 CURRENTLY NOT BEING USED
             }
 
             @Override
             public void onSuccess(ForecastFullResponse response) {
-                // PersistenceDatabase.getAppDatabase().forecastHourlyDao().
+                saveForecastApiDataToDb(ForecastResponseToForecastDbModelConverterUtil
+                        .convertResponseToDbModel(response), context);
+                view.updateActivity(response);
+                presentForecastToView(ForecastResponseToForecastDbModelConverterUtil
+                        .convertHourlyDataResponseListToDbModelList(response
+                                .getHourly()
+                                .getData()));
             }
 
             @Override
             public void onError(Throwable e) {
-
+                // TODO: 3/18/2019 CURRENTLY NOT BEING USED
             }
         });
-        view.showLoader(false);
     }
 
     @Override
-    public void saveForecastApiDataToDb(ForecastFullDbModel fullDbModel) {
-        // TODO: 3/19/2019
+    public void saveForecastApiDataToDb(ForecastFullDbModel fullDbModel, Context context) {
+        Completable.fromRunnable(
+                () -> PersistenceDatabase
+                        .getAppDatabase(context)
+                        .forecastFullDao().updateDb(fullDbModel)
+        ).subscribeOn(Schedulers.io())
+                .subscribe();
+        Log.d(TAG, "saveForecastApiDataToDb" );
     }
 
     @Override
-    public void presentForecastToView(List<ForecastCurrentlyDbModel> currentlyDbModels) {
-        if (currentlyDbModels.isEmpty()) {
-            view.showEmptyForecast();
+    public void presentForecastToView(List<ForecastCurrentlyDbModel> hourlyData) {
+        if (hourlyData.isEmpty()) {
+            view.showEmptyScreen(true);
         } else {
-            view.showForecast(currentlyDbModels);
+            view.showForecast(hourlyData);
+            Log.d(TAG, "presentForecastToView: PRESENTING HOURLY FORECAST TO VIEW");
         }
     }
 }

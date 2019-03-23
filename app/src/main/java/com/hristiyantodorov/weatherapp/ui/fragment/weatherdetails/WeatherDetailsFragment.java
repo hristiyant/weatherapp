@@ -10,8 +10,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.model.forecast.ForecastCurrentlyDbModel;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.WeatherDetailsFragmentContracts;
+import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastCurrentlyDbModel;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.fragment.WeatherDetailsFragmentContracts;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.fragment.WeatherDetailsFragmentPresenter;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 
@@ -31,6 +32,10 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
     TextView txtPressure;
     @BindView(R.id.txt_wind_speed)
     TextView txtWindSpeed;
+    @BindView(R.id.txt_hourly_summary)
+    TextView txtHourlySummary;
+    @BindView(R.id.txt_daily_summary)
+    TextView txtDailySummary;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
     @BindView(R.id.fragment_weather_details)
@@ -39,7 +44,9 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
     private WeatherDetailsFragmentContracts.Presenter presenter;
 
     public static WeatherDetailsFragment newInstance() {
-        return new WeatherDetailsFragment();
+        WeatherDetailsFragment fragment = new WeatherDetailsFragment();
+        new WeatherDetailsFragmentPresenter(fragment);
+        return fragment;
     }
 
     @Override
@@ -47,7 +54,7 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        presenter.loadDataFromDb();
+        presenter.requestDataFromApi();
 
         return view;
     }
@@ -80,7 +87,7 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
     }
 
     @Override
-    public void showForecastCurrentlyData(ForecastCurrentlyDbModel data) {
+    public void showForecastCurrentlyData(ForecastCurrentlyDbModel data, String hourlySummary, String dailySummary) {
         txtTemperature.setText(getString(R.string.txt_temperature,
                 WeatherDataFormatterUtil.convertFahrenheitToCelsius(data.getTemperature())));
         txtApparentTemperature.setText(getString(R.string.txt_apparent_temperature,
@@ -91,6 +98,9 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
                 WeatherDataFormatterUtil.convertRoundedDoubleToString(data.getPressure())));
         txtWindSpeed.setText(getString(R.string.txt_wind_speed,
                 WeatherDataFormatterUtil.convertMphToMs(data.getWindSpeed())));
+        txtHourlySummary.setText(hourlySummary);
+        txtDailySummary.setText(dailySummary);
+        showLoader(false);
         showEmptyScreen(false);
     }
 }

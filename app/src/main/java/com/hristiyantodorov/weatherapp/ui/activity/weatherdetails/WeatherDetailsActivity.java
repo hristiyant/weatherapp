@@ -5,7 +5,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -13,12 +12,15 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.weatherdetails.WeatherDetailsPagerAdapter;
-import com.hristiyantodorov.weatherapp.model.forecast.ForecastCurrentlyDbModel;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.WeatherDetailsActivityContracts;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.WeatherDetailsActivityPresenter;
+import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastCurrentlyDbModel;
+import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.activity.WeatherDetailsActivityContracts;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.activity.WeatherDetailsActivityPresenter;
 import com.hristiyantodorov.weatherapp.ui.activity.BaseActivity;
+import com.hristiyantodorov.weatherapp.util.ForecastResponseToForecastDbModelConverterUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherIconPickerUtil;
 
@@ -29,8 +31,7 @@ import java.util.Locale;
 import butterknife.BindView;
 
 public class WeatherDetailsActivity extends BaseActivity
-        implements WeatherDetailsActivityContracts.View,
-        SwipeRefreshLayout.OnRefreshListener{
+        implements WeatherDetailsActivityContracts.View{
 
     private static final String TAG = "WDActivity";
 
@@ -54,12 +55,12 @@ public class WeatherDetailsActivity extends BaseActivity
     TabLayout tabLayout;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
-//    @BindView(R.id.swipe_container)
-//    SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
     @BindView(R.id.app_bar_basic_forecast)
     AppBarLayout appBarLayout;
+    @BindView(R.id.background_weather_image)
+    ImageView imgBackground;
 
     private WeatherDetailsActivityContracts.Presenter presenter;
 
@@ -67,13 +68,12 @@ public class WeatherDetailsActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        swipeRefreshLayout.setOnRefreshListener(this);
-
-        new WeatherDetailsActivityPresenter(this);
-        presenter.downloadForecastFromApi();
+        presenter = new WeatherDetailsActivityPresenter(this);
+        presenter.downloadForecastFromApi(this);
 
         WeatherDetailsPagerAdapter weatherDetailsPagerAdapter =
                 new WeatherDetailsPagerAdapter(getSupportFragmentManager());
+        viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(weatherDetailsPagerAdapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -100,26 +100,6 @@ public class WeatherDetailsActivity extends BaseActivity
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-//        appBarLayout.addOnOffsetChangedListener(this);
-        refreshLastUpdated();
-    }
-
-    /*@Override
-    protected void onPause() {
-        super.onPause();
-        appBarLayout.removeOnOffsetChangedListener(this);
-    }*/
-
-    @Override
-    public void onRefresh() {
-//        swipeRefreshLayout.setRefreshing(true);
-        presenter.downloadForecastFromApi();
-//        swipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
     public void setPresenter(WeatherDetailsActivityContracts.Presenter presenter) {
         this.presenter = presenter;
     }
@@ -138,16 +118,11 @@ public class WeatherDetailsActivity extends BaseActivity
 
     @Override
     public void showError(Throwable e) {
-// TODO: 3/19/2019
+        // TODO: 3/19/2019
     }
 
     @Override
-    public void showForecast(ForecastCurrentlyDbModel data) {
-        setFields(data, "ToBeChanged");
-        Log.d(TAG, "timestamp " + data.getTime());
-    }
-
-    public void setFields(ForecastCurrentlyDbModel response, String timezone) {
+    public void showForecast(ForecastCurrentlyDbModel response, String timezone) {
         txtLocationName.setText(timezone);
         txtSummary.setText(response.getSummary());
         txtCurrentTemp.setText(Html.fromHtml(
@@ -159,12 +134,25 @@ public class WeatherDetailsActivity extends BaseActivity
                 R.string.txt_current_wind_speed,
                 WeatherDataFormatterUtil.convertMphToMs(response.getWindSpeed())
         ));
-        String currentTimeStamp = DateFormat
-                .getTimeInstance(SimpleDateFormat.MEDIUM, Locale.getDefault())
-                .format(new java.util.Date());
-        txtLastUpdated.setText(getString(R.string.txt_last_updated, currentTimeStamp));
         imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(response.getIcon()));
+
+        Glide.with(this)
+                .asGif()
+                .load(R.drawable.gif_partly_cloudy_night)
+                .centerCrop()
+                .into(imgBackground);
+
         showEmptyScreen(false);
+    }
+
+    public void updateView(ForecastFullResponse response){
+        refreshLastUpdated();
+        showForecast(
+                ForecastResponseToForecastDbModelConverterUtil
+                        .convertCurrentlyResponseToDbModel(response.getCurrently()),
+                response.getTimezone()
+        );
+        Log.d(TAG, "updateView: ACTIVITY UPDATED");
     }
 
     public void refreshLastUpdated() {
@@ -173,9 +161,4 @@ public class WeatherDetailsActivity extends BaseActivity
                 .format(new java.util.Date());
         txtLastUpdated.setText(getString(R.string.txt_last_updated, timeStamp));
     }
-
-    /*@Override
-    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-        swipeRefreshLayout.setEnabled(i == 0);
-    }*/
 }

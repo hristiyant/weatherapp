@@ -6,12 +6,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.WeatherDetailsFragmentContracts;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.WeatherDetailsFragmentPresenter;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecastdaily.ForecastDailyContracts;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecastdaily.ForecastDailyPresenter;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly.ForecastHourlyContracts;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly.ForecastHourlyPresenter;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.fragment.WeatherDetailsFragmentContracts;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.fragment.WeatherDetailsFragmentPresenter;
 import com.hristiyantodorov.weatherapp.ui.fragment.settings.SettingsFragment;
 import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.ForecastDailyFragment;
 import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.ForecastHourlyFragment;
@@ -28,9 +28,9 @@ public class WeatherDetailsPagerAdapter extends FragmentPagerAdapter {
         super(manager);
     }
 
-   private ForecastHourlyContracts.Presenter forecastHourlyPresenter;
-   private ForecastDailyContracts.Presenter forecastDailyPresenter;
-   private WeatherDetailsFragmentContracts.Presenter weatherDetailsPresenter;
+       private ForecastHourlyContracts.Presenter forecastHourlyPresenter;
+    private ForecastDailyContracts.Presenter forecastDailyPresenter;
+    private WeatherDetailsFragmentContracts.Presenter weatherDetailsPresenter;
 
     @Override
     public Fragment getItem(int position) {

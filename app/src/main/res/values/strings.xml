@@ -61,4 +61,9 @@
     <string name="txt_forecast_not_available">Forecast not available
         \nPull down to refresh…</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="shared_pred_api_content_lang_key">apiContentLang</string>
+    <string name="English">en</string>
+
 </resources>

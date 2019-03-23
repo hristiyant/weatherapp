@@ -12,15 +12,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.model.user.UserDao;
-import com.hristiyantodorov.weatherapp.model.user.UserDbModel;
-import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
 import com.hristiyantodorov.weatherapp.presenter.login.LoginContracts;
 import com.hristiyantodorov.weatherapp.ui.activity.main.MainActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
-import com.hristiyantodorov.weatherapp.util.AppExecutorUtil;
 import com.ramotion.circlemenu.CircleMenuView;
 
 import butterknife.BindView;
@@ -93,14 +88,9 @@ public class LoginFragment extends BaseFragment implements LoginContracts.View {
 
     @OnClick(R.id.btn_sign_in)
     public void onSignInButtonClick() {
-        //Test implementation - adding and entry to the database "users"
-        UserDbModel user = new UserDbModel();
-        String email = edtEmail.getText().toString();
-        user.setEmail(email);
-        UserDao userDao = PersistenceDatabase
-                .getAppDatabase(App.getInstance().getApplicationContext()).userDao();
-        AppExecutorUtil.getInstance().execute(() -> userDao.insertUser(user));
-        // TODO: 1/18/2019  Login from presenter mPresenter.loginUser(userName, password);
+        /*
+        SharedPrefUtil.init(getContext());
+        SharedPrefUtil.read("shared_pred_api_content_lang_key", "en");*/
         startActivity(new Intent(getContext(), MainActivity.class));
     }
 

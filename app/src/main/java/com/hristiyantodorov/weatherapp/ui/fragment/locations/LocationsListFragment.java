@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.locations.LocationsListAdapter;
 import com.hristiyantodorov.weatherapp.adapter.locations.LocationsListDiffCallback;
-import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.model.database.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.presenter.locations.LocationsListContracts;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
@@ -64,11 +64,11 @@ public class LocationsListFragment extends BaseFragment
 
         edtFilter.addTextChangedListener(filterTextWatcher);
         recyclerViewLocations.setAdapter(locationsListAdapter);
-        recyclerViewLocations.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerViewLocations.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewLocations.addItemDecoration(new DividerItemDecoration(
-                getActivity(), R.drawable.divider
+                Objects.requireNonNull(getContext())
         ));
-        getLocationsFromDatabase();
+        presenter.loadDbData();
 
         return view;
     }
@@ -80,24 +80,24 @@ public class LocationsListFragment extends BaseFragment
     }
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.fragment_locations_list;
-    }
-
-    @Override
     public void setPresenter(LocationsListContracts.Presenter presenter) {
         this.presenter = presenter;
     }
 
     @Override
+    protected int getLayoutResId() {
+        return R.layout.fragment_locations_list;
+    }
+
+    @Override
     public void showLoader(boolean isShowing) {
         progressBar.setVisibility(isShowing ? View.VISIBLE : View.GONE);
-//        recyclerViewLocations.setVisibility(isShowing ? View.GONE : View.VISIBLE);
     }
 
     @Override
     public void showEmptyScreen(boolean isShowing) {
-        // TODO: 3/18/2019 ADD IMPLEMENTATION !!!!
+        txtNoResultsFound.setVisibility(isShowing ? View.VISIBLE : View.GONE);
+//        recyclerViewLocations.setVisibility(isShowing ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -109,8 +109,9 @@ public class LocationsListFragment extends BaseFragment
     public void showLocations(List<LocationDbModel> locations) {
         locationsListAdapter.submitList(locations);
         locationsListAdapter.notifyDataSetChanged();
-        recyclerViewLocations.setVisibility(View.VISIBLE);
+//        recyclerViewLocations.setVisibility(View.VISIBLE);
         showLoader(false);
+        showEmptyScreen(false);
     }
 
     @Override
@@ -118,22 +119,16 @@ public class LocationsListFragment extends BaseFragment
         showLoader(true);
 
         //TODO: check for info in the db and then get from API
-        presenter.downloadApiDataForDbModels(getContext());
+//        presenter.downloadApiDataForDbModels(getContext());
     }
 
     @Override
     public void getBasicForecastInfo(List<LocationDbModel> locations) {
         for (LocationDbModel location : locations) {
-            presenter.getBasicForecastInfo(location);
+//            presenter.getBasicForecastInfo(location);
         }
         //TODO: GET DATA FROM DB AND PASS TO VIEW TO SHOW
-        presenter.loadDbData(getContext());
-    }
-
-    @Override
-    public void showEmptyLocationsList() {
-        recyclerViewLocations.setVisibility(View.GONE);
-        txtNoResultsFound.setVisibility(View.VISIBLE);
+        presenter.loadDbData();
     }
 
     @Override

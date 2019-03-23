@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "475e1a89170b59b1c4d5e78d49a1edaf",
+    "identityHash": "026e41239515a2dc66413d85ee242594",
     "entities": [
       {
         "tableName": "users",
@@ -32,7 +32,7 @@
       },
       {
         "tableName": "locations",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `longitude` REAL NOT NULL, `latitude` REAL NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `longitude` REAL NOT NULL, `latitude` REAL NOT NULL, `temperature` REAL NOT NULL, `icon` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -57,6 +57,18 @@
             "columnName": "latitude",
             "affinity": "REAL",
             "notNull": true
+          },
+          {
+            "fieldPath": "temperature",
+            "columnName": "temperature",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "icon",
+            "columnName": "icon",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -67,11 +79,412 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "forecast_data",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `latitude` REAL, `longitude` REAL, `timezone` TEXT, `lastUpdatedTimestamp` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "latitude",
+            "columnName": "latitude",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "longitude",
+            "columnName": "longitude",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "timezone",
+            "columnName": "timezone",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastUpdatedTimestamp",
+            "columnName": "lastUpdatedTimestamp",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "forecast_currently",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`currentlyId` INTEGER PRIMARY KEY AUTOINCREMENT, `time` TEXT, `summary` TEXT, `icon` TEXT, `temperature` REAL, `apparentTemperature` REAL, `humidity` REAL, `pressure` REAL, `windSpeed` REAL, `forecastFullId` INTEGER, `forecastHourlyId` INTEGER, FOREIGN KEY(`forecastHourlyId`) REFERENCES `forecast_hourly`(`hourlyId`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`forecastFullId`) REFERENCES `forecast_data`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "currentlyId",
+            "columnName": "currentlyId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "time",
+            "columnName": "time",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "summary",
+            "columnName": "summary",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "icon",
+            "columnName": "icon",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "temperature",
+            "columnName": "temperature",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "apparentTemperature",
+            "columnName": "apparentTemperature",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "humidity",
+            "columnName": "humidity",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "pressure",
+            "columnName": "pressure",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "windSpeed",
+            "columnName": "windSpeed",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "forecastFullId",
+            "columnName": "forecastFullId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "forecastHourlyId",
+            "columnName": "forecastHourlyId",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "currentlyId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "idxForecastHourlyId",
+            "unique": false,
+            "columnNames": [
+              "forecastHourlyId"
+            ],
+            "createSql": "CREATE  INDEX `idxForecastHourlyId` ON `${TABLE_NAME}` (`forecastHourlyId`)"
+          },
+          {
+            "name": "idxForecastFullIdCurrently",
+            "unique": false,
+            "columnNames": [
+              "forecastFullId"
+            ],
+            "createSql": "CREATE  INDEX `idxForecastFullIdCurrently` ON `${TABLE_NAME}` (`forecastFullId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "forecast_hourly",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "forecastHourlyId"
+            ],
+            "referencedColumns": [
+              "hourlyId"
+            ]
+          },
+          {
+            "table": "forecast_data",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "forecastFullId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "forecast_hourly",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`hourlyId` INTEGER PRIMARY KEY AUTOINCREMENT, `summary` TEXT, `icon` TEXT, `forecastFullId` INTEGER, FOREIGN KEY(`forecastFullId`) REFERENCES `forecast_data`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "hourlyId",
+            "columnName": "hourlyId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "summary",
+            "columnName": "summary",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "icon",
+            "columnName": "icon",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "forecastFullId",
+            "columnName": "forecastFullId",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "hourlyId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "idxForecastFullIdHourly",
+            "unique": false,
+            "columnNames": [
+              "forecastFullId"
+            ],
+            "createSql": "CREATE  INDEX `idxForecastFullIdHourly` ON `${TABLE_NAME}` (`forecastFullId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "forecast_data",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "forecastFullId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "forecast_daily",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`dailyId` INTEGER PRIMARY KEY AUTOINCREMENT, `summary` TEXT, `icon` TEXT, `forecastFullId` INTEGER, FOREIGN KEY(`forecastFullId`) REFERENCES `forecast_data`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "dailyId",
+            "columnName": "dailyId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "summary",
+            "columnName": "summary",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "icon",
+            "columnName": "icon",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "forecastFullId",
+            "columnName": "forecastFullId",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "dailyId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "idxForecastFullIdDaily",
+            "unique": false,
+            "columnNames": [
+              "forecastFullId"
+            ],
+            "createSql": "CREATE  INDEX `idxForecastFullIdDaily` ON `${TABLE_NAME}` (`forecastFullId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "forecast_data",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "forecastFullId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "forecast_daily_data",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`dailyDataId` INTEGER PRIMARY KEY AUTOINCREMENT, `time` TEXT, `summary` TEXT, `icon` TEXT, `sunriseTime` TEXT, `sunsetTime` TEXT, `humidity` REAL, `pressure` REAL, `windSpeed` REAL, `temperatureMin` REAL, `temperatureMinTime` TEXT, `temperatureMax` REAL, `temperatureMaxTime` TEXT, `forecastDailyId` INTEGER, FOREIGN KEY(`forecastDailyId`) REFERENCES `forecast_daily`(`dailyId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "dailyDataId",
+            "columnName": "dailyDataId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "time",
+            "columnName": "time",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "summary",
+            "columnName": "summary",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "icon",
+            "columnName": "icon",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sunriseTime",
+            "columnName": "sunriseTime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sunsetTime",
+            "columnName": "sunsetTime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "humidity",
+            "columnName": "humidity",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "pressure",
+            "columnName": "pressure",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "windSpeed",
+            "columnName": "windSpeed",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "temperatureMin",
+            "columnName": "temperatureMin",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "temperatureMinTime",
+            "columnName": "temperatureMinTime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "temperatureMax",
+            "columnName": "temperatureMax",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "temperatureMaxTime",
+            "columnName": "temperatureMaxTime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "forecastDailyId",
+            "columnName": "forecastDailyId",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "dailyDataId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "forecastDailyId",
+            "unique": false,
+            "columnNames": [
+              "forecastDailyId"
+            ],
+            "createSql": "CREATE  INDEX `forecastDailyId` ON `${TABLE_NAME}` (`forecastDailyId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "forecast_daily",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "forecastDailyId"
+            ],
+            "referencedColumns": [
+              "dailyId"
+            ]
+          }
+        ]
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"475e1a89170b59b1c4d5e78d49a1edaf\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"026e41239515a2dc66413d85ee242594\")"
     ]
   }
 }

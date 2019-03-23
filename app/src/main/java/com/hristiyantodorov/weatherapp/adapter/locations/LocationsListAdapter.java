@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.model.database.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherIconPickerUtil;
 
@@ -32,9 +32,6 @@ public class LocationsListAdapter
     @NonNull
     @Override
     public LocationsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        /*View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_locations_list, viewGroup, false);
-        LocationsViewHolder viewHolder = new LocationsViewHolder(view);*/
         return new LocationsViewHolder(LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.item_locations_list, viewGroup, false));
     }

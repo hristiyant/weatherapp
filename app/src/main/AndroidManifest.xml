@@ -53,5 +53,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.main.MainActivity" />
         </activity>
+        <activity android:name=".util.location.MyActivity"/>
     </application>
 </manifest>

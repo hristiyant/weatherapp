@@ -2,7 +2,7 @@ package com.hristiyantodorov.weatherapp.presenter.locations;
 
 import android.content.Context;
 
-import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.model.database.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.presenter.BaseView;
 
 import java.util.List;
@@ -17,8 +17,6 @@ public interface LocationsListContracts {
 
         void setPresenter(Presenter presenter);
 
-        void showEmptyLocationsList();
-
         void getBasicForecastInfo(List<LocationDbModel> locations);
 
         void updateApiInfo(LocationDbModel location);
@@ -27,6 +25,8 @@ public interface LocationsListContracts {
     interface Presenter {
 
         void loadDbData();
+
+        void fillDbFromApi(List<LocationDbModel> locationDbModels);
 
         void filterLocations(String pattern, Context context);
 

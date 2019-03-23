@@ -3,14 +3,15 @@ package com.hristiyantodorov.weatherapp.presenter.locations;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
-import com.hristiyantodorov.weatherapp.App;
-import com.hristiyantodorov.weatherapp.model.location.LocationDbModel;
-import com.hristiyantodorov.weatherapp.networking.service.LocationsDbService;
+import com.hristiyantodorov.weatherapp.model.database.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.networking.services.LocationsDbService;
 import com.hristiyantodorov.weatherapp.presenter.BasePresenter;
+import com.hristiyantodorov.weatherapp.retrofit.APIClient;
+import com.hristiyantodorov.weatherapp.retrofit.WeatherApiService;
 import com.hristiyantodorov.weatherapp.util.DisposableManagerUtil;
-import com.hristiyantodorov.weatherapp.util.retrofit.APIClient;
-import com.hristiyantodorov.weatherapp.util.retrofit.WeatherApiService;
+import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 
+import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.Completable;
@@ -30,12 +31,19 @@ public class LocationsListPresenter extends BasePresenter
     //private CompositeDisposable disposable = new CompositeDisposable();
     private WeatherApiService weatherApiService;
     private LocationsDbService locationsDbService;
+    public static final List<LocationDbModel> defaultLocationsList = Arrays.asList(
+            new LocationDbModel("Tokyo", 35.652832, 139.839478),
+            new LocationDbModel("New York", 40.730610, -73.935242),
+            new LocationDbModel("Paris", 48.864716, 2.349014),
+            new LocationDbModel("London", 51.509865, -0.118092),
+            new LocationDbModel("Sydney", -33.865143, 151.209900)
+    );
 
-    public LocationsListPresenter(LocationsListContracts.View view) {
+    public LocationsListPresenter(LocationsListContracts.View view, Context context) {
         this.view = view;
         this.view.setPresenter(this);
-        this.weatherApiService = APIClient.getClient().create(WeatherApiService.class);
-        locationsDbService = LocationsDbService.getInstance(App.getInstance().getApplicationContext());
+        weatherApiService = APIClient.getClient().create(WeatherApiService.class);
+        locationsDbService = LocationsDbService.getInstance(context);
     }
 
     @Override
@@ -51,27 +59,61 @@ public class LocationsListPresenter extends BasePresenter
                     @Override
                     public void onSuccess(List<LocationDbModel> locationDbModels) {
                         if (locationDbModels.isEmpty()) {
-                            fillDbFromApi(locationDbModels);
+                            populateDatabaseWithDefaultList();
+                            //check if ther are null icons
                         } else {
-                            presentLocationsToView(locationDbModels);
+                            checkForNullIcons(locationDbModels);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        // TODO: 20.3.2019 CURRENTLY NOT BEING USED
                     }
                 });
     }
 
+    private void checkForNullIcons(List<LocationDbModel> locationDbModels) {
+        subscribeSingle(locationsDbService.checkForNullIcons(locationDbModels),
+                new SingleObserver<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        // TODO: 20.3.2019 CURRENTLY NOT BEING USED
+                    }
+
+                    @Override
+                    public void onSuccess(Integer integer) {
+                        if (integer == 0) {
+                            presentLocationsToView(locationDbModels);
+                        } else {
+                            fillDbFromApi(locationDbModels);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // TODO: 20.3.2019 CURRENTLY NOT BEING USED
+                    }
+                });
+    }
+
+    private void populateDatabaseWithDefaultList() {
+        Completable.fromAction(() -> locationsDbService.populateDatabaseWithDefaultList())
+                .doOnComplete(this::loadDbData)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
+
     @SuppressLint("CheckResult")
-    private void fillDbFromApi(List<LocationDbModel> locationDbModels) {
+    public void fillDbFromApi(List<LocationDbModel> locationDbModels) {
         locationsDbService.getAllLocationsList()
                 .flatMapObservable(Observable::fromIterable)
                 .flatMapSingle(locationDbModel ->
                         weatherApiService.getForecastCurrently(
                                 String.valueOf(locationDbModel.getLatitude()),
-                                String.valueOf(locationDbModel.getLongitude())
+                                String.valueOf(locationDbModel.getLongitude()),
+                                SharedPrefUtil.read("shared_pred_api_content_lang_key", "en")
                         ))
                 .toList()
                 .subscribeOn(Schedulers.io())
@@ -79,6 +121,7 @@ public class LocationsListPresenter extends BasePresenter
                 .subscribe((forecastFullResponses, throwable) -> {
                     for (int i = 0; i < forecastFullResponses.size(); i++) {
                         locationDbModels.get(i).setIcon(forecastFullResponses.get(i).getCurrently().getIcon());
+                        locationDbModels.get(i).setTemperature(forecastFullResponses.get(i).getCurrently().getTemperature());
                         updateLocationDbInfo(locationDbModels.get(i));
                     }
                     presentLocationsToView(locationDbModels);
@@ -170,7 +213,8 @@ public class LocationsListPresenter extends BasePresenter
             List<LocationDbModel> locations = locationsDbService.getFilteredLocationsList(pattern);
             emitter.onNext(locations);
             emitter.onComplete();
-        }).doOnSubscribe(disposable -> view.showLoader(true))
+        })
+                .doOnSubscribe(disposable -> view.showLoader(true))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> view.showLoader(false))
@@ -181,7 +225,7 @@ public class LocationsListPresenter extends BasePresenter
     @Override
     public void presentLocationsToView(List<LocationDbModel> locations) {
         if (locations.isEmpty()) {
-            view.showEmptyLocationsList();
+            view.showEmptyScreen(true);
         } else {
             view.showLocations(locations);
         }

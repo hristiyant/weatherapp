@@ -39,4 +39,38 @@ public class WeatherIconPickerUtil {
                 return 0;
         }
     }
+
+    /**
+     * Picks which weather image to be set as background based on the icon string received from the API.
+     *
+     * @param icon
+     * @return
+     */
+    @DrawableRes
+    public static int pickWeatherBackgroundImage(String icon) {
+        switch (icon) {
+            case "clear-day":
+                return R.drawable.back_image_clear_day;
+            case "clear-night":
+                return R.drawable.back_image_clear_night;
+           /* case "rain":
+                return R.drawable.back_image_rain;
+            case "snow":
+                return R.drawable.back_image_snow;
+            case "sleet":
+                return R.drawable.back_image_sleet;
+            case "wind":
+                return R.drawable.back_image_wind;
+            case "fog":
+                return R.drawable.back_image_fog;
+            case "cloudy":
+                return R.drawable.back_image_cloudy;
+            case "partly-cloudy-day":
+                return R.drawable.back_image_partly_cloudy_day;
+            case "partly-cloudy-night":
+                return R.drawable.back_image_;*/
+            default:
+                return 0;
+        }
+    }
 }

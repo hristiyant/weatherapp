@@ -1,19 +1,20 @@
 package com.hristiyantodorov.weatherapp.util;
 
-import com.hristiyantodorov.weatherapp.model.forecast.ForecastCurrentlyDbModel;
-import com.hristiyantodorov.weatherapp.model.forecast.ForecastDailyDataDbModel;
-import com.hristiyantodorov.weatherapp.model.forecast.ForecastDailyDbModel;
-import com.hristiyantodorov.weatherapp.model.forecast.ForecastFullDbModel;
-import com.hristiyantodorov.weatherapp.model.forecast.ForecastHourlyDbModel;
-import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastCurrentlyResponse;
-import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastDailyDataResponse;
-import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastDailyResponse;
-import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastFullResponse;
-import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastHourlyResponse;
+import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastCurrentlyDbModel;
+import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastDailyDataDbModel;
+import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastDailyDbModel;
+import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastFullDbModel;
+import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastHourlyDbModel;
+import com.hristiyantodorov.weatherapp.model.response.ForecastCurrentlyResponse;
+import com.hristiyantodorov.weatherapp.model.response.ForecastDailyDataResponse;
+import com.hristiyantodorov.weatherapp.model.response.ForecastDailyResponse;
+import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
+import com.hristiyantodorov.weatherapp.model.response.ForecastHourlyResponse;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -31,15 +32,13 @@ public class ForecastResponseToForecastDbModelConverterUtil {
         fullDbModel.setDailyDbModel(convertDailyResponseToDbModel(fullResponse.getDaily()));
         fullDbModel.setDailyDataDbModels(convertDailyDataResponseListToDbModelList(fullResponse.getDaily().getData()));
 
-
         return fullDbModel;
     }
 
     public static ForecastCurrentlyDbModel convertCurrentlyResponseToDbModel(ForecastCurrentlyResponse currentlyResponse) {
         ForecastCurrentlyDbModel currentlyDbModel = new ForecastCurrentlyDbModel();
 
-        currentlyDbModel.setTime(new SimpleDateFormat("HH:mm")
-                .format(new java.util.Date(currentlyResponse.getTime() * 1000)));
+        currentlyDbModel.setTime(convertTimestampToHoursAndMinutes(currentlyResponse.getTime()));
         currentlyDbModel.setSummary(currentlyResponse.getSummary());
         currentlyDbModel.setIcon(currentlyResponse.getIcon());
         currentlyDbModel.setTemperature(currentlyResponse.getTemperature());
@@ -97,18 +96,13 @@ public class ForecastResponseToForecastDbModelConverterUtil {
         dailyDataDbModel.setPressure(dailyDataResponse.getPressure());
         dailyDataDbModel.setPressure(dailyDataResponse.getPressure());
         dailyDataDbModel.setSummary(dailyDataResponse.getSummary());
-        dailyDataDbModel.setSunriseTime(new SimpleDateFormat("HH:mm")
-                .format(new java.util.Date(dailyDataResponse.getSunriseTime() * 1000)));
-        dailyDataDbModel.setSunsetTime(new SimpleDateFormat("HH:mm")
-                .format(new java.util.Date(dailyDataResponse.getSunsetTime() * 1000)));
+        dailyDataDbModel.setSunriseTime(convertTimestampToHoursAndMinutes(dailyDataResponse.getSunriseTime()));
+        dailyDataDbModel.setSunsetTime(convertTimestampToHoursAndMinutes(dailyDataResponse.getSunsetTime()));
         dailyDataDbModel.setTemperatureMax(dailyDataResponse.getTemperatureMax());
-        dailyDataDbModel.setTemperatureMaxTime(new SimpleDateFormat("HH:mm")
-                .format(new java.util.Date(dailyDataResponse.getTemperatureMaxTime() * 1000)));
+        dailyDataDbModel.setTemperatureMaxTime(convertTimestampToHoursAndMinutes(dailyDataResponse.getTemperatureMaxTime()));
         dailyDataDbModel.setTemperatureMin(dailyDataResponse.getTemperatureMin());
-        dailyDataDbModel.setTemperatureMinTime(new SimpleDateFormat("HH:mm")
-                .format(new java.util.Date(dailyDataResponse.getTemperatureMinTime() * 1000)));
-        dailyDataDbModel.setTime(new SimpleDateFormat("EEEE")
-                .format(new java.util.Date(dailyDataResponse.getTime() * 1000)));
+        dailyDataDbModel.setTemperatureMinTime(convertTimestampToHoursAndMinutes(dailyDataResponse.getTemperatureMinTime()));
+        dailyDataDbModel.setTime(convertTimestampToHoursAndMinutes(dailyDataResponse.getTime()));
         dailyDataDbModel.setWindSpeed(dailyDataResponse.getWindSpeed());
 
         return dailyDataDbModel;
@@ -120,4 +114,10 @@ public class ForecastResponseToForecastDbModelConverterUtil {
                 .format(new java.util.Date());
     }
 
+    private static String convertTimestampToHoursAndMinutes(long timestamp) {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(timestamp * 1000);
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        return format.format(c.getTime());
+    }
 }

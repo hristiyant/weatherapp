@@ -1,8 +1,11 @@
 package com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecastdaily;
 
-import com.hristiyantodorov.weatherapp.model.forecast.ForecastFullDbModel;
+import android.content.Context;
+
+import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastDailyDataDbModel;
+import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastFullDbModel;
 import com.hristiyantodorov.weatherapp.presenter.BaseView;
-import com.hristiyantodorov.weatherapp.util.retrofit.model.ForecastDailyDataResponse;
+import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
 
 import java.util.List;
 
@@ -10,22 +13,21 @@ public interface ForecastDailyContracts {
 
     interface View extends BaseView<Presenter> {
 
-        void showForecastDailyData(List<ForecastDailyDataResponse> result);
+        void showForecast(List<ForecastDailyDataDbModel> dailyData);
 
-        void showEmptyForecast();
-
+        void updateActivity(ForecastFullResponse response);
     }
 
     interface Presenter {
 
-        void requestForecastDailyDataFromApi(String latitude, String longitude);
+        void subscribe(View view);
 
-        void saveForecastApiDataToDb(ForecastFullDbModel fullDbModel);
+        void loadDataFromDb(Context context);
 
-        void presentForecastToView(List<ForecastDailyDataResponse> response);
+        void updateForecastDailyDataFromApi(Context context);
 
-        void clearResources();
+        void saveForecastApiDataToDb(ForecastFullDbModel fullDbModel, Context context);
 
+        void presentForecastToView(List<ForecastDailyDataDbModel> dailyData);
     }
-
 }
