@@ -102,7 +102,7 @@ public class ForecastResponseToForecastDbModelConverterUtil {
         dailyDataDbModel.setTemperatureMaxTime(convertTimestampToHoursAndMinutes(dailyDataResponse.getTemperatureMaxTime()));
         dailyDataDbModel.setTemperatureMin(dailyDataResponse.getTemperatureMin());
         dailyDataDbModel.setTemperatureMinTime(convertTimestampToHoursAndMinutes(dailyDataResponse.getTemperatureMinTime()));
-        dailyDataDbModel.setTime(convertTimestampToHoursAndMinutes(dailyDataResponse.getTime()));
+        dailyDataDbModel.setTime(convertTimestampToDayOfWeek(dailyDataResponse.getTime()));
         dailyDataDbModel.setWindSpeed(dailyDataResponse.getWindSpeed());
 
         return dailyDataDbModel;
@@ -118,6 +118,13 @@ public class ForecastResponseToForecastDbModelConverterUtil {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(timestamp * 1000);
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        return format.format(c.getTime());
+    }
+
+    private static String convertTimestampToDayOfWeek(long timestamp) {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(timestamp * 1000);
+        SimpleDateFormat format = new SimpleDateFormat("EEEE");
         return format.format(c.getTime());
     }
 }
