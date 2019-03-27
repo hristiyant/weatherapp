@@ -1,5 +1,7 @@
 package com.hristiyantodorov.weatherapp.util;
 
+import com.hristiyantodorov.weatherapp.App;
+import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastCurrentlyDbModel;
 import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastDailyDataDbModel;
 import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastDailyDbModel;
@@ -27,11 +29,14 @@ public class ForecastResponseToForecastDbModelConverterUtil {
         fullDbModel.setTimezone(fullResponse.getTimezone());
         fullDbModel.setLastUpdatedTimestamp(getCurrentTimestamp());
         fullDbModel.setCurrentlyDbModel(convertCurrentlyResponseToDbModel(fullResponse.getCurrently()));
-        fullDbModel.setHourlyDbModel(convertHourlyResponseToDbModel(fullResponse.getHourly()));
-        fullDbModel.setHourlyDataDbModels(convertHourlyDataResponseListToDbModelList(fullResponse.getHourly().getData()));
-        fullDbModel.setDailyDbModel(convertDailyResponseToDbModel(fullResponse.getDaily()));
-        fullDbModel.setDailyDataDbModels(convertDailyDataResponseListToDbModelList(fullResponse.getDaily().getData()));
-
+        if (fullResponse.getHourly() != null) {
+            fullDbModel.setHourlyDbModel(convertHourlyResponseToDbModel(fullResponse.getHourly()));
+            fullDbModel.setHourlyDataDbModels(convertHourlyDataResponseListToDbModelList(fullResponse.getHourly().getData()));
+        }
+        if (fullResponse.getDaily() != null) {
+            fullDbModel.setDailyDbModel(convertDailyResponseToDbModel(fullResponse.getDaily()));
+            fullDbModel.setDailyDataDbModels(convertDailyDataResponseListToDbModelList(fullResponse.getDaily().getData()));
+        }
         return fullDbModel;
     }
 
@@ -115,16 +120,16 @@ public class ForecastResponseToForecastDbModelConverterUtil {
     }
 
     private static String convertTimestampToHoursAndMinutes(long timestamp) {
-        Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(timestamp * 1000);
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-        return format.format(c.getTime());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp * 1000);
+        SimpleDateFormat format = new SimpleDateFormat(App.getInstance().getString(R.string.simple_date_format_hours_minutes));
+        return format.format(calendar.getTime());
     }
 
     private static String convertTimestampToDayOfWeek(long timestamp) {
-        Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(timestamp * 1000);
-        SimpleDateFormat format = new SimpleDateFormat("EEEE");
-        return format.format(c.getTime());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp * 1000);
+        SimpleDateFormat format = new SimpleDateFormat(App.getInstance().getString(R.string.simple_date_format_day_of_week));
+        return format.format(calendar.getTime());
     }
 }

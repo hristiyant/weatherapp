@@ -16,27 +16,31 @@ public class APIClient {
 
     private static final int REQUEST_TIMEOUT = 60;
     private static Retrofit retrofit = null;
+    private static final Object LOCK = new Object();
 
-    public static Retrofit getClient() {
+    public static synchronized Retrofit getClient() {
         if (retrofit == null) {
-            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                    .connectTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
-                    .readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
-                    .writeTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
-                    .addInterceptor(interceptor)
-                    .addInterceptor(new ChuckInterceptor(App.getInstance().getApplicationContext()))
-                    .build();
+            synchronized (LOCK) {
+                if (retrofit == null) {
+                    HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+                    interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                    OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                            .connectTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
+                            .readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
+                            .writeTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
+                            .addInterceptor(interceptor)
+                            .addInterceptor(new ChuckInterceptor(App.getInstance().getApplicationContext()))
+                            .build();
 
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BuildConfig.BaseUrl + BuildConfig.ApiKey + "/")
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .client(okHttpClient)
-                    .build();
+                    retrofit = new Retrofit.Builder()
+                            .baseUrl(BuildConfig.BaseUrl + BuildConfig.ApiKey + "/")
+                            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .client(okHttpClient)
+                            .build();
+                }
+            }
         }
-
         return retrofit;
     }
 }

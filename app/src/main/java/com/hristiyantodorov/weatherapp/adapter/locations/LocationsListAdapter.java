@@ -63,13 +63,10 @@ public class LocationsListAdapter
         }
 
         void bind(LocationDbModel location) {
-            txtCurrentTemperature
-                    .setText(App.getInstance().getApplicationContext()
-                            .getString(R.string.txt_current_temp_celsius,
-                                    WeatherDataFormatterUtil.
-                                            convertFahrenheitToCelsius(location.getTemperature())));
-            imgWeatherIcon
-                    .setImageResource(WeatherIconPickerUtil.pickWeatherIcon(location.getIcon()));
+            txtCurrentTemperature.setText(App.getInstance().getApplicationContext()
+                    .getString(R.string.txt_current_temp_celsius, WeatherDataFormatterUtil.
+                            convertFahrenheitToCelsius(location.getTemperature())));
+            imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(location.getIcon()));
             txtCityName.setText(location.getName());
             this.location = location;
         }

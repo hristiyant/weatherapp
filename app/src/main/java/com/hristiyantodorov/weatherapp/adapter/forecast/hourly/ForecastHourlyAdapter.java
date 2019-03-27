@@ -132,33 +132,23 @@ public class ForecastHourlyAdapter
     }
 
     private void setUpDialog(ForecastCurrentlyDbModel item) {
-        //TODO: Use ButterKnife
-        /*String time = String.valueOf(item.getTime());
+        String time = String.valueOf(item.getTime());
         String summary = String.valueOf(item.getSummary());
-        String sunriseTime = String.valueOf(item.getSunriseTime());
-        String sunsetTime = String.valueOf(item.getSunsetTime());
+        String temperature = String.valueOf(item.getTemperature());
+        String apparentTemperature = String.valueOf(item.getApparentTemperature());
         String humidity = String.valueOf(item.getHumidity());
         String pressure = String.valueOf(item.getPressure());
         String windSpeed = String.valueOf(item.getWindSpeed());
-        String temperatureMin = String.valueOf(item.getTemperatureMin());
-        String temperatureMinTime = String.valueOf(item.getTemperatureMinTime());
-        String temperatureMax = String.valueOf(item.getTemperatureMax());
-        String temperatureMaxTime = String.valueOf(item.getTemperatureMaxTime());
+
         TextView txtSummary = (TextView) dialog.findViewById(R.id.txt_dialog_summary);
-        //TextView txtIcon = (TextView) dialog.findViewById(R.id.txt_dialog_icon);
         ImageView imgWeatherIcon = (ImageView) dialog.findViewById(R.id.img_dialog_weather_icon);
         txtSummary.setText(time + "\n" +
                 summary + "\n\n" +
-                "sunriseTime:\n " + sunriseTime + "\n\n" +
-                "sunsetTime:\n " + sunsetTime + "\n\n" +
+                "temperature:\n " + temperature + "\n\n" +
+                "apparent temperature:\n " + apparentTemperature + "\n\n" +
                 "humidity:\n " + humidity + "\n\n" +
                 "pressure:\n " + pressure + "\n\n" +
-                "windSpeed:\n " + windSpeed + "\n\n" +
-                "temperatureMin:\n " + temperatureMin + "\n\n" +
-                "temperatureMinTime:\n " + temperatureMinTime + "\n\n" +
-                "temperatureMax:\n " + temperatureMax + "\n\n" +
-                "temperatureMaxTime:\n " + temperatureMaxTime);
-        //txtIcon.setText(itemsList.get(viewHolder.getAdapterPosition()).getIcon());
-        imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(item.getIcon()));*/
+                "windSpeed:\n " + windSpeed + "\n\n");
+        imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(item.getIcon()));
     }
 }

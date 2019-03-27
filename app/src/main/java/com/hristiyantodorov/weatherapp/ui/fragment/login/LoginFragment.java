@@ -1,6 +1,5 @@
 package com.hristiyantodorov.weatherapp.ui.fragment.login;
 
-import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,8 +17,6 @@ import com.hristiyantodorov.weatherapp.presenter.login.LoginContracts;
 import com.hristiyantodorov.weatherapp.ui.activity.main.MainActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 import com.ramotion.circlemenu.CircleMenuView;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -93,9 +90,6 @@ public class LoginFragment extends BaseFragment
 
     @OnClick(R.id.btn_sign_in)
     public void onSignInButtonClick() {
-        /*
-        SharedPrefUtil.init(getContext());
-        SharedPrefUtil.read("shared_pref_api_content_lang_key", "en");*/
         startActivity(new Intent(getContext(), MainActivity.class));
     }
 
@@ -111,11 +105,11 @@ public class LoginFragment extends BaseFragment
 
     @Override
     public void showEmptyScreen(boolean isShowing) {
-        // TODO: 3/18/2019 ADD IMPLEMENTATION
+        // TODO: 3/18/2019 CURRENTLY NOT BEING USED
     }
 
     @Override
     public void showError(Throwable e) {
-        showErrorDialog(getContext(),e.getMessage());
+        showErrorDialog(getContext(), e);
     }
 }

@@ -17,13 +17,19 @@
     <string name="main_screen_option_pick_from_list">Pick from list</string>
 
     <!--Main Fragment-->
-    <string name="alert_dialog_title">This permission is needed because weather details cannot be
-    displayed if the app is not able to detect your current locationDbModel.</string>
-    <string name="rationale_message">Permission needed</string>
-    <string name="positive_button_text">OK</string>
-    <string name="negative_button_text">Cancel</string>
-    <string name="permission_denied">Permission denied</string>
-    <string name="never_ask_again">Never ask again</string>
+    <string name="location_permission_alert_dialog_title">This permission is needed because weather
+        details cannot be displayed if the app is not able to detect your current locationDbModel.</string>
+    <string name="location_permission_alert_rationale_message">Permission needed</string>
+    <string name="location_permission_alert_positive_button_text">OK</string>
+    <string name="location_permission_alert_negative_button_text">Cancel</string>
+    <string name="location_permission_alert_permission_denied">Permission denied</string>
+    <string name="location_permission_alert_never_ask_again">Never ask again</string>
+
+    <!--Location Alert Dialog-->
+    <string name="gps_alert_dialog_title_text">SETTINGS</string>
+    <string name="gps_alert_dialog_message_text">Enable Location Provider! Go to settings menu?</string>
+    <string name="gps_alert_dialog_positive_button_text">SETTINGS</string>
+
 
     <!--Locations List Fragment-->
     <string name="locations_list_fragment_edit_text_hint">Enter to search:</string>
@@ -41,6 +47,7 @@
     <string name="txt_humidity">Humidity: %1$s %%</string>
     <string name="txt_pressure">Pressure: %1$s hPa</string>
     <string name="txt_summary_windy">Windy</string>
+    <string name="txt_html_degrees_celsius">"<sup>\u00B0c</sup></string>
 
     <!--WeatherDetailsPagerAdapter-->
     <string name="weather_details_tab_hourly_title">Hourly</string>
@@ -63,12 +70,10 @@
     <string name="preference_feedback_subject_text">About WeatherApp</string>
     <string name="preference_feedback_subject_extra_text">-->Enter text here</string>
 
-    <string name="shared_pref_key_logged_user_email">Logged User Email Address</string>
     <string name="shared_pref_def_value_empty">empty</string>
-    <string name="forecast_hourly_summary_windy_txt">Windy</string>
 
     <string name="shared_pref_api_content_lang_key">apiContentLang</string>
-    <string name="English">en</string>
+    <string name="api_content_language_english">en</string>
 
     <string name="all_timestamp_format_full_day_name">EEEE</string>
     <string name="all_timestamp_format_hours_minutes">HH:mm</string>
@@ -85,7 +90,9 @@
 
     <!--Forecast Hourly Adapter-->
     <string name="forecast_hourly_adapter_summary_txt_windy">Windy</string>
-    <string name="txt_forecast_not_available">Forecast not available
-        \nPull down to refresh…</string>
+    <string name="forecast_hourly_summary_windy_txt">Windy</string>
+    <string name="all_txt_forecast_not_available">Forecast not available \nPull down to refresh…</string>
+    <string name="simple_date_format_day_of_week">EEEE</string>
+    <string name="simple_date_format_hours_minutes">HH:mm</string>
 
 </resources>

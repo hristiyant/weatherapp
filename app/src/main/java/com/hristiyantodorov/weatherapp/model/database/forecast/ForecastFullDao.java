@@ -112,66 +112,73 @@ public abstract class ForecastFullDao {
             " WHERE dailyId = :id")
     abstract void updateForecastDaily(long id, String summary, String icon);
 
-    //Deletes entire Hourly data
+    /**
+     * Deletes the entire Hourly data from db.
+     */
     @Query("DELETE FROM forecast_currently WHERE forecastHourlyId IS NOT NULL")
     abstract void dropForecastHourlyData();
 
-    //Deletes entire Daily data
+    /**
+     * Deletes the entire Daily data from db.
+     */
     @Query("DELETE FROM forecast_daily_data")
     abstract void dropForecastDailyData();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract long _insert(ForecastFullDbModel model);
+    abstract long insert(ForecastFullDbModel model);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract void _insert(ForecastCurrentlyDbModel model);
+    abstract void insert(ForecastCurrentlyDbModel model);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract long _insert(ForecastDailyDbModel model);
+    abstract long insert(ForecastDailyDbModel model);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract void _insert(ForecastDailyDataDbModel model);
+    abstract void insert(ForecastDailyDataDbModel model);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract long _insert(ForecastHourlyDbModel model);
+    abstract long insert(ForecastHourlyDbModel model);
 
     private void insertForecastFull(ForecastFullDbModel fullModel, ForecastCurrentlyDbModel currentlyModel) {
-
-        long id = _insert(fullModel);
+        long id = insert(fullModel);
 
         insertForecastCurrently(id, currentlyModel);
-        insertForecastDaily(id, fullModel.getDailyDbModel(), fullModel.getDailyDataDbModels());
-        insertForecastHourly(id, fullModel.getHourlyDbModel(), fullModel.getHourlyDataDbModels());
+        if (fullModel.getDailyDbModel() != null) {
+            insertForecastDaily(id, fullModel.getDailyDbModel(), fullModel.getDailyDataDbModels());
+        }
+        if (fullModel.getHourlyDbModel() != null) {
+            insertForecastHourly(id, fullModel.getHourlyDbModel(), fullModel.getHourlyDataDbModels());
+        }
     }
 
     private void insertForecastCurrently(long fullId, ForecastCurrentlyDbModel currentlyModel) {
         currentlyModel.setForecastFullId(fullId);
-        _insert(currentlyModel);
+        insert(currentlyModel);
     }
 
     private void insertForecastHourly(long fullId, ForecastHourlyDbModel hourlyDbModel, List<ForecastCurrentlyDbModel> hourlyDataDbModels) {
         hourlyDbModel.setForecastFullId(fullId);
-        long hourlyId = _insert(hourlyDbModel);
+        long hourlyId = insert(hourlyDbModel);
         insertForecastHourlyData(hourlyId, hourlyDataDbModels);
     }
 
     private void insertForecastHourlyData(long hourlyId, List<ForecastCurrentlyDbModel> hourlyDataDbModels) {
         for (ForecastCurrentlyDbModel hourlyDbModel : hourlyDataDbModels) {
             hourlyDbModel.setForecastHourlyId(hourlyId);
-            _insert(hourlyDbModel);
+            insert(hourlyDbModel);
         }
     }
 
     private void insertForecastDaily(long fullId, ForecastDailyDbModel dailyModel, List<ForecastDailyDataDbModel> dailyDataDbModels) {
         dailyModel.setForecastFullId(fullId);
-        long dailyId = _insert(dailyModel);
+        long dailyId = insert(dailyModel);
         insertForecastDailyData(dailyId, dailyDataDbModels);
     }
 
     private void insertForecastDailyData(long dailyId, List<ForecastDailyDataDbModel> dailyDataDbModels) {
         for (ForecastDailyDataDbModel dailyDataDbModel : dailyDataDbModels) {
             dailyDataDbModel.setForecastDailyId(dailyId);
-            _insert(dailyDataDbModel);
+            insert(dailyDataDbModel);
         }
     }
 
@@ -195,8 +202,10 @@ public abstract class ForecastFullDao {
             updateDbWithCurrently(forecastFullId, fullDbModel.getCurrentlyDbModel());
         }
 
-        ForecastHourlyDbModel hourlyDbModel = fullDbModel.getHourlyDbModel();
-        if (hourlyDbModel != null) {
+//        assert fullDbModel != null;
+//        ForecastHourlyDbModel hourlyDbModel = fullDbModel.getHourlyDbModel();
+        assert fullDbModel != null;
+        if (fullDbModel.getHourlyDbModel() != null) {
             updateDbWithHourly(fullDbModel);
         }
 
@@ -232,7 +241,7 @@ public abstract class ForecastFullDao {
         //Insert new hourly data
         for (ForecastCurrentlyDbModel hourlyDbModel : hourlyData) {
             hourlyDbModel.setForecastHourlyId(forecastHourlyId);
-            _insert(hourlyDbModel);
+            insert(hourlyDbModel);
         }
     }
 
@@ -250,12 +259,7 @@ public abstract class ForecastFullDao {
         //Insert new daily data
         for (ForecastDailyDataDbModel dailyDbModel : dailyData) {
             dailyDbModel.setForecastDailyId(forecastDailyId);
-            _insert(dailyDbModel);
+            insert(dailyDbModel);
         }
     }
-
-    /*public void loadFullModelFromDb(){
-        Observable.zip(PersistenceDatabase.getAppDatabase(App.getInstance().getApplicationContext()).forecastFullDao().getForecastFull(),
-                PersistenceDatabase.getAppDatabase(App.getInstance().getApplicationContext()).forecastFullDao().ge)
-    }*/
 }

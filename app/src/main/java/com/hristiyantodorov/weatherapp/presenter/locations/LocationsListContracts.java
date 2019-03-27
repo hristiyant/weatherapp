@@ -13,14 +13,9 @@ public interface LocationsListContracts {
 
         void showLocations(List<LocationDbModel> locations);
 
-        void getLocationsFromDatabase();
-
         void setPresenter(Presenter presenter);
 
-        void getBasicForecastInfo(List<LocationDbModel> locations);
-
-        void updateApiInfo(LocationDbModel location);
-
+        void openWeatherDetailsActivity();
     }
 
     interface Presenter {
@@ -31,8 +26,10 @@ public interface LocationsListContracts {
 
         void filterLocations(String pattern, Context context);
 
-        void presentLocationsToView(List<LocationDbModel> locations);
-
         void updateLocationDbInfo(LocationDbModel locationDbModel);
+
+        void selectLocation(String lat, String lon, Context context);
+
+        void clearDisposables();
     }
 }

@@ -12,12 +12,12 @@ import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 
 import java.util.Objects;
 
+import static com.hristiyantodorov.weatherapp.util.Constants.FEEDBACK_KEY;
+import static com.hristiyantodorov.weatherapp.util.Constants.LANGUAGE_KEY;
+
 public class SettingsFragment extends PreferenceFragmentCompat {
 
-    private static final String FEEDBACK_KEY = "feedback";
-    private static final String LANGUAGE_KEY = "shared_pref_api_content_lang_key";
-
-    ListPreference list;
+    private ListPreference list;
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -27,12 +27,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle bundle, String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
 
-        list = (ListPreference) findPreference(this.getResources().getString(R.string.shared_pref_api_content_lang_key));
-//        list = (ListPreference) getPreferenceManager().findPreference(LANGUAGE_KEY);
+        list = (ListPreference) getPreferenceManager().findPreference(this.getResources().getString(R.string.shared_pref_api_content_lang_key));
         list.setEntries(R.array.api_content_language_names);
         list.setEntryValues(R.array.api_content_language_values);
         list.setOnPreferenceChangeListener((preference, o) -> {
-            SharedPrefUtil.write("shared_pref_api_content_lang_key", o.toString());
+            SharedPrefUtil.write(LANGUAGE_KEY, o.toString());
             list.setValue(o.toString());
             Intent intent = Objects.requireNonNull(getActivity()).getIntent();
             getActivity().finish();

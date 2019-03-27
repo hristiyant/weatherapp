@@ -128,7 +128,6 @@ public class ForecastDailyAdapter
     }
 
     private void setUpDialog(ForecastDailyDataDbModel item) {
-        //TODO: Use ButterKnife
         String time = String.valueOf(item.getTime());
         String summary = String.valueOf(item.getSummary());
         String sunriseTime = String.valueOf(item.getSunriseTime());
@@ -140,6 +139,7 @@ public class ForecastDailyAdapter
         String temperatureMinTime = String.valueOf(item.getTemperatureMinTime());
         String temperatureMax = String.valueOf(item.getTemperatureMax());
         String temperatureMaxTime = String.valueOf(item.getTemperatureMaxTime());
+
         TextView txtSummary = (TextView) dialog.findViewById(R.id.txt_dialog_summary);
         ImageView imgWeatherIcon = (ImageView) dialog.findViewById(R.id.img_dialog_weather_icon);
         txtSummary.setText(time + "\n" +

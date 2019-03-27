@@ -2,23 +2,13 @@
 <resources>
     <string-array name="api_content_language_names">
         <item>English</item>
-        <!--item>en</item-->
-
         <item>Bulgarian</item>
-        <!--item>bg</item-->
-
         <item>Czech</item>
-        <!--item>cs</item-->
     </string-array>
 
     <string-array name="api_content_language_values">
-        <!--item>English</item-->
         <item>en</item>
-
-        <!--item>Bulgarian</item-->
         <item>bg</item>
-
-        <!--item>Czech</item-->
         <item>cs</item>
     </string-array>
 </resources>

@@ -149,10 +149,10 @@ public class ForecastDailyDataDbModel {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ForecastDailyDataDbModel that = (ForecastDailyDataDbModel) o;
+    public boolean equals(Object otherObject) {
+        if (this == otherObject) return true;
+        if (otherObject == null || getClass() != otherObject.getClass()) return false;
+        ForecastDailyDataDbModel that = (ForecastDailyDataDbModel) otherObject;
         return Objects.equals(dailyDataId, that.dailyDataId) &&
                 Objects.equals(time, that.time) &&
                 Objects.equals(summary, that.summary) &&
@@ -171,6 +171,8 @@ public class ForecastDailyDataDbModel {
 
     @Override
     public int hashCode() {
-        return Objects.hash(dailyDataId, time, summary, icon, sunriseTime, sunsetTime, humidity, pressure, windSpeed, temperatureMin, temperatureMinTime, temperatureMax, temperatureMaxTime, forecastDailyId);
+        return Objects.hash(dailyDataId, time, summary, icon, sunriseTime, sunsetTime, humidity,
+                pressure, windSpeed, temperatureMin, temperatureMinTime, temperatureMax,
+                temperatureMaxTime, forecastDailyId);
     }
 }

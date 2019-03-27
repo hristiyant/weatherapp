@@ -12,7 +12,7 @@
         android:layout_margin="@dimen/activity_vertical_margin"
         android:fontFamily="casual"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:text="@string/txt_forecast_not_available"
+        android:text="@string/all_txt_forecast_not_available"
         android:textAlignment="center"
         android:textSize="@dimen/material_design_subheading_txt_size"
         android:textStyle="italic"
@@ -113,8 +113,8 @@
                         android:layout_width="@dimen/no_dimens"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_between_elements_default"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="@dimen/margin_between_elements_default"
+                        android:layout_marginRight="@dimen/margin_between_elements_default"
                         android:fontFamily="casual"
                         android:gravity="center"
                         android:paddingStart="@dimen/activity_horizontal_margin"
@@ -176,15 +176,11 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <!--<android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_container"-->
-
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager_forecasts_holder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-        <!--</android.support.v4.widget.SwipeRefreshLayout>-->
 
     </android.support.design.widget.CoordinatorLayout>
 

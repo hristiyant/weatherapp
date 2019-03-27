@@ -18,7 +18,7 @@ import android.arch.persistence.room.PrimaryKey;
 public class ForecastHourlyDbModel {
 
     @PrimaryKey(autoGenerate = true)
-    public Long hourlyId;
+    private Long hourlyId;
     private String summary;
     private String icon;
     private Long forecastFullId;

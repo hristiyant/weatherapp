@@ -2,8 +2,7 @@ package com.hristiyantodorov.weatherapp.presenter.weatherdetails.activity;
 
 import android.content.Context;
 
-import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastCurrentlyDbModel;
-import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastFullDbModel;
+import com.hristiyantodorov.weatherapp.model.response.ForecastCurrentlyResponse;
 import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
 import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
 import com.hristiyantodorov.weatherapp.presenter.BasePresenter;
@@ -13,10 +12,12 @@ import com.hristiyantodorov.weatherapp.util.Constants;
 import com.hristiyantodorov.weatherapp.util.ForecastResponseToForecastDbModelConverterUtil;
 import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import io.reactivex.Completable;
-import io.reactivex.SingleObserver;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.Single;
 
 public class WeatherDetailsActivityPresenter extends BasePresenter
         implements WeatherDetailsActivityContracts.Presenter {
@@ -37,52 +38,44 @@ public class WeatherDetailsActivityPresenter extends BasePresenter
     public void downloadForecastFromApi(Context context) {
         view.showLoader(true);
         subscribeSingle(
-                service.getForecastCurrently(
+                service.getForecastFullResponse(
                         SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
                         SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null),
-                        SharedPrefUtil.read("shared_pref_api_content_lang_key", "en")
-                ), new SingleObserver<ForecastFullResponse>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        // TODO: 23.3.2019 CURRENTLY NOT BEING USED
-                    }
+                        SharedPrefUtil.read(Constants.LANGUAGE_KEY, "en")
+                )
+                        .flatMap(fullResponse -> saveForecastApiDataToDb(fullResponse, context)),
+                fullResponse -> {
+                    timezone = fullResponse.getTimezone();
+                    presentForecastToView(fullResponse.getCurrently());
+                },
+                throwable -> view.showError(throwable)
 
-                    @Override
-                    public void onSuccess(ForecastFullResponse forecastFullResponse) {
-                        timezone = forecastFullResponse.getTimezone();
-                        ForecastCurrentlyDbModel currentlyDbModel =
-                                ForecastResponseToForecastDbModelConverterUtil
-                                        .convertCurrentlyResponseToDbModel(forecastFullResponse.getCurrently());
-                        presentForecastToView(currentlyDbModel);
-                        /*saveApiDataToDb(
-                                ForecastResponseToForecastDbModelConverterUtil
-                                        .convertResponseToDbModel(forecastFullResponse),
-                                context
-                        );*/
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        // TODO: 23.3.2019 CURRENTLY NOT BEING USED
-                    }
-                }
         );
     }
 
-    public void saveApiDataToDb(ForecastFullDbModel fullDbModel, Context context) {
-        Completable.fromRunnable(
-                () -> PersistenceDatabase
-                        .getAppDatabase(context)
-                        .forecastFullDao().updateDb(fullDbModel)
-        ).subscribeOn(Schedulers.io())
-                .subscribe();
+    private Single<ForecastFullResponse> saveForecastApiDataToDb(ForecastFullResponse fullResponse, Context context) {
+        return Completable.fromRunnable(() -> PersistenceDatabase.getAppDatabase(context)
+                .forecastFullDao()
+                .updateDb(ForecastResponseToForecastDbModelConverterUtil.convertResponseToDbModel(fullResponse)))
+                .toSingleDefault(fullResponse);
     }
 
-    public void presentForecastToView(ForecastCurrentlyDbModel data) {
+    private void presentForecastToView(ForecastCurrentlyResponse data) {
         if (data == null) {
             view.showEmptyScreen(true);
         } else {
             view.showForecast(data, timezone);
         }
+    }
+
+    public String getTimestamp() {
+        return DateFormat
+                .getTimeInstance(SimpleDateFormat.MEDIUM, Locale.getDefault())
+                .format(new java.util.Date());
+    }
+
+    @Override
+    public void clearDisposables() {
+        super.clearDisposables();
     }
 }

@@ -20,6 +20,7 @@
         android:entryValues="@array/api_content_language_values"
         android:key="@string/shared_pref_api_content_lang_key"
         android:summary="%s"
-        android:defaultValue="@string/English"
+        android:defaultValue="@string/api_content_language_english"
         android:title="Language" />
+
 </PreferenceScreen>

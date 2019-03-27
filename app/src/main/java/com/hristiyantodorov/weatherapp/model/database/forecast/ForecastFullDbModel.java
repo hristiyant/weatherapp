@@ -10,7 +10,7 @@ import java.util.List;
 public class ForecastFullDbModel {
 
     @PrimaryKey(autoGenerate = true)
-    public Long id;
+    private Long id;
     private Double latitude;
     private Double longitude;
     private String timezone;
@@ -106,5 +106,4 @@ public class ForecastFullDbModel {
     public void setDailyDataDbModels(List<ForecastDailyDataDbModel> dailyDataDbModels) {
         this.dailyDataDbModels = dailyDataDbModels;
     }
-
 }

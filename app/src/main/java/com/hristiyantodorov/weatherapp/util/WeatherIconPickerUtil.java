@@ -4,6 +4,9 @@ import android.support.annotation.DrawableRes;
 
 import com.hristiyantodorov.weatherapp.R;
 
+import static com.hristiyantodorov.weatherapp.util.Constants.ICON_CLEAR_DAY;
+import static com.hristiyantodorov.weatherapp.util.Constants.ICON_CLEAR_NIGHT;
+
 public class WeatherIconPickerUtil {
 
     /**
@@ -15,9 +18,9 @@ public class WeatherIconPickerUtil {
     @DrawableRes
     public static int pickWeatherIcon(String icon) {
         switch (icon) {
-            case Constants.ICON_CLEAR_DAY:
+            case ICON_CLEAR_DAY:
                 return R.drawable.ic_clear_day;
-            case Constants.ICON_CLEAR_NIGHT:
+            case ICON_CLEAR_NIGHT:
                 return R.drawable.ic_clear_night;
             case Constants.ICON_RAIN:
                 return R.drawable.ic_rain;
@@ -49,9 +52,9 @@ public class WeatherIconPickerUtil {
     @DrawableRes
     public static int pickWeatherBackgroundImage(String icon) {
         switch (icon) {
-            case "clear-day":
+            case ICON_CLEAR_DAY:
                 return R.drawable.back_image_clear_day;
-            case "clear-night":
+            case ICON_CLEAR_NIGHT:
                 return R.drawable.back_image_clear_night;
            /* case "rain":
                 return R.drawable.back_image_rain;

@@ -30,7 +30,7 @@ public abstract class BaseFragment extends Fragment {
     @LayoutRes
     protected abstract int getLayoutResId();
 
-    public void showErrorDialog(Context context, String errorMessage) {
+    public void showErrorDialog(Context context, Throwable e) {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
@@ -38,7 +38,7 @@ public abstract class BaseFragment extends Fragment {
             builder = new AlertDialog.Builder(context);
         }
         builder.setTitle(R.string.base_fragment_error_dialog_title)
-                .setMessage(errorMessage)
+                .setMessage(e.getMessage())
                 .setCancelable(true)
                 .setPositiveButton(android.R.string.ok, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)

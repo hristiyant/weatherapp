@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="casual"
-        android:text="@string/txt_forecast_not_available"
+        android:text="@string/all_txt_forecast_not_available"
         android:textAlignment="center"
         android:textSize="@dimen/material_design_subheading_txt_size"
         android:textStyle="italic"

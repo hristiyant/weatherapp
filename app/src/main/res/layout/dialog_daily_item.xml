@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dialog_scroll_view"
-    android:layout_width="300dp"
-    android:layout_height="450dp"
+    android:layout_width="@dimen/dialog_daily_item_width"
+    android:layout_height="@dimen/dialog_daily_item_height"
     android:layout_gravity="center"
     android:background="@drawable/background_forecast_dialog">
 
@@ -14,7 +14,7 @@
 
         <ImageView
             android:id="@+id/img_dialog_weather_icon"
-            android:layout_width="120dp"
+            android:layout_width="@dimen/dialog_daily_item_icon_width"
             android:layout_height="@dimen/no_dimens"
             android:layout_margin="@dimen/activity_vertical_margin"
             app:layout_constraintLeft_toLeftOf="parent"

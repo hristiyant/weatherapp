@@ -90,7 +90,7 @@ public class ForecastDailyFragment extends BaseFragment
 
     @Override
     public void showError(Throwable e) {
-       showErrorDialog(getContext(),e.getMessage());
+        showErrorDialog(getContext(), e);
     }
 
     @Override
@@ -111,5 +111,11 @@ public class ForecastDailyFragment extends BaseFragment
     @Override
     public void onRefresh() {
         presenter.updateForecastDailyDataFromApi(getContext());
+    }
+
+    @Override
+    public void onDestroy() {
+        presenter.clearDisposables();
+        super.onDestroy();
     }
 }

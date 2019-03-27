@@ -15,18 +15,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.weatherdetails.WeatherDetailsPagerAdapter;
-import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastCurrentlyDbModel;
+import com.hristiyantodorov.weatherapp.model.response.ForecastCurrentlyResponse;
 import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.activity.WeatherDetailsActivityContracts;
 import com.hristiyantodorov.weatherapp.presenter.weatherdetails.activity.WeatherDetailsActivityPresenter;
 import com.hristiyantodorov.weatherapp.ui.activity.BaseActivity;
-import com.hristiyantodorov.weatherapp.util.ForecastResponseToForecastDbModelConverterUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherIconPickerUtil;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 import butterknife.BindView;
 
@@ -68,6 +63,7 @@ public class WeatherDetailsActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        showLoader(true);
         presenter = new WeatherDetailsActivityPresenter(this);
         presenter.downloadForecastFromApi(this);
 
@@ -113,22 +109,21 @@ public class WeatherDetailsActivity extends BaseActivity
     public void showEmptyScreen(boolean isShowing) {
         txtForecastNotAvailable.setVisibility(isShowing ? View.VISIBLE : View.GONE);
         coordinatorLayout.setVisibility(isShowing ? View.GONE : View.VISIBLE);
-        showLoader(false);
     }
 
     @Override
     public void showError(Throwable e) {
-        // TODO: 3/19/2019
+        showErrorDialog(this, e);
     }
 
     @Override
-    public void showForecast(ForecastCurrentlyDbModel response, String timezone) {
+    public void showForecast(ForecastCurrentlyResponse response, String timezone) {
         txtLocationName.setText(timezone);
         txtSummary.setText(response.getSummary());
         txtCurrentTemp.setText(Html.fromHtml(
                 WeatherDataFormatterUtil
                         .convertFahrenheitToCelsius(response.getTemperature())
-                        + "<sup>\u00B0c</sup>"
+                        + getString(R.string.txt_html_degrees_celsius)
         ));
         txtWindSpeed.setText(getString(
                 R.string.txt_current_wind_speed,
@@ -142,23 +137,23 @@ public class WeatherDetailsActivity extends BaseActivity
                 .centerCrop()
                 .into(imgBackground);
 
+        showLoader(false);
         showEmptyScreen(false);
     }
 
     public void updateView(ForecastFullResponse response) {
         refreshLastUpdated();
-        showForecast(
-                ForecastResponseToForecastDbModelConverterUtil
-                        .convertCurrentlyResponseToDbModel(response.getCurrently()),
-                response.getTimezone()
-        );
+        showForecast(response.getCurrently(), response.getTimezone());
         Log.d(TAG, "updateView: ACTIVITY UPDATED");
     }
 
     public void refreshLastUpdated() {
-        String timeStamp = DateFormat
-                .getTimeInstance(SimpleDateFormat.MEDIUM, Locale.getDefault())
-                .format(new java.util.Date());
-        txtLastUpdated.setText(getString(R.string.txt_last_updated, timeStamp));
+        txtLastUpdated.setText(getString(R.string.txt_last_updated, presenter.getTimestamp()));
+    }
+
+    @Override
+    protected void onDestroy() {
+        presenter.clearDisposables();
+        super.onDestroy();
     }
 }

@@ -1,8 +1,12 @@
 package com.hristiyantodorov.weatherapp.presenter.weatherdetails.fragment;
 
+import android.content.Context;
+
 import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastCurrentlyDbModel;
-import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastFullDbModel;
+import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
 import com.hristiyantodorov.weatherapp.presenter.BaseView;
+
+import io.reactivex.Single;
 
 public interface WeatherDetailsFragmentContracts {
 
@@ -13,12 +17,12 @@ public interface WeatherDetailsFragmentContracts {
 
     interface Presenter {
 
-        void requestDataFromApi();
+        void requestDataFromApi(Context context);
 
-        void loadDataFromDb();
+//        void loadDataFromDb();
 
-        void saveApiDataToDb(ForecastFullDbModel fullDbModel);
+        Single<ForecastFullResponse> saveApiDataToDb(ForecastFullResponse fullResponse, Context context);
 
-        void presentForecastToView(ForecastCurrentlyDbModel data, String hourlySummary, String dailySummary);
+        void clearDisposables();
     }
 }

@@ -2,6 +2,7 @@ package com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,9 +55,16 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        presenter.requestDataFromApi();
+        presenter.requestDataFromApi(getContext());
+//        presenter.loadDataFromDb();
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
     }
 
     @Override
@@ -83,7 +91,7 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
 
     @Override
     public void showError(Throwable e) {
-        showErrorDialog(getContext(), e.getMessage());
+        showErrorDialog(getContext(), e);
     }
 
     @Override
@@ -102,5 +110,11 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
         txtDailySummary.setText(dailySummary);
         showLoader(false);
         showEmptyScreen(false);
+    }
+
+    @Override
+    public void onDestroy() {
+        presenter.clearDisposables();
+        super.onDestroy();
     }
 }

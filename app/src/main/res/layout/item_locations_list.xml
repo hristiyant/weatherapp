@@ -39,9 +39,9 @@
         android:layout_marginEnd="@dimen/margin_between_elements_default"
         android:layout_marginRight="@dimen/margin_between_elements_default"
         android:fontFamily="casual"
-        android:textStyle="bold"
         android:gravity="end"
         android:textSize="@dimen/main_screen_labels_size"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/txt_city_name"
@@ -49,8 +49,8 @@
         tools:text="47\u00B0C" />
 
     <FrameLayout
-        android:background="@color/colorAccent"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_height="@dimen/item_location_list_underline_height"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </android.support.constraint.ConstraintLayout>

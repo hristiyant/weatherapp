@@ -35,7 +35,7 @@ import android.arch.persistence.room.PrimaryKey;
 public class ForecastCurrentlyDbModel {
 
     @PrimaryKey(autoGenerate = true)
-    public Long currentlyId;
+    private Long currentlyId;
     private String time;
     private String summary;
     private String icon;
@@ -134,27 +134,4 @@ public class ForecastCurrentlyDbModel {
     public void setForecastHourlyId(Long forecastHourlyId) {
         this.forecastHourlyId = forecastHourlyId;
     }
-
-    /*@Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ForecastCurrentlyDbModel that = (ForecastCurrentlyDbModel) o;
-        return Objects.equals(currentlyId, that.currentlyId) &&
-                Objects.equals(time, that.time) &&
-                Objects.equals(summary, that.summary) &&
-                Objects.equals(icon, that.icon) &&
-                Objects.equals(temperature, that.temperature) &&
-                Objects.equals(apparentTemperature, that.apparentTemperature) &&
-                Objects.equals(humidity, that.humidity) &&
-                Objects.equals(pressure, that.pressure) &&
-                Objects.equals(windSpeed, that.windSpeed) &&
-                Objects.equals(forecastFullId, that.forecastFullId) &&
-                Objects.equals(forecastHourlyId, that.forecastHourlyId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(currentlyId, time, summary, icon, temperature, apparentTemperature, humidity, pressure, windSpeed, forecastFullId, forecastHourlyId);
-    }*/
 }
