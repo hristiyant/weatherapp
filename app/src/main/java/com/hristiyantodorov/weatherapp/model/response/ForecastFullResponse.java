@@ -1,20 +1,15 @@
 package com.hristiyantodorov.weatherapp.model.response;
 
-import com.google.gson.annotations.SerializedName;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class ForecastFullResponse {
+public class ForecastFullResponse implements Parcelable {
 
-    @SerializedName("latitude")
     private Double latitude;
-    @SerializedName("longitude")
     private Double longitude;
-    @SerializedName("timezone")
     private String timezone;
-    @SerializedName("currently")
     private ForecastCurrentlyResponse currently;
-    @SerializedName("hourly")
     private ForecastHourlyResponse hourly;
-    @SerializedName("daily")
     private ForecastDailyResponse daily;
 
     public double getLatitude() {
@@ -64,4 +59,41 @@ public class ForecastFullResponse {
     public void setDaily(ForecastDailyResponse daily) {
         this.daily = daily;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
+        dest.writeParcelable(currently, flags);
+        dest.writeParcelable(hourly, flags);
+        dest.writeParcelable(daily, flags);
+    }
+
+    protected ForecastFullResponse(Parcel in) {
+        this.latitude = in.readDouble();
+        this.longitude = in.readDouble();
+        this.timezone = in.readString();
+        this.currently = in.readParcelable(ForecastCurrentlyResponse.class.getClassLoader());
+        this.hourly = in.readParcelable(ForecastHourlyResponse.class.getClassLoader());
+        this.daily = in.readParcelable(ForecastDailyResponse.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<ForecastFullResponse> CREATOR =
+            new Parcelable.Creator<ForecastFullResponse>() {
+
+                @Override
+                public ForecastFullResponse createFromParcel(Parcel source) {
+                    return new ForecastFullResponse(source);
+                }
+
+                @Override
+                public ForecastFullResponse[] newArray(int size) {
+                    return new ForecastFullResponse[size];
+                }
+            };
 }

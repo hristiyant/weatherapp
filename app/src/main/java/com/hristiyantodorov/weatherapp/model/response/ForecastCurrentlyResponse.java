@@ -1,27 +1,21 @@
 package com.hristiyantodorov.weatherapp.model.response;
 
-import com.google.gson.annotations.SerializedName;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import java.io.Serializable;
+public class ForecastCurrentlyResponse implements Parcelable {
 
-public class ForecastCurrentlyResponse implements Serializable {
-
-    @SerializedName("time")
     private Long time;
-    @SerializedName("summary")
     private String summary;
-    @SerializedName("icon")
     private String icon;
-    @SerializedName("temperature")
     private Double temperature;
-    @SerializedName("apparentTemperature")
     private Double apparentTemperature;
-    @SerializedName("humidity")
     private Double humidity;
-    @SerializedName("pressure")
     private Double pressure;
-    @SerializedName("windSpeed")
     private Double windSpeed;
+
+    public ForecastCurrentlyResponse() {
+    }
 
     public Long getTime() {
         return time;
@@ -86,4 +80,46 @@ public class ForecastCurrentlyResponse implements Serializable {
     public void setWindSpeed(Double windSpeed) {
         this.windSpeed = windSpeed;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(time);
+        dest.writeString(summary);
+        dest.writeString(icon);
+        dest.writeDouble(temperature);
+        dest.writeDouble(apparentTemperature);
+        dest.writeDouble(humidity);
+        dest.writeDouble(pressure);
+        dest.writeDouble(windSpeed);
+    }
+
+    protected ForecastCurrentlyResponse(Parcel in) {
+        this.time = in.readLong();
+        this.summary = in.readString();
+        this.icon = in.readString();
+        this.temperature = in.readDouble();
+        this.apparentTemperature = in.readDouble();
+        this.humidity = in.readDouble();
+        this.pressure = in.readDouble();
+        this.windSpeed = in.readDouble();
+    }
+
+    public static final Parcelable.Creator<ForecastCurrentlyResponse> CREATOR =
+            new Parcelable.Creator<ForecastCurrentlyResponse>() {
+
+                @Override
+                public ForecastCurrentlyResponse createFromParcel(Parcel source) {
+                    return new ForecastCurrentlyResponse(source);
+                }
+
+                @Override
+                public ForecastCurrentlyResponse[] newArray(int size) {
+                    return new ForecastCurrentlyResponse[size];
+                }
+            };
 }

@@ -1,33 +1,25 @@
 package com.hristiyantodorov.weatherapp.model.response;
 
-import com.google.gson.annotations.SerializedName;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class ForecastDailyDataResponse {
+public class ForecastDailyDataResponse implements Parcelable {
 
-    @SerializedName("time")
     private Long time;
-    @SerializedName("summary")
     private String summary;
-    @SerializedName("icon")
     private String icon;
-    @SerializedName("sunriseTime")
     private Long sunriseTime;
-    @SerializedName("sunsetTime")
     private Long sunsetTime;
-    @SerializedName("humidity")
     private Double humidity;
-    @SerializedName("pressure")
     private Double pressure;
-    @SerializedName("windSpeed")
     private Double windSpeed;
-    @SerializedName("temperatureMin")
     private Double temperatureMin;
-    @SerializedName("temperatureMinTime")
     private Long temperatureMinTime;
-    @SerializedName("temperatureMax")
     private Double temperatureMax;
-    @SerializedName("temperatureMaxTime")
     private Long temperatureMaxTime;
+
+    public ForecastDailyDataResponse() {
+    }
 
     public Long getTime() {
         return time;
@@ -124,4 +116,54 @@ public class ForecastDailyDataResponse {
     public void setTemperatureMaxTime(Long temperatureMaxTime) {
         this.temperatureMaxTime = temperatureMaxTime;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(time);
+        dest.writeString(summary);
+        dest.writeString(icon);
+        dest.writeLong(sunriseTime);
+        dest.writeLong(sunsetTime);
+        dest.writeDouble(humidity);
+        dest.writeDouble(pressure);
+        dest.writeDouble(windSpeed);
+        dest.writeDouble(temperatureMin);
+        dest.writeDouble(temperatureMax);
+        dest.writeLong(temperatureMinTime);
+        dest.writeLong(temperatureMaxTime);
+    }
+
+    protected ForecastDailyDataResponse(Parcel in) {
+        this.time = in.readLong();
+        this.summary = in.readString();
+        this.icon = in.readString();
+        this.sunriseTime = in.readLong();
+        this.sunsetTime = in.readLong();
+        this.humidity = in.readDouble();
+        this.pressure = in.readDouble();
+        this.windSpeed = in.readDouble();
+        this.temperatureMin = in.readDouble();
+        this.temperatureMax = in.readDouble();
+        this.temperatureMinTime = in.readLong();
+        this.temperatureMaxTime = in.readLong();
+    }
+
+    public static final Parcelable.Creator<ForecastDailyDataResponse> CREATOR =
+            new Parcelable.Creator<ForecastDailyDataResponse>() {
+
+                @Override
+                public ForecastDailyDataResponse createFromParcel(Parcel source) {
+                    return new ForecastDailyDataResponse(source);
+                }
+
+                @Override
+                public ForecastDailyDataResponse[] newArray(int size) {
+                    return new ForecastDailyDataResponse[size];
+                }
+            };
 }
