@@ -1,8 +1,6 @@
 package com.hristiyantodorov.weatherapp.retrofit;
 
 import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
-import com.hristiyantodorov.weatherapp.util.Constants;
-import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 
 import io.reactivex.Single;
 import retrofit2.Call;
@@ -11,8 +9,6 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface WeatherApiService {
-
-    String language = SharedPrefUtil.read(Constants.LANGUAGE_KEY, "en");
 
     /**
      * Downloads the full forecast data (currently, hourly and daily) from the API.

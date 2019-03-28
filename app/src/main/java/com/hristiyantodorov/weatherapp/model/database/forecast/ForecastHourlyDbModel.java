@@ -54,5 +54,4 @@ public class ForecastHourlyDbModel {
     public void setForecastFullId(Long forecastFullId) {
         this.forecastFullId = forecastFullId;
     }
-
 }

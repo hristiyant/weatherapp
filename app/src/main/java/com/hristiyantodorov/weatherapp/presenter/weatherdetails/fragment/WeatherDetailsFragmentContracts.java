@@ -19,8 +19,6 @@ public interface WeatherDetailsFragmentContracts {
 
         void requestDataFromApi(Context context);
 
-//        void loadDataFromDb();
-
         Single<ForecastFullResponse> saveApiDataToDb(ForecastFullResponse fullResponse, Context context);
 
         void clearDisposables();

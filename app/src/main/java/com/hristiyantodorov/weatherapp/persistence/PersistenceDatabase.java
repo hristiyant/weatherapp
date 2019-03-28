@@ -26,19 +26,18 @@ public class PersistenceDatabase {
                             .addCallback(new RoomDatabase.Callback() {
                                 @Override
                                 public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                                    Executors.newSingleThreadExecutor().execute(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            getAppDatabase(context).locationDao().insertAll(Arrays.asList(
-                                                    new LocationDbModel("Tokyo", 35.652832, 139.839478),
-                                                    new LocationDbModel("New York", 40.730610, -73.935242),
-                                                    new LocationDbModel("Paris", 48.864716, 2.349014),
-                                                    new LocationDbModel("London", 51.509865, -0.118092),
-                                                    new LocationDbModel("Sydney", -33.865143, 151.209900),
-                                                    new LocationDbModel("Sliven", 42.68583, 26.32917),
-                                                    new LocationDbModel("Sofia", 42.69751, 23.32415)));
-                                        }
-                                    });
+                                    Executors.newSingleThreadExecutor()
+                                            .execute(() ->
+                                                    getAppDatabase(context)
+                                                            .locationDao()
+                                                            .insertAll(Arrays.asList(
+                                                                    new LocationDbModel("Tokyo", 35.652832, 139.839478),
+                                                                    new LocationDbModel("New York", 40.730610, -73.935242),
+                                                                    new LocationDbModel("Paris", 48.864716, 2.349014),
+                                                                    new LocationDbModel("London", 51.509865, -0.118092),
+                                                                    new LocationDbModel("Sydney", -33.865143, 151.209900),
+                                                                    new LocationDbModel("Sliven", 42.68583, 26.32917),
+                                                                    new LocationDbModel("Sofia", 42.69751, 23.32415))));
                                 }
                             })
                             .build();

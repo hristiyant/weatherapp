@@ -36,5 +36,4 @@ public class ForecastDailyResponse {
     public void setData(List<ForecastDailyDataResponse> data) {
         this.data = data;
     }
-
 }

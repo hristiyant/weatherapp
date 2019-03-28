@@ -56,7 +56,6 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         presenter.requestDataFromApi(getContext());
-//        presenter.loadDataFromDb();
 
         return view;
     }

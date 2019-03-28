@@ -124,5 +124,4 @@ public class ForecastDailyDataResponse {
     public void setTemperatureMaxTime(Long temperatureMaxTime) {
         this.temperatureMaxTime = temperatureMaxTime;
     }
-
 }

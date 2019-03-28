@@ -56,22 +56,22 @@ public class WeatherIconPickerUtil {
                 return R.drawable.back_image_clear_day;
             case ICON_CLEAR_NIGHT:
                 return R.drawable.back_image_clear_night;
-           /* case "rain":
-                return R.drawable.back_image_rain;
+            case "rain":
+                return R.drawable.back_image_clear_day;
             case "snow":
-                return R.drawable.back_image_snow;
+                return R.drawable.back_image_clear_day;
             case "sleet":
-                return R.drawable.back_image_sleet;
+                return R.drawable.back_image_clear_day;
             case "wind":
-                return R.drawable.back_image_wind;
+                return R.drawable.back_image_clear_day;
             case "fog":
-                return R.drawable.back_image_fog;
+                return R.drawable.back_image_clear_day;
             case "cloudy":
-                return R.drawable.back_image_cloudy;
+                return R.drawable.back_image_clear_day;
             case "partly-cloudy-day":
-                return R.drawable.back_image_partly_cloudy_day;
+                return R.drawable.back_image_clear_day;
             case "partly-cloudy-night":
-                return R.drawable.back_image_;*/
+                return R.drawable.back_image_clear_night;
             default:
                 return 0;
         }

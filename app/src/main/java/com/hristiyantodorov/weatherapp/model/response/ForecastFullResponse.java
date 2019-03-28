@@ -2,9 +2,7 @@ package com.hristiyantodorov.weatherapp.model.response;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class ForecastFullResponse implements Serializable {
+public class ForecastFullResponse {
 
     @SerializedName("latitude")
     private Double latitude;
@@ -66,5 +64,4 @@ public class ForecastFullResponse implements Serializable {
     public void setDaily(ForecastDailyResponse daily) {
         this.daily = daily;
     }
-
 }

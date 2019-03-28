@@ -4,5 +4,4 @@ package com.hristiyantodorov.weatherapp.presenter.login;
 public class LoginPresenter {
 
     private LoginContracts.View mView;
-
 }

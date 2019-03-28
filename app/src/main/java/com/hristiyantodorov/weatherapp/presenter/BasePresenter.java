@@ -22,21 +22,17 @@ public class BasePresenter {
 
     protected void subscribeCompletable(Completable completable) {
         disposableManager.subscribeCompletable(completable);
-//        completable.compose(RxUtils.applyCompletableSchedulers()).subscribe();
     }
 
     protected void subscribeCompletable(Completable completable, Action onComplete) {
         disposableManager.subscribeCompletable(completable, onComplete);
-//        completable.compose(RxUtils.applyCompletableSchedulers()).doOnComplete(onComplete).subscribe();
     }
 
     protected void addToCompositeDisposable(Disposable disposable) {
         disposableManager.add(disposable);
-//        disposables.add(disposable);
     }
 
     protected void clearDisposables() {
         disposableManager.dispose();
-//        DisposableManager.dispose();
     }
 }

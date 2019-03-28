@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastCurrentlyDbModel;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
@@ -107,7 +108,7 @@ public class ForecastHourlyAdapter
         void bind(ForecastCurrentlyDbModel item) {
             txtTime.setText(item.getTime());
             txtTemperature.setText(Html.fromHtml(WeatherDataFormatterUtil.convertFahrenheitToCelsius(item.getTemperature())
-                    + "<sup>\u00B0c</sup>"));
+                    + App.getInstance().getString(R.string.txt_html_degrees_celsius)));
             if (item.getIcon().equals("wind")) {
                 txtSummary.setText(R.string.forecast_hourly_adapter_summary_txt_windy);
             } else {

@@ -86,5 +86,4 @@ public class ForecastCurrentlyResponse implements Serializable {
     public void setWindSpeed(Double windSpeed) {
         this.windSpeed = windSpeed;
     }
-
 }

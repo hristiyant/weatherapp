@@ -202,8 +202,6 @@ public abstract class ForecastFullDao {
             updateDbWithCurrently(forecastFullId, fullDbModel.getCurrentlyDbModel());
         }
 
-//        assert fullDbModel != null;
-//        ForecastHourlyDbModel hourlyDbModel = fullDbModel.getHourlyDbModel();
         assert fullDbModel != null;
         if (fullDbModel.getHourlyDbModel() != null) {
             updateDbWithHourly(fullDbModel);
@@ -235,10 +233,8 @@ public abstract class ForecastFullDao {
     }
 
     private void updateForecastHourlyData(List<ForecastCurrentlyDbModel> hourlyData, long forecastHourlyId) {
-        //Delete all records that have forecastHourlyId != 0
         dropForecastHourlyData();
 
-        //Insert new hourly data
         for (ForecastCurrentlyDbModel hourlyDbModel : hourlyData) {
             hourlyDbModel.setForecastHourlyId(forecastHourlyId);
             insert(hourlyDbModel);
@@ -253,10 +249,8 @@ public abstract class ForecastFullDao {
     }
 
     private void updateForecastDailyData(List<ForecastDailyDataDbModel> dailyData, long forecastDailyId) {
-        //Delete all records in forecast_daily_data
         dropForecastDailyData();
 
-        //Insert new daily data
         for (ForecastDailyDataDbModel dailyDbModel : dailyData) {
             dailyDbModel.setForecastDailyId(forecastDailyId);
             insert(dailyDbModel);
