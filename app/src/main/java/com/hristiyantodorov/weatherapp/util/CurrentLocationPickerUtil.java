@@ -15,6 +15,7 @@ import static android.content.Context.LOCATION_SERVICE;
 public class CurrentLocationPickerUtil {
 
     private static final String TAG = "CLPUtil";
+
     public static void getCurrentLocation(Context context, LocationListener locationListener) throws IOException {
 
         LocationManager locationManager;

@@ -1,31 +1,27 @@
 package com.hristiyantodorov.weatherapp.ui.fragment.locations;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.locations.LocationsListAdapter;
 import com.hristiyantodorov.weatherapp.adapter.locations.LocationsListDiffCallback;
-import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.model.database.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.presenter.locations.LocationsListContracts;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 import com.hristiyantodorov.weatherapp.util.Constants;
-import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 import com.hristiyantodorov.weatherapp.view.DividerItemDecoration;
 
 import java.util.List;
@@ -58,38 +54,22 @@ public class LocationsListFragment extends BaseFragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-
-        showLoader(true);
 
         locationsListAdapter = new LocationsListAdapter(new LocationsListDiffCallback());
         locationsListAdapter.setOnLocationClickListener(this);
 
         edtFilter.addTextChangedListener(filterTextWatcher);
         recyclerViewLocations.setAdapter(locationsListAdapter);
-        recyclerViewLocations.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerViewLocations.addItemDecoration(new DividerItemDecoration(getActivity(), R.drawable.divider));
-        getLocationsFromDatabase();
+        recyclerViewLocations.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewLocations.addItemDecoration(new DividerItemDecoration(
+                Objects.requireNonNull(getContext())
+        ));
+        showLoader(true);
+        presenter.loadDbData();
 
         return view;
-    }
-
-    @Override
-    protected int getLayoutResId() {
-        return R.layout.fragment_locations_list;
-    }
-
-    @Override
-    public void showLocations(List<LocationDbModel> locations) {
-        locationsListAdapter.submitList(locations);
-        Log.d(TAG, "showLocations ");
-    }
-
-    @Override
-    public void getLocationsFromDatabase() {
-        presenter.loadLocationsFromDatabase();
-        Log.d(TAG, "getLocationsFromDatabase: ");
     }
 
     @Override
@@ -98,21 +78,50 @@ public class LocationsListFragment extends BaseFragment
     }
 
     @Override
-    public void showLoader(boolean isVisible) {
-        progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    protected int getLayoutResId() {
+        return R.layout.fragment_locations_list;
     }
 
     @Override
-    public void showError(Exception e) {
-        if (isAdded()) {
-            showErrorDialog(getContext(), e.getMessage());
-        }
+    public void showLoader(boolean isShowing) {
+        progressBar.setVisibility(isShowing ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void showEmptyScreen(boolean isShowing) {
+        txtNoResultsFound.setVisibility(isShowing ? View.VISIBLE : View.GONE);
+        recyclerViewLocations.setVisibility(isShowing ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    public void showError(Throwable e) {
+        showErrorDialog(getContext(), e);
+    }
+
+    @Override
+    public void showLocations(List<LocationDbModel> locations) {
+        locationsListAdapter.submitList(locations);
+        showLoader(false);
+        showEmptyScreen(false);
     }
 
     @Override
     public void onClick(LocationDbModel location) {
-        presenter.selectLocation(location);
-        Log.d(TAG, "onClick: ");
+        presenter.selectLocation(
+                String.valueOf(location.getLatitude()),
+                String.valueOf(location.getLongitude()),
+                getContext());
+    }
+
+    @Override
+    public void openWeatherDetailsActivity() {
+        startActivity(new Intent(getContext(), WeatherDetailsActivity.class));
+    }
+
+    @Override
+    public void onDestroy() {
+        presenter.clearDisposables();
+        super.onDestroy();
     }
 
     private TextWatcher filterTextWatcher = new TextWatcher() {
@@ -126,11 +135,8 @@ public class LocationsListFragment extends BaseFragment
                 public void run() {
                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
                         String pattern = edtFilter.getText().toString().toLowerCase();
-                        presenter.filterLocations(pattern);
-                        Log.d(TAG, "run: presenter.filterLocations");
+                        presenter.filterLocations(pattern, getContext());
                     });
-                    InputMethodManager in = (InputMethodManager) App.getInstance().getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    in.hideSoftInputFromWindow(edtFilter.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 }
             }, Constants.DEBOUNCE_DELAY_MILLIS);
         }
@@ -144,17 +150,7 @@ public class LocationsListFragment extends BaseFragment
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (timer != null) {
                 timer.cancel();
-                Log.d(TAG, "onTextChanged: resetting timer");
             }
         }
     };
-
-    @Override
-    public void showLocationWeatherDetails(LocationDbModel selectedLocation) {
-        SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_NAME, selectedLocation.getName());
-        SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_LAT, String.valueOf(selectedLocation.getLatitude()));
-        SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_LON, String.valueOf(selectedLocation.getLongitude()));
-        startActivity(new Intent(getContext(), WeatherDetailsActivity.class));
-    }
-
 }

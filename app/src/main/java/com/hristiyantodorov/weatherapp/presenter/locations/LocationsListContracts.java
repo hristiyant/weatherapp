@@ -1,7 +1,8 @@
 package com.hristiyantodorov.weatherapp.presenter.locations;
 
-import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
-import com.hristiyantodorov.weatherapp.presenter.BasePresenter;
+import android.content.Context;
+
+import com.hristiyantodorov.weatherapp.model.database.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.presenter.BaseView;
 
 import java.util.List;
@@ -12,21 +13,23 @@ public interface LocationsListContracts {
 
         void showLocations(List<LocationDbModel> locations);
 
-        void getLocationsFromDatabase();
-
         void setPresenter(Presenter presenter);
 
-        void showLocationWeatherDetails(LocationDbModel selectedLocation);
-
+        void openWeatherDetailsActivity();
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter {
 
-        void loadLocationsFromDatabase();
+        void loadDbData();
 
-        void filterLocations(String pattern);
+        void fillDbFromApi(List<LocationDbModel> locationDbModels);
 
-        void selectLocation(LocationDbModel location);
+        void filterLocations(String pattern, Context context);
 
+        void updateLocationDbInfo(LocationDbModel locationDbModel);
+
+        void selectLocation(String lat, String lon, Context context);
+
+        void clearDisposables();
     }
 }

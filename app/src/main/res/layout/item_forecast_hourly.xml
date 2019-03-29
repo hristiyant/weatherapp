@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/hourly_item"
     android:layout_margin="@dimen/margin_between_elements_default"
     android:background="@drawable/background_item_weather_details">
 
@@ -35,8 +36,7 @@
         android:layout_marginEnd="@dimen/margin_between_elements_default"
         android:fontFamily="casual"
         android:gravity="center"
-        android:lines="@dimen/rows_item_forecast_summary"
-        android:textSize="@dimen/material_design_body_txt_size"
+        android:lines="3"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/txt_current_temperature"
@@ -49,7 +49,7 @@
     <TextView
         android:id="@+id/txt_current_temperature"
         style="@style/WeatherDetailsOverlayText"
-        android:layout_width="@dimen/no_dimens"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:fontFamily="casual"
         android:gravity="end"

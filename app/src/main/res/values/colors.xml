@@ -20,4 +20,7 @@
 
     <!--Weather Details Background-->
     <color name="weatherDetailsTransparentBackground">#33FFFFFF</color>
+
+    <!--Forecast Dialog Background-->
+    <color name="forecastDialogSlightlyTransparentBackground">#99FFFFFF</color>
 </resources>

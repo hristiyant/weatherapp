@@ -2,24 +2,27 @@ package com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
-import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
-import com.hristiyantodorov.weatherapp.networking.service.NetworkingService;
-import com.hristiyantodorov.weatherapp.ui.ExceptionHandlerUtil;
+import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastCurrentlyDbModel;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.fragment.WeatherDetailsFragmentContracts;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.fragment.WeatherDetailsFragmentPresenter;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 
 import butterknife.BindView;
 
-public class WeatherDetailsFragment extends BaseFragment implements DownloadResponse<WeatherData> {
+public class WeatherDetailsFragment extends BaseFragment implements WeatherDetailsFragmentContracts.View {
 
+    @BindView(R.id.txt_forecast_not_available)
+    TextView txtForecastNotAvailable;
     @BindView(R.id.txt_temperature)
     TextView txtTemperature;
     @BindView(R.id.txt_apparent_temperature)
@@ -30,9 +33,21 @@ public class WeatherDetailsFragment extends BaseFragment implements DownloadResp
     TextView txtPressure;
     @BindView(R.id.txt_wind_speed)
     TextView txtWindSpeed;
+    @BindView(R.id.txt_hourly_summary)
+    TextView txtHourlySummary;
+    @BindView(R.id.txt_daily_summary)
+    TextView txtDailySummary;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+    @BindView(R.id.fragment_weather_details)
+    ConstraintLayout constraintLayout;
+
+    private WeatherDetailsFragmentContracts.Presenter presenter;
 
     public static WeatherDetailsFragment newInstance() {
-        return new WeatherDetailsFragment();
+        WeatherDetailsFragment fragment = new WeatherDetailsFragment();
+        new WeatherDetailsFragmentPresenter(fragment);
+        return fragment;
     }
 
     @Override
@@ -40,11 +55,15 @@ public class WeatherDetailsFragment extends BaseFragment implements DownloadResp
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        new NetworkingService().getWeatherDataCurrently(
-                WeatherDetailsFragment.this
-        );
+        presenter.requestDataFromApi(getContext());
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
     }
 
     @Override
@@ -53,28 +72,48 @@ public class WeatherDetailsFragment extends BaseFragment implements DownloadResp
     }
 
     @Override
-    public void onSuccess(WeatherData result) {
-        if (result == null) {
-            showErrorDialog(getContext(), App.getInstance()
-                    .getString(R.string.all_alert_dialog_not_found_message));
-        } else {
-            txtTemperature.setText(getString(R.string.txt_temperature,
-                    WeatherDataFormatterUtil.convertFahrenheitToCelsius(result.getCurrently().getTemperature())));
-            txtApparentTemperature.setText(getString(R.string.txt_apparent_temperature,
-                    WeatherDataFormatterUtil.convertFahrenheitToCelsius(result.getCurrently().getApparentTemperature())));
-            txtHumidity.setText(getString(R.string.txt_humidity,
-                    WeatherDataFormatterUtil.convertDoubleToPercentage(result.getCurrently().getHumidity())));
-            txtPressure.setText(getString(R.string.txt_pressure,
-                    WeatherDataFormatterUtil.convertRoundedDoubleToString(result.getCurrently().getPressure())));
-            txtWindSpeed.setText(getString(R.string.txt_wind_speed,
-                    WeatherDataFormatterUtil.convertMphToMs(result.getCurrently().getWindSpeed())));
-        }
+    public void setPresenter(WeatherDetailsFragmentContracts.Presenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override
-    public void onFailure(Exception e) {
-        showErrorDialog(getContext(),e.getMessage());
-        ExceptionHandlerUtil.logStackTrace(e);
+    public void showLoader(boolean isShowing) {
+        progressBar.setVisibility(isShowing ? View.VISIBLE : View.GONE);
     }
 
+    @Override
+    public void showEmptyScreen(boolean isShowing) {
+        txtForecastNotAvailable.setVisibility(isShowing ? View.VISIBLE : View.GONE);
+        constraintLayout.setVisibility(isShowing ? View.GONE : View.VISIBLE);
+        showLoader(false);
+    }
+
+    @Override
+    public void showError(Throwable e) {
+        showErrorDialog(getContext(), e);
+    }
+
+    @Override
+    public void showForecastCurrentlyData(ForecastCurrentlyDbModel data, String hourlySummary, String dailySummary) {
+        txtTemperature.setText(getString(R.string.txt_temperature,
+                WeatherDataFormatterUtil.convertFahrenheitToCelsius(data.getTemperature())));
+        txtApparentTemperature.setText(getString(R.string.txt_apparent_temperature,
+                WeatherDataFormatterUtil.convertFahrenheitToCelsius(data.getApparentTemperature())));
+        txtHumidity.setText(getString(R.string.txt_humidity,
+                WeatherDataFormatterUtil.convertDoubleToPercentage(data.getHumidity())));
+        txtPressure.setText(getString(R.string.txt_pressure,
+                WeatherDataFormatterUtil.convertRoundedDoubleToString(data.getPressure())));
+        txtWindSpeed.setText(getString(R.string.txt_wind_speed,
+                WeatherDataFormatterUtil.convertMphToMs(data.getWindSpeed())));
+        txtHourlySummary.setText(hourlySummary);
+        txtDailySummary.setText(dailySummary);
+        showLoader(false);
+        showEmptyScreen(false);
+    }
+
+    @Override
+    public void onDestroy() {
+        presenter.clearDisposables();
+        super.onDestroy();
+    }
 }

@@ -4,8 +4,9 @@ public interface BaseView<T> {
 
     void setPresenter(T presenter);
 
-    void showLoader(boolean isVisible);
+    void showLoader(boolean isShowing);
 
-    void showError(Exception e);
+    void showEmptyScreen(boolean isShowing);
 
+    void showError(Throwable e);
 }

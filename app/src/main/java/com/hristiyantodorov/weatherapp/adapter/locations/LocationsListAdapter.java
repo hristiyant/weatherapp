@@ -11,10 +11,7 @@ import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
-import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
-import com.hristiyantodorov.weatherapp.networking.service.NetworkingService;
-import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.model.database.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherIconPickerUtil;
 
@@ -48,8 +45,7 @@ public class LocationsListAdapter
         this.onLocationClickListener = onLocationClickListener;
     }
 
-    public static class LocationsViewHolder extends RecyclerView.ViewHolder
-            implements DownloadResponse<WeatherData> {
+    static class LocationsViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.txt_city_name)
         TextView txtCityName;
@@ -67,10 +63,11 @@ public class LocationsListAdapter
         }
 
         void bind(LocationDbModel location) {
-            new NetworkingService().getWeatherDataCurrently(this,
-                    String.valueOf(location.getLatitude()),
-                    String.valueOf(location.getLongitude())
-            );
+            txtCurrentTemperature.setText(App.getInstance().getApplicationContext()
+                    .getString(R.string.txt_current_temp_celsius, WeatherDataFormatterUtil.
+                            convertFahrenheitToCelsius(location.getTemperature())));
+            imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(location.getIcon()));
+            txtCityName.setText(location.getName());
             this.location = location;
         }
 
@@ -82,34 +79,9 @@ public class LocationsListAdapter
         void setOnLocationClickListener(OnLocationClickListener onLocationClickListener) {
             onClickListener = onLocationClickListener;
         }
-
-        @Override
-        public void onSuccess(WeatherData result) {
-            if(result == null) {
-
-            } else {
-                txtCurrentTemperature
-                        .setText(App.getInstance().getApplicationContext()
-                                .getString(R.string.txt_current_temp_celsius,
-                                        WeatherDataFormatterUtil.convertFahrenheitToCelsius(result
-                                                .getCurrently()
-                                                .getTemperature())));
-                imgWeatherIcon
-                        .setImageResource(WeatherIconPickerUtil.pickWeatherIcon(result
-                                .getCurrently()
-                                .getIcon()));
-                txtCityName.setText(location.getName());
-            }
-        }
-
-        @Override
-        public void onFailure(Exception e) {
-            // TODO: 3/1/2019 CURRENTLY NOT BEING USED
-        }
     }
 
     public interface OnLocationClickListener {
         void onClick(LocationDbModel location);
     }
-
 }

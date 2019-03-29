@@ -1,93 +1,124 @@
 package com.hristiyantodorov.weatherapp.presenter.locations;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
-import com.hristiyantodorov.weatherapp.App;
-import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
-import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
-import com.hristiyantodorov.weatherapp.persistence.location.LocationDbModel;
-import com.hristiyantodorov.weatherapp.ui.ExceptionHandlerUtil;
-import com.hristiyantodorov.weatherapp.util.SearchFilterAsyncTask;
+import com.hristiyantodorov.weatherapp.model.database.location.LocationDbModel;
+import com.hristiyantodorov.weatherapp.service.LocationsDbService;
+import com.hristiyantodorov.weatherapp.presenter.BasePresenter;
+import com.hristiyantodorov.weatherapp.retrofit.APIClient;
+import com.hristiyantodorov.weatherapp.retrofit.WeatherApiService;
+import com.hristiyantodorov.weatherapp.util.Constants;
+import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 
 import java.util.List;
 
-public class LocationsListPresenter
-        implements LocationsListContracts.Presenter, DownloadResponse<List<LocationDbModel>> {
+import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
-    private static final String TAG = "LLP";
+public class LocationsListPresenter extends BasePresenter
+        implements LocationsListContracts.Presenter {
+
+    private static final String TAG = "LLPresenter";
 
     private LocationsListContracts.View view;
+    private WeatherApiService weatherApiService;
+    private LocationsDbService locationsDbService;
+    private List<LocationDbModel> locationsTemp;
 
-    public LocationsListPresenter(LocationsListContracts.View view) {
+    public LocationsListPresenter(LocationsListContracts.View view, Context context) {
         this.view = view;
         this.view.setPresenter(this);
+        weatherApiService = APIClient.getClient().create(WeatherApiService.class);
+        locationsDbService = LocationsDbService.getInstance(context);
     }
 
     @Override
-    public void loadLocationsFromDatabase() {
-        new LoadLocationsAsyncTask(this, App.getInstance().getApplicationContext()).execute();
+    public void loadDbData() {
+        addToCompositeDisposable(subscribeSingle(
+                locationsDbService.getAllLocationsList()
+                        .flatMap(locationDbModels -> {
+                            locationsTemp = locationDbModels;
+                            return locationsDbService.checkForNullIcons();
+                        }),
+                integer -> {
+                    if (integer == 0) {
+                        presentLocationsToView(locationsTemp);
+                        Log.d(TAG, "No null icons");
+                    } else {
+                        fillDbFromApi(locationsTemp);
+                        Log.d(TAG, "Found null icons");
+                    }
+                },
+                throwable -> view.showError(throwable)));
+    }
+
+    @SuppressLint("CheckResult")
+    public void fillDbFromApi(List<LocationDbModel> locationDbModels) {
+        addToCompositeDisposable(locationsDbService.getAllLocationsList()
+                .flatMapObservable(Observable::fromIterable)
+                .flatMapSingle(locationDbModel ->
+                        weatherApiService.getForecastCurrently(
+                                String.valueOf(locationDbModel.getLatitude()),
+                                String.valueOf(locationDbModel.getLongitude()),
+                                SharedPrefUtil.read(Constants.LANGUAGE_KEY, "en")
+                        ))
+                .toList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((forecastFullResponses, throwable) -> {
+                    for (int i = 0; i < forecastFullResponses.size(); i++) {
+                        locationDbModels.get(i).setIcon(forecastFullResponses.get(i).getCurrently().getIcon());
+                        locationDbModels.get(i).setTemperature(forecastFullResponses.get(i).getCurrently().getTemperature());
+                        updateLocationDbInfo(locationDbModels.get(i));
+                    }
+                    presentLocationsToView(locationDbModels);
+                }));
     }
 
     @Override
-    public void filterLocations(String pattern) {
-        new SearchFilterAsyncTask(this, App.getInstance().getApplicationContext()).execute(pattern);
+    public void updateLocationDbInfo(LocationDbModel locationDbModel) {
+        subscribeCompletable(Completable.fromAction(() -> locationsDbService.update(locationDbModel)));
     }
 
     @Override
-    public void selectLocation(LocationDbModel selectedLocation) {
-        view.showLocationWeatherDetails(selectedLocation);
+    public void filterLocations(String pattern, Context context) {
+        addToCompositeDisposable(Observable.create((ObservableOnSubscribe<List<LocationDbModel>>) emitter -> {
+            List<LocationDbModel> locations = locationsDbService.getFilteredLocationsList(pattern);
+            emitter.onNext(locations);
+            emitter.onComplete();
+        })
+                .doOnSubscribe(disposable -> view.showLoader(true))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> view.showLoader(false))
+                .subscribe(this::presentLocationsToView,
+                        error -> view.showError(error)));
     }
 
-    @Override
-    public void onSuccess(List<LocationDbModel> filteredLocations) {
-        if(filteredLocations == null) {
-            view.showErrorDialog(getContext(), App.getInstance()
-                    .getString(R.string.all_alert_dialog_not_found_message));
+    private void presentLocationsToView(List<LocationDbModel> locations) {
+        Log.d(TAG, "Presenting locations to view");
+        if (locations.isEmpty()) {
+            view.showEmptyScreen(true);
+            Log.d(TAG, "Showing empty screen");
+        } else {
+            view.showLocations(locations);
         }
-        view.showLocations(filteredLocations);
-        view.showLoader(false);
-        Log.d(TAG, "onSuccess: showLocations");
     }
 
     @Override
-    public void onFailure(Exception e) {
-        view.showError(e);
-        ExceptionHandlerUtil.logStackTrace(e);
+    public void selectLocation(String lat, String lon, Context context) {
+        SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_LAT, lat);
+        SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_LON, lon);
+        view.openWeatherDetailsActivity();
     }
 
-    static class LoadLocationsAsyncTask extends AsyncTask<Void, Void, List<LocationDbModel>> {
-
-        private static final String TAG = "LLAT";
-
-        private DownloadResponse callback;
-        private Exception exception;
-        private Context context;
-
-        LoadLocationsAsyncTask(DownloadResponse callback, Context context) {
-            this.callback = callback;
-            this.context = context;
-        }
-
-        @Override
-        protected void onPostExecute(List<LocationDbModel> result) {
-            super.onPostExecute(result);
-            if (callback != null) {
-                if (exception == null) {
-                    callback.onSuccess(result);
-                    Log.d(TAG, "onPostExecute: onSuccess");
-                } else {
-                    callback.onFailure(exception);
-                }
-            }
-        }
-
-        @Override
-        protected List<LocationDbModel> doInBackground(Void... voids) {
-            return PersistenceDatabase
-                    .getAppDatabase(context).locationDao().getAllLocations();
-        }
+    @Override
+    public void clearDisposables() {
+        super.clearDisposables();
     }
 }

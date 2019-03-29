@@ -1,41 +1,37 @@
 package com.hristiyantodorov.weatherapp.ui.activity.weatherdetails;
 
-import android.location.Location;
-import android.location.LocationListener;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.hristiyantodorov.weatherapp.App;
+import com.bumptech.glide.Glide;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.weatherdetails.WeatherDetailsPagerAdapter;
-import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
-import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
-import com.hristiyantodorov.weatherapp.networking.service.NetworkingService;
-import com.hristiyantodorov.weatherapp.ui.ExceptionHandlerUtil;
+import com.hristiyantodorov.weatherapp.model.response.ForecastCurrentlyResponse;
+import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.activity.WeatherDetailsActivityContracts;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetails.activity.WeatherDetailsActivityPresenter;
 import com.hristiyantodorov.weatherapp.ui.activity.BaseActivity;
-import com.hristiyantodorov.weatherapp.util.Constants;
-import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherIconPickerUtil;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
 import butterknife.BindView;
 
-public class WeatherDetailsActivity extends BaseActivity implements DownloadResponse<WeatherData>, LocationListener {
+public class WeatherDetailsActivity extends BaseActivity
+        implements WeatherDetailsActivityContracts.View {
 
-    @BindView(R.id.view_pager_forecasts_holder)
-    ViewPager viewPager;
-    @BindView(R.id.tab_layout_forecast_categories)
-    TabLayout tabLayout;
-    @BindView(R.id.img_current_weather_icon)
-    ImageView imgWeatherIcon;
+    private static final String TAG = "WDActivity";
+
+    @BindView(R.id.txt_forecast_not_available)
+    TextView txtForecastNotAvailable;
     @BindView(R.id.txt_current_temperature)
     TextView txtCurrentTemp;
     @BindView(R.id.txt_summary)
@@ -46,17 +42,34 @@ public class WeatherDetailsActivity extends BaseActivity implements DownloadResp
     TextView txtLocationName;
     @BindView(R.id.txt_wind_speed)
     TextView txtWindSpeed;
+    @BindView(R.id.img_current_weather_icon)
+    ImageView imgWeatherIcon;
+    @BindView(R.id.view_pager_forecasts_holder)
+    ViewPager viewPager;
+    @BindView(R.id.tab_layout_forecast_categories)
+    TabLayout tabLayout;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+    @BindView(R.id.coordinatorLayout)
+    CoordinatorLayout coordinatorLayout;
+    @BindView(R.id.app_bar_basic_forecast)
+    AppBarLayout appBarLayout;
+    @BindView(R.id.background_weather_image)
+    ImageView imgBackground;
 
-    private WeatherData weatherData;
+    private WeatherDetailsActivityContracts.Presenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        new NetworkingService().getWeatherDataCurrently(WeatherDetailsActivity.this);
+        showLoader(true);
+        presenter = new WeatherDetailsActivityPresenter(this);
+        presenter.downloadForecastFromApi(this);
 
         WeatherDetailsPagerAdapter weatherDetailsPagerAdapter =
                 new WeatherDetailsPagerAdapter(getSupportFragmentManager());
+        viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(weatherDetailsPagerAdapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -75,7 +88,6 @@ public class WeatherDetailsActivity extends BaseActivity implements DownloadResp
             }
         });
         tabLayout.setupWithViewPager(viewPager);
-
     }
 
     @Override
@@ -84,57 +96,64 @@ public class WeatherDetailsActivity extends BaseActivity implements DownloadResp
     }
 
     @Override
-    public void onSuccess(WeatherData result) {
-        if (result == null) {
-            showErrorDialog(this, App.getInstance().getString(R.string.all_alert_dialog_not_found_message));
-        } else {
-            weatherData = result;
-            txtLocationName.setText(SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_NAME,
-                    "Current Location"));
-            txtSummary.setText(weatherData.getCurrently().getSummary());
-            txtCurrentTemp.setText(Html.fromHtml(WeatherDataFormatterUtil
-                    .convertFahrenheitToCelsius(result.getCurrently().getTemperature()))
-                    + "<sup>\u00B0c</sup>");
-            String currentTimeStamp = DateFormat
-                    .getTimeInstance(SimpleDateFormat.MEDIUM, Locale.getDefault())
-                    .format(new java.util.Date());
-            txtLastUpdated.setText(getString(R.string.txt_last_updated, currentTimeStamp));
-            txtWindSpeed.setText(getString(R.string.txt_current_wind_speed, WeatherDataFormatterUtil.convertMphToMs(result.getCurrently().getWindSpeed())));
-            imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(result.getCurrently()
-                    .getIcon()));
-        }
+    public void setPresenter(WeatherDetailsActivityContracts.Presenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override
-    public void onFailure(Exception e) {
-        showErrorDialog(this, e.getMessage());
-        ExceptionHandlerUtil.logStackTrace(e);
+    public void showLoader(boolean isShowing) {
+        progressBar.setVisibility(isShowing ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void showEmptyScreen(boolean isShowing) {
+        txtForecastNotAvailable.setVisibility(isShowing ? View.VISIBLE : View.GONE);
+        coordinatorLayout.setVisibility(isShowing ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    public void showError(Throwable e) {
+        showErrorDialog(this, e);
+    }
+
+    @Override
+    public void showForecast(ForecastCurrentlyResponse response, String timezone) {
+        txtLocationName.setText(timezone);
+        txtSummary.setText(response.getSummary());
+        txtCurrentTemp.setText(Html.fromHtml(
+                WeatherDataFormatterUtil
+                        .convertFahrenheitToCelsius(response.getTemperature())
+                        + getString(R.string.txt_html_degrees_celsius)
+        ));
+        txtWindSpeed.setText(getString(
+                R.string.txt_current_wind_speed,
+                WeatherDataFormatterUtil.convertMphToMs(response.getWindSpeed())
+        ));
+        imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(response.getIcon()));
+
+        Glide.with(this)
+                .asGif()
+                .load(R.drawable.gif_partly_cloudy_night)
+                .centerCrop()
+                .into(imgBackground);
+
+        showLoader(false);
+        showEmptyScreen(false);
+    }
+
+    public void updateView(ForecastFullResponse response) {
+        refreshLastUpdated();
+        showForecast(response.getCurrently(), response.getTimezone());
+        Log.d(TAG, "updateView: ACTIVITY UPDATED");
     }
 
     public void refreshLastUpdated() {
-        String timeStamp = DateFormat
-                .getTimeInstance(SimpleDateFormat.MEDIUM, Locale.getDefault())
-                .format(new java.util.Date());
-        txtLastUpdated.setText(getString(R.string.txt_last_updated, timeStamp));
+        txtLastUpdated.setText(getString(R.string.txt_last_updated, presenter.getTimestamp()));
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-        // TODO: 2/22/2019 CURRENTLY NOT USED
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        // TODO: 2/22/2019 CURRENTLY NOT USED
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-        // TODO: 2/22/2019 CURRENTLY NOT USED
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-        // TODO: 2/22/2019 CURRENTLY NOT USED
+    protected void onDestroy() {
+        presenter.clearDisposables();
+        super.onDestroy();
     }
 }

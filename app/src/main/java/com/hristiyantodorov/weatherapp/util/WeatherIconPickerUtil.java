@@ -4,6 +4,9 @@ import android.support.annotation.DrawableRes;
 
 import com.hristiyantodorov.weatherapp.R;
 
+import static com.hristiyantodorov.weatherapp.util.Constants.ICON_CLEAR_DAY;
+import static com.hristiyantodorov.weatherapp.util.Constants.ICON_CLEAR_NIGHT;
+
 public class WeatherIconPickerUtil {
 
     /**
@@ -15,9 +18,9 @@ public class WeatherIconPickerUtil {
     @DrawableRes
     public static int pickWeatherIcon(String icon) {
         switch (icon) {
-            case Constants.ICON_CLEAR_DAY:
+            case ICON_CLEAR_DAY:
                 return R.drawable.ic_clear_day;
-            case Constants.ICON_CLEAR_NIGHT:
+            case ICON_CLEAR_NIGHT:
                 return R.drawable.ic_clear_night;
             case Constants.ICON_RAIN:
                 return R.drawable.ic_rain;
@@ -35,6 +38,40 @@ public class WeatherIconPickerUtil {
                 return R.drawable.ic_partly_cloudy_day;
             case Constants.ICON_PARTLY_CLOUDY_NIGHT:
                 return R.drawable.ic_partly_cloudy_night;
+            default:
+                return 0;
+        }
+    }
+
+    /**
+     * Picks which weather image to be set as background based on the icon string received from the API.
+     *
+     * @param icon
+     * @return
+     */
+    @DrawableRes
+    public static int pickWeatherBackgroundImage(String icon) {
+        switch (icon) {
+            case ICON_CLEAR_DAY:
+                return R.drawable.back_image_clear_day;
+            case ICON_CLEAR_NIGHT:
+                return R.drawable.back_image_clear_night;
+            case "rain":
+                return R.drawable.back_image_clear_day;
+            case "snow":
+                return R.drawable.back_image_clear_day;
+            case "sleet":
+                return R.drawable.back_image_clear_day;
+            case "wind":
+                return R.drawable.back_image_clear_day;
+            case "fog":
+                return R.drawable.back_image_clear_day;
+            case "cloudy":
+                return R.drawable.back_image_clear_day;
+            case "partly-cloudy-day":
+                return R.drawable.back_image_clear_day;
+            case "partly-cloudy-night":
+                return R.drawable.back_image_clear_night;
             default:
                 return 0;
         }

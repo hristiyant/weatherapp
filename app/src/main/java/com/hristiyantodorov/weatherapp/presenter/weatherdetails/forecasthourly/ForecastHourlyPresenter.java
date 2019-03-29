@@ -1,39 +1,93 @@
 package com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly;
 
-import com.hristiyantodorov.weatherapp.App;
-import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.model.weather.WeatherData;
-import com.hristiyantodorov.weatherapp.networking.DownloadResponse;
-import com.hristiyantodorov.weatherapp.networking.service.NetworkingService;
-import com.hristiyantodorov.weatherapp.ui.ExceptionHandlerUtil;
+import android.content.Context;
 
-public class ForecastHourlyPresenter implements ForecastHourlyContracts.Presenter, DownloadResponse<WeatherData> {
+import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastCurrentlyDbModel;
+import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
+import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
+import com.hristiyantodorov.weatherapp.presenter.BasePresenter;
+import com.hristiyantodorov.weatherapp.retrofit.APIClient;
+import com.hristiyantodorov.weatherapp.retrofit.WeatherApiService;
+import com.hristiyantodorov.weatherapp.util.Constants;
+import com.hristiyantodorov.weatherapp.util.ForecastResponseToForecastDbModelConverterUtil;
+import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
+
+import java.util.List;
+
+import io.reactivex.Completable;
+import io.reactivex.Single;
+
+public class ForecastHourlyPresenter extends BasePresenter
+        implements ForecastHourlyContracts.Presenter {
+
+    private static final String TAG = "FHPresenter";
 
     private ForecastHourlyContracts.View view;
+    private WeatherApiService weatherApiService;
 
     public ForecastHourlyPresenter(ForecastHourlyContracts.View view) {
         this.view = view;
         view.setPresenter(this);
+        weatherApiService = APIClient.getClient().create(WeatherApiService.class);
     }
 
     @Override
-    public void loadForecastHourlyData() {
-        view.showLoader(true);
-        new NetworkingService().getWeatherDataHourly(this);
+    public void subscribe(ForecastHourlyContracts.View view) {
+        this.view = view;
     }
 
     @Override
-    public void onSuccess(WeatherData object) {
-        if (object == null) {
-            view.showErrorDialog(App.getInstance()
-                    .getString(R.string.all_alert_dialog_not_found_message));
+    public void loadDataFromDb(Context context) {
+        subscribeSingle(
+                PersistenceDatabase.getAppDatabase(context).forecastFullDao().getForecastFullRx()
+                        .flatMap(fullDbModel -> PersistenceDatabase.getAppDatabase(context)
+                                .forecastFullDao().getForecastHourlyById(fullDbModel.getId()))
+                        .flatMap(forecastHourlyDbModel -> PersistenceDatabase.getAppDatabase(context)
+                                .forecastFullDao().getForecastHourlyDataByHourlyId(forecastHourlyDbModel.getHourlyId())),
+                this::presentForecastToView,
+                throwable -> view.showError(throwable)
+        );
+    }
+
+    @Override
+    public void updateForecastHourlyDataFromApi(Context context) {
+        subscribeSingle(
+                weatherApiService.getForecastFullResponse(
+                        SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
+                        SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null),
+                        SharedPrefUtil.read(Constants.LANGUAGE_KEY, "en")
+                ).flatMap(fullResponse -> saveForecastApiDataToDb(fullResponse, context)),
+                fullResponse -> {
+                    view.updateActivity(fullResponse);
+                    presentForecastToView(ForecastResponseToForecastDbModelConverterUtil
+                            .convertHourlyDataResponseListToDbModelList(fullResponse
+                                    .getHourly()
+                                    .getData()));
+                },
+                throwable -> view.showError(throwable)
+        );
+    }
+
+    @Override
+    public Single<ForecastFullResponse> saveForecastApiDataToDb(ForecastFullResponse fullResponse, Context context) {
+        return Completable.fromRunnable(() -> PersistenceDatabase
+                .getAppDatabase(context)
+                .forecastFullDao()
+                .updateDb(ForecastResponseToForecastDbModelConverterUtil.convertResponseToDbModel(fullResponse)))
+                .toSingleDefault(fullResponse);
+    }
+
+    @Override
+    public void presentForecastToView(List<ForecastCurrentlyDbModel> hourlyData) {
+        if (hourlyData.isEmpty()) {
+            view.showEmptyScreen(true);
+        } else {
+            view.showForecast(hourlyData);
         }
-        view.showForecastHourlyData(object.getHourly().getData());
     }
 
     @Override
-    public void onFailure(Exception e) {
-        view.showError(e);
-        ExceptionHandlerUtil.logStackTrace(e);
+    public void clearDisposables() {
+        super.clearDisposables();
     }
 }

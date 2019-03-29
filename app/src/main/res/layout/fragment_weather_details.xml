@@ -1,70 +1,126 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_weather_details"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".ui.fragment.weatherdetails.WeatherDetailsFragment">
 
     <TextView
-        android:id="@+id/txt_temperature"
+        android:id="@+id/txt_forecast_not_available"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_between_elements_default"
-        android:drawableStart="@drawable/ic_wall_thermometer"
-        android:drawableLeft="@drawable/ic_wall_thermometer"
-        android:drawablePadding="@dimen/margin_between_elements_default"
         android:fontFamily="casual"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Temperature: 18 C" />
+        android:text="@string/all_txt_forecast_not_available"
+        android:textAlignment="center"
+        android:textSize="@dimen/material_design_subheading_txt_size"
+        android:textStyle="italic"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edt_filter" />
 
-    <TextView
-        android:id="@+id/txt_apparent_temperature"
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:visibility="visible" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/fragment_weather_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_between_elements_default"
-        android:drawableStart="@drawable/ic_wall_thermometer"
-        android:drawableLeft="@drawable/ic_wall_thermometer"
-        android:drawablePadding="@dimen/margin_between_elements_default"
-        android:fontFamily="casual"
-        app:layout_constraintTop_toBottomOf="@id/txt_temperature"
-        tools:text="Feels like: 20 C" />
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:background="@color/weatherDetailsTransparentBackground"
+        android:visibility="gone">
 
-    <TextView
-        android:id="@+id/txt_humidity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_between_elements_default"
-        android:drawableStart="@drawable/ic_humidity"
-        android:drawableLeft="@drawable/ic_humidity"
-        android:drawablePadding="@dimen/margin_between_elements_default"
-        android:fontFamily="casual"
-        app:layout_constraintTop_toBottomOf="@id/txt_apparent_temperature"
-        tools:text="Humidity:" />
+        <TextView
+            android:id="@+id/txt_temperature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_between_elements_default"
+            android:drawableStart="@drawable/ic_wall_thermometer"
+            android:drawableLeft="@drawable/ic_wall_thermometer"
+            android:drawablePadding="@dimen/margin_between_elements_default"
+            android:fontFamily="casual"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Temperature: 18 C" />
 
-    <TextView
-        android:id="@+id/txt_pressure"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_between_elements_default"
-        android:drawableStart="@drawable/ic_pressure"
-        android:drawableLeft="@drawable/ic_pressure"
-        android:drawablePadding="@dimen/margin_between_elements_default"
-        android:fontFamily="casual"
-        app:layout_constraintTop_toBottomOf="@id/txt_humidity"
-        tools:text="Pressure: " />
+        <TextView
+            android:id="@+id/txt_apparent_temperature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_between_elements_default"
+            android:drawableStart="@drawable/ic_wall_thermometer"
+            android:drawableLeft="@drawable/ic_wall_thermometer"
+            android:drawablePadding="@dimen/margin_between_elements_default"
+            android:fontFamily="casual"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            app:layout_constraintTop_toBottomOf="@id/txt_temperature"
+            tools:text="Feels like: 20 C" />
 
-    <TextView
-        android:id="@+id/txt_wind_speed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_between_elements_default"
-        android:drawableStart="@drawable/ic_wind_sock"
-        android:drawableLeft="@drawable/ic_wind_sock"
-        android:drawablePadding="@dimen/margin_between_elements_default"
-        android:fontFamily="casual"
-        app:layout_constraintTop_toBottomOf="@id/txt_pressure"
-        tools:text="Wind speed: 5 kts" />
+        <TextView
+            android:id="@+id/txt_humidity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_between_elements_default"
+            android:drawableStart="@drawable/ic_humidity"
+            android:drawableLeft="@drawable/ic_humidity"
+            android:drawablePadding="@dimen/margin_between_elements_default"
+            android:fontFamily="casual"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            app:layout_constraintTop_toBottomOf="@id/txt_apparent_temperature"
+            tools:text="Humidity:" />
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/txt_pressure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_between_elements_default"
+            android:drawableStart="@drawable/ic_pressure"
+            android:drawableLeft="@drawable/ic_pressure"
+            android:drawablePadding="@dimen/margin_between_elements_default"
+            android:fontFamily="casual"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            app:layout_constraintTop_toBottomOf="@id/txt_humidity"
+            tools:text="Pressure: " />
+
+        <TextView
+            android:id="@+id/txt_wind_speed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_between_elements_default"
+            android:drawableStart="@drawable/ic_wind_sock"
+            android:drawableLeft="@drawable/ic_wind_sock"
+            android:drawablePadding="@dimen/margin_between_elements_default"
+            android:fontFamily="casual"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            app:layout_constraintTop_toBottomOf="@id/txt_pressure"
+            tools:text="Wind speed: 5 kts" />
+
+        <TextView
+            android:id="@+id/txt_hourly_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_between_elements_default"
+            android:fontFamily="casual"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            app:layout_constraintTop_toBottomOf="@id/txt_wind_speed"
+            tools:text="Hourly " />
+
+        <TextView
+            android:id="@+id/txt_daily_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_between_elements_default"
+            android:fontFamily="casual"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            app:layout_constraintTop_toBottomOf="@id/txt_hourly_summary"
+            tools:text="Daily " />
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

@@ -3,16 +3,21 @@ package com.hristiyantodorov.weatherapp.ui.fragment.settings;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
 import com.hristiyantodorov.weatherapp.R;
+import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
+
+import java.util.Objects;
+
+import static com.hristiyantodorov.weatherapp.util.Constants.FEEDBACK_KEY;
+import static com.hristiyantodorov.weatherapp.util.Constants.LANGUAGE_KEY;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
-    private static final String FEEDBACK_KEY = "feedback";
-
-    private Preference emailPreference;
+    private ListPreference list;
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -21,7 +26,20 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle bundle, String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
-        emailPreference = getPreferenceManager().findPreference(FEEDBACK_KEY);
+
+        list = (ListPreference) getPreferenceManager().findPreference(this.getResources().getString(R.string.shared_pref_api_content_lang_key));
+        list.setEntries(R.array.api_content_language_names);
+        list.setEntryValues(R.array.api_content_language_values);
+        list.setOnPreferenceChangeListener((preference, o) -> {
+            SharedPrefUtil.write(LANGUAGE_KEY, o.toString());
+            list.setValue(o.toString());
+            Intent intent = Objects.requireNonNull(getActivity()).getIntent();
+            getActivity().finish();
+            startActivity(intent);
+            return false;
+        });
+
+        Preference emailPreference = getPreferenceManager().findPreference(FEEDBACK_KEY);
         emailPreference.setOnPreferenceClickListener(preference -> {
 
             if (preference.getKey().equals(FEEDBACK_KEY)) {

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/item_daily"
     android:layout_margin="@dimen/margin_between_elements_default"
     android:background="@drawable/background_item_weather_details">
 

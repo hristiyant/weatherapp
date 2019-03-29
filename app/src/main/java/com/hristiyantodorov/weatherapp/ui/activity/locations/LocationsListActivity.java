@@ -18,7 +18,7 @@ public class LocationsListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         fragment = LocationsListFragment.newInstance();
-        presenter = new LocationsListPresenter(fragment);
+        presenter = new LocationsListPresenter(fragment, this);
         commitFragmentTransaction(R.id.content, fragment);
     }
 

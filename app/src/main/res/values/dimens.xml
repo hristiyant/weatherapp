@@ -50,4 +50,8 @@
     <dimen name="item_locations_list_height">100dp</dimen>
     
     <dimen name="rows_item_forecast_summary">3</dimen>
+    <dimen name="dialog_daily_item_width">300dp</dimen>
+    <dimen name="dialog_daily_item_height">450dp</dimen>
+    <dimen name="dialog_daily_item_icon_width">120dp</dimen>
+    <dimen name="item_location_list_underline_height">2dp</dimen>
 </resources>
