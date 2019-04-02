@@ -4,15 +4,16 @@ import android.content.Context;
 
 import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastDailyDataDbModel;
 import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
-import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
 import com.hristiyantodorov.weatherapp.presenter.BasePresenter;
-import com.hristiyantodorov.weatherapp.retrofit.APIClient;
-import com.hristiyantodorov.weatherapp.retrofit.WeatherApiService;
+import com.hristiyantodorov.weatherapp.service.ForecastApiService;
+import com.hristiyantodorov.weatherapp.service.ForecastDbService;
 import com.hristiyantodorov.weatherapp.util.Constants;
 import com.hristiyantodorov.weatherapp.util.ForecastResponseToForecastDbModelConverterUtil;
 import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -22,13 +23,15 @@ public class ForecastDailyPresenter extends BasePresenter
 
     private static final String TAG = "FDPresenter";
 
+    @Inject
+    ForecastApiService forecastApiService;
+    @Inject
+    ForecastDbService forecastDbService;
     private ForecastDailyContracts.View view;
-    private WeatherApiService weatherApiService;
 
     public ForecastDailyPresenter(ForecastDailyContracts.View view) {
         this.view = view;
         view.setPresenter(this);
-        this.weatherApiService = APIClient.getClient().create(WeatherApiService.class);
     }
 
     @Override
@@ -39,10 +42,10 @@ public class ForecastDailyPresenter extends BasePresenter
     @Override
     public void loadDataFromDb(Context context) {
         subscribeSingle(
-                PersistenceDatabase.getAppDatabase(context).forecastFullDao().getForecastFullRx()
-                        .flatMap(fullDbModel -> PersistenceDatabase.getAppDatabase(context).forecastFullDao()
+                forecastDbService.getForecastFullRx()
+                        .flatMap(fullDbModel -> forecastDbService
                                 .getForecastDailyById(fullDbModel.getId()))
-                        .flatMap(forecastDailyDbModel -> PersistenceDatabase.getAppDatabase(context).forecastFullDao()
+                        .flatMap(forecastDailyDbModel -> forecastDbService
                                 .getForecastDailyDataByDailyId(forecastDailyDbModel.getDailyId())),
                 this::presentForecastToView,
                 throwable -> view.showError(throwable)
@@ -52,7 +55,7 @@ public class ForecastDailyPresenter extends BasePresenter
     @Override
     public void updateForecastDailyDataFromApi(Context context) {
         subscribeSingle(
-                weatherApiService.getForecastFullResponse(
+                forecastApiService.getForecastFullResponse(
                         SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
                         SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null),
                         SharedPrefUtil.read(Constants.LANGUAGE_KEY, "en")
@@ -71,8 +74,7 @@ public class ForecastDailyPresenter extends BasePresenter
 
     @Override
     public Single<ForecastFullResponse> saveForecastApiDataToDb(ForecastFullResponse fullResponse, Context context) {
-        return Completable.fromRunnable(() -> PersistenceDatabase.getAppDatabase(context)
-                .forecastFullDao()
+        return Completable.fromRunnable(() -> forecastDbService
                 .updateDb(ForecastResponseToForecastDbModelConverterUtil.convertResponseToDbModel(fullResponse)))
                 .toSingleDefault(fullResponse);
     }
@@ -89,5 +91,10 @@ public class ForecastDailyPresenter extends BasePresenter
     @Override
     public void clearDisposables() {
         super.clearDisposables();
+    }
+
+    @Override
+    protected void inject() {
+        provideAppComponent().inject(this);
     }
 }

@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -62,6 +63,9 @@ public class WeatherDetailsActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         showLoader(true);
         presenter = new WeatherDetailsActivityPresenter(this);
@@ -132,8 +136,7 @@ public class WeatherDetailsActivity extends BaseActivity
         imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(response.getIcon()));
 
         Glide.with(this)
-                .asGif()
-                .load(R.drawable.gif_partly_cloudy_night)
+                .load(WeatherIconPickerUtil.pickWeatherBackgroundImage(response.getIcon()))
                 .centerCrop()
                 .into(imgBackground);
 

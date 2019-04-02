@@ -8,7 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface WeatherApiService {
+public interface WeatherApi {
 
     /**
      * Downloads the full forecast data (currently, hourly and daily) from the API.

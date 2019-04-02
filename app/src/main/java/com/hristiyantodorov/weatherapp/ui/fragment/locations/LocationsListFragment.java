@@ -19,6 +19,7 @@ import com.hristiyantodorov.weatherapp.adapter.locations.LocationsListAdapter;
 import com.hristiyantodorov.weatherapp.adapter.locations.LocationsListDiffCallback;
 import com.hristiyantodorov.weatherapp.model.database.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.presenter.locations.LocationsListContracts;
+import com.hristiyantodorov.weatherapp.presenter.locations.LocationsListPresenter;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 import com.hristiyantodorov.weatherapp.util.Constants;
@@ -50,7 +51,9 @@ public class LocationsListFragment extends BaseFragment
     private Timer timer;
 
     public static LocationsListFragment newInstance() {
-        return new LocationsListFragment();
+        LocationsListFragment fragment = new LocationsListFragment();
+        new LocationsListPresenter(fragment);
+        return fragment;
     }
 
     @Override
