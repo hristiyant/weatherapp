@@ -28,14 +28,14 @@ public class APIClient {
     public APIClient() {
     }
 
-    Gson createGson() {
+    private Gson createGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         return gsonBuilder.create();
     }
 
     // TODO: 28.3.2019 provideCache
 
-    OkHttpClient buildOkHttpClient() {
+    private OkHttpClient buildOkHttpClient() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -49,7 +49,7 @@ public class APIClient {
         return httpClient.build();
     }
 
-    Retrofit buildRetrofit(Gson gson, OkHttpClient okHttpClient) {
+    private Retrofit buildRetrofit(Gson gson, OkHttpClient okHttpClient) {
         Retrofit.Builder retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BaseUrl + BuildConfig.ApiKey + "/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
