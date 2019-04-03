@@ -4,10 +4,9 @@ import android.content.Context;
 
 import com.hristiyantodorov.weatherapp.model.response.ForecastCurrentlyResponse;
 import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
-import com.hristiyantodorov.weatherapp.persistence.PersistenceDatabase;
 import com.hristiyantodorov.weatherapp.presenter.BasePresenter;
-import com.hristiyantodorov.weatherapp.retrofit.APIClient;
-import com.hristiyantodorov.weatherapp.retrofit.WeatherApiService;
+import com.hristiyantodorov.weatherapp.service.ForecastApiService;
+import com.hristiyantodorov.weatherapp.service.ForecastDbService;
 import com.hristiyantodorov.weatherapp.util.Constants;
 import com.hristiyantodorov.weatherapp.util.ForecastResponseToForecastDbModelConverterUtil;
 import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
@@ -15,6 +14,8 @@ import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -24,21 +25,24 @@ public class WeatherDetailsActivityPresenter extends BasePresenter
 
     private static final String TAG = "WDAPresenter";
 
-    private WeatherDetailsActivityContracts.View view;
-    private WeatherApiService service;
+    @Inject
+    ForecastApiService forecastApiService;
+    @Inject
+    ForecastDbService forecastDbService;
+
     private String timezone;
+    private WeatherDetailsActivityContracts.View view;
 
     public WeatherDetailsActivityPresenter(WeatherDetailsActivityContracts.View view) {
         this.view = view;
         view.setPresenter(this);
-        this.service = APIClient.getClient().create(WeatherApiService.class);
     }
 
     @Override
     public void downloadForecastFromApi(Context context) {
         view.showLoader(true);
         subscribeSingle(
-                service.getForecastFullResponse(
+                forecastApiService.getForecastFullResponse(
                         SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
                         SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null),
                         SharedPrefUtil.read(Constants.LANGUAGE_KEY, "en")
@@ -49,13 +53,11 @@ public class WeatherDetailsActivityPresenter extends BasePresenter
                     presentForecastToView(fullResponse.getCurrently());
                 },
                 throwable -> view.showError(throwable)
-
         );
     }
 
     private Single<ForecastFullResponse> saveForecastApiDataToDb(ForecastFullResponse fullResponse, Context context) {
-        return Completable.fromRunnable(() -> PersistenceDatabase.getAppDatabase(context)
-                .forecastFullDao()
+        return Completable.fromRunnable(() -> forecastDbService
                 .updateDb(ForecastResponseToForecastDbModelConverterUtil.convertResponseToDbModel(fullResponse)))
                 .toSingleDefault(fullResponse);
     }
@@ -77,5 +79,10 @@ public class WeatherDetailsActivityPresenter extends BasePresenter
     @Override
     public void clearDisposables() {
         super.clearDisposables();
+    }
+
+    @Override
+    protected void inject() {
+        provideAppComponent().inject(this);
     }
 }

@@ -30,8 +30,6 @@ public class Constants {
     public static final String ICON_PARTLY_CLOUDY_DAY = "partly-cloudy-day";
     public static final String ICON_PARTLY_CLOUDY_NIGHT = "partly-cloudy-night";
 
-    //Weather Backgrounds
-
     //Json Response field names
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
