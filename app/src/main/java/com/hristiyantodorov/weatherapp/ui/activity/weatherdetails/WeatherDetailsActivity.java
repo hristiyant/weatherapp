@@ -55,7 +55,7 @@ public class WeatherDetailsActivity extends BaseActivity
     CoordinatorLayout coordinatorLayout;
     @BindView(R.id.app_bar_basic_forecast)
     AppBarLayout appBarLayout;
-    @BindView(R.id.background_weather_image)
+    @BindView(R.id.img_background_weather)
     ImageView imgBackground;
 
     private WeatherDetailsActivityContracts.Presenter presenter;
