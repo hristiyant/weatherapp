@@ -24,6 +24,7 @@ public class WeatherDetailsFragmentPresenter extends BasePresenter
     ForecastApiService forecastApiService;
     @Inject
     ForecastDbService forecastDbService;
+
     private WeatherDetailsFragmentContracts.View view;
     private String hourlySummary;
     private String dailySummary;

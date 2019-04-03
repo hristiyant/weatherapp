@@ -27,6 +27,7 @@ public class ForecastDailyPresenter extends BasePresenter
     ForecastApiService forecastApiService;
     @Inject
     ForecastDbService forecastDbService;
+    
     private ForecastDailyContracts.View view;
 
     public ForecastDailyPresenter(ForecastDailyContracts.View view) {

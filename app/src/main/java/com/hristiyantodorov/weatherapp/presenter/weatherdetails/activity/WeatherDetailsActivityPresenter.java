@@ -29,6 +29,7 @@ public class WeatherDetailsActivityPresenter extends BasePresenter
     ForecastApiService forecastApiService;
     @Inject
     ForecastDbService forecastDbService;
+
     private String timezone;
     private WeatherDetailsActivityContracts.View view;
 
