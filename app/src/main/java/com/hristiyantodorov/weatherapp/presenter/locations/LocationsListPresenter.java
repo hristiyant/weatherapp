@@ -5,14 +5,15 @@ import android.content.Context;
 import android.util.Log;
 
 import com.hristiyantodorov.weatherapp.model.database.location.LocationDbModel;
-import com.hristiyantodorov.weatherapp.service.LocationsDbService;
 import com.hristiyantodorov.weatherapp.presenter.BasePresenter;
-import com.hristiyantodorov.weatherapp.retrofit.APIClient;
-import com.hristiyantodorov.weatherapp.retrofit.WeatherApiService;
+import com.hristiyantodorov.weatherapp.service.ForecastApiService;
+import com.hristiyantodorov.weatherapp.service.LocationsDbService;
 import com.hristiyantodorov.weatherapp.util.Constants;
 import com.hristiyantodorov.weatherapp.util.SharedPrefUtil;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
@@ -25,16 +26,16 @@ public class LocationsListPresenter extends BasePresenter
 
     private static final String TAG = "LLPresenter";
 
+    @Inject
+    ForecastApiService weatherApiService;
+    @Inject
+    LocationsDbService locationsDbService;
     private LocationsListContracts.View view;
-    private WeatherApiService weatherApiService;
-    private LocationsDbService locationsDbService;
     private List<LocationDbModel> locationsTemp;
 
-    public LocationsListPresenter(LocationsListContracts.View view, Context context) {
+    public LocationsListPresenter(LocationsListContracts.View view) {
         this.view = view;
         this.view.setPresenter(this);
-        weatherApiService = APIClient.getClient().create(WeatherApiService.class);
-        locationsDbService = LocationsDbService.getInstance(context);
     }
 
     @Override
@@ -120,5 +121,10 @@ public class LocationsListPresenter extends BasePresenter
     @Override
     public void clearDisposables() {
         super.clearDisposables();
+    }
+
+    @Override
+    protected void inject() {
+        provideAppComponent().inject(this);
     }
 }

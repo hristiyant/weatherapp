@@ -40,7 +40,7 @@
     <string name="txt_humidity">Humidity: %1$s %%</string>
     <string name="txt_pressure">Pressure: %1$s hPa</string>
     <string name="txt_summary_windy">Windy</string>
-    <string name="txt_html_degrees_celsius">"<sup>\u00B0c</sup></string>
+    <string name="txt_html_degrees_celsius"><![CDATA[<sup>\u00B0c</sup>]]></string>
 
     <!--WeatherDetailsPagerAdapter-->
     <string name="weather_details_tab_hourly_title">Hourly</string>
@@ -78,6 +78,8 @@
     <string name="persistence_database_city_name_paris">Paris</string>
     <string name="persistence_database_city_name_london">London</string>
     <string name="persistence_database_city_name_sydney">Sydney</string>
+    <string name="persistence_database_city_name_sliven">Sliven</string>
+    <string name="persistence_database_city_name_sofia">Sofia</string>
 
     <string name="all_alert_dialog_not_found_message">No data found.</string>
 
