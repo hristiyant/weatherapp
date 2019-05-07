@@ -3,6 +3,7 @@ package com.hristiyantodorov.weatherapp.ui.fragment.locations;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -20,6 +21,7 @@ import com.hristiyantodorov.weatherapp.adapter.locations.LocationsListDiffCallba
 import com.hristiyantodorov.weatherapp.model.database.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.presenter.locations.LocationsListContracts;
 import com.hristiyantodorov.weatherapp.presenter.locations.LocationsListPresenter;
+import com.hristiyantodorov.weatherapp.ui.activity.locations.AddLocationToDbActivity;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 import com.hristiyantodorov.weatherapp.util.Constants;
@@ -31,6 +33,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class LocationsListFragment extends BaseFragment
         implements LocationsListContracts.View, LocationsListAdapter.OnLocationClickListener {
@@ -39,6 +42,8 @@ public class LocationsListFragment extends BaseFragment
 
     @BindView(R.id.edt_filter)
     EditText edtFilter;
+    @BindView(R.id.fab_add_location)
+    FloatingActionButton fabAddLocation;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
     @BindView(R.id.recycler_view_locations)
@@ -125,6 +130,11 @@ public class LocationsListFragment extends BaseFragment
     public void onDestroy() {
         presenter.clearDisposables();
         super.onDestroy();
+    }
+
+    @OnClick(R.id.fab_add_location)
+    public void onAddLocationClick() {
+        startActivity(new Intent(getContext(), AddLocationToDbActivity.class));
     }
 
     private TextWatcher filterTextWatcher = new TextWatcher() {

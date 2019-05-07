@@ -21,6 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.activity.locations.AddLocationToDbActivity"></activity>
         <activity
             android:name=".ui.activity.locations.LocationsListActivity"
             android:launchMode="singleTop"
@@ -60,4 +61,5 @@
         </activity>
         <activity android:name=".util.location.MyActivity" />
     </application>
+
 </manifest>

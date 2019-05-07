@@ -24,13 +24,28 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_between_elements_default"
             android:drawableStart="@android:drawable/ic_menu_search"
-            android:drawableLeft="@android:drawable/ic_menu_search"
             android:hint="@string/locations_list_fragment_edit_text_hint"
             android:inputType="textFilter"
             app:backgroundTint="@color/colorAccent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/fab_add_location"
+            app:layout_constraintEnd_toStartOf="@+id/fab_add_location"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/fab_add_location" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_add_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:backgroundTint="#00FFFFFF"
+            app:fabSize="mini"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/edt_filter"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_add_black" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_locations"
