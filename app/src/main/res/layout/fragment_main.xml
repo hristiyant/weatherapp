@@ -8,75 +8,48 @@
     android:layout_margin="@dimen/margin_between_elements_default"
     tools:context=".ui.fragment.main.MainFragment">
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_half_screen"
+    <ImageView
+        android:id="@+id/img_main_screen"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
-
-    <ImageButton
-        android:id="@+id/img_btn_pick_location"
-        android:layout_width="@dimen/no_dimens"
-        android:layout_height="@dimen/no_dimens"
-        android:layout_margin="@dimen/margin_between_elements_default"
-        android:adjustViewBounds="true"
-        android:background="@drawable/animated_button"
         android:contentDescription="@null"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/txt_pick_location"
+        android:src="@drawable/main_screen_image"
+        app:layout_constraintBottom_toTopOf="@+id/btn_from_current_location"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@drawable/ic_placeholder" />
+        app:layout_constraintVertical_chainStyle="packed" />
 
-    <TextView
-        android:id="@+id/txt_pick_location"
+    <Button
+        android:id="@+id/btn_from_current_location"
         style="@style/WeatherDetailsOverlayText"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/main_screen_option_pick_location"
-        android:textSize="@dimen/main_screen_labels_size"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_half_screen"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_btn_pick_location" />
-
-    <ImageButton
-        android:id="@+id/img_btn_pick_from_list"
-        android:layout_width="@dimen/no_dimens"
-        android:layout_height="@dimen/no_dimens"
         android:layout_margin="@dimen/margin_between_elements_default"
-        android:adjustViewBounds="true"
         android:background="@drawable/animated_button"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/txt_pick_from_list"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/main_screen_option_pick_location"
+        android:textSize="@dimen/fragment_locations_list_button_sign_in_text_size"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btn_from_list"
+        app:layout_constraintEnd_toEndOf="@+id/img_main_screen"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline_half_screen"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@drawable/ic_book"
-        android:contentDescription="@null" />
+        app:layout_constraintStart_toStartOf="@+id/img_main_screen"
+        app:layout_constraintTop_toBottomOf="@+id/img_main_screen" />
 
-    <TextView
-        android:id="@+id/txt_pick_from_list"
+    <Button
+        android:id="@+id/btn_from_list"
         style="@style/WeatherDetailsOverlayText"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:layout_margin="@dimen/margin_between_elements_default"
+        android:background="@drawable/animated_button"
         android:text="@string/main_screen_option_pick_from_list"
-        android:textSize="@dimen/main_screen_labels_size"
+        android:textSize="@dimen/fragment_locations_list_button_sign_in_text_size"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btn_from_current_location"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_btn_pick_from_list" />
+        app:layout_constraintStart_toStartOf="@+id/btn_from_current_location"
+        app:layout_constraintTop_toBottomOf="@+id/btn_from_current_location" />
 
 </android.support.constraint.ConstraintLayout>

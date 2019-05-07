@@ -5,13 +5,6 @@
     <!--Base Fragment-->
     <string name="base_fragment_error_dialog_title">Error!</string>
 
-    <!-- Login Screen Layout -->
-    <string name="login_screen_btn_sign_in">Sign in</string>
-    <string name="login_screen_username_hint">Username: </string>
-    <string name="login_screen_password_hint">Password: </string>
-    <string name="login_screen_line_text_view_text">or</string>
-    <string name="login_screen_toast_login_successful_text">Login successful!</string>
-
     <!-- Main Screen Layout -->
     <string name="main_screen_option_pick_location">Current location</string>
     <string name="main_screen_option_pick_from_list">Pick from list</string>

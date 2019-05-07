@@ -142,7 +142,4 @@ dependencies {
 
     //Picasso
     implementation "com.squareup.picasso:picasso:$picasso_version"
-
-    //CircleMenu
-    implementation 'com.ramotion.circlemenu:circle-menu:0.3.1'
 }

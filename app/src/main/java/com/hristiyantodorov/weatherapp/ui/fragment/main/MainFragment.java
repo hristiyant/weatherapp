@@ -13,10 +13,9 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.hristiyantodorov.weatherapp.R;
@@ -45,18 +44,15 @@ public class MainFragment extends BaseFragment implements LocationListener {
     private static final String ADDRESS_BUNDLE_KEY = "address";
     private static final int MESSAGE_CODE_ONE = 1;
 
-    @BindView(R.id.img_btn_pick_location)
-    ImageButton imgBtnPickLocation;
+    @BindView(R.id.btn_from_current_location)
+    Button btnPickLocation;
+    @BindView(R.id.img_main_screen)
+    ImageView imgMainScreenImage;
 
     AppLocationService appLocationService;
 
     public static MainFragment newInstance() {
         return new MainFragment();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -71,7 +67,7 @@ public class MainFragment extends BaseFragment implements LocationListener {
         return R.layout.fragment_main;
     }
 
-    @OnClick(R.id.img_btn_pick_location)
+    @OnClick(R.id.btn_from_current_location)
     public void onButtonPickFromLocationClick() {
         MainFragmentPermissionsDispatcher.openWeatherDetailsWithPermissionCheck(MainFragment.this);
     }
@@ -122,7 +118,7 @@ public class MainFragment extends BaseFragment implements LocationListener {
         Toast.makeText(getContext(), R.string.location_permission_alert_never_ask_again, Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick(R.id.img_btn_pick_from_list)
+    @OnClick(R.id.btn_from_list)
     public void onButtonPickFromListClick() {
         Intent intent = new Intent(getActivity(), LocationsListActivity.class);
         startActivity(intent);
