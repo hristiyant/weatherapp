@@ -45,7 +45,7 @@ public class ForecastDailyAdapter
         DailyItemHolder viewHolder = new DailyItemHolder(view);
 
         dialog = new Dialog(parent.getContext());
-        dialog.setContentView(R.layout.dialog_daily_item);
+        dialog.setContentView(R.layout.fragment_dialog_daily_item);
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         viewHolder.constraintLayoutDaily.setOnClickListener(v -> {
@@ -85,7 +85,7 @@ public class ForecastDailyAdapter
 
     static class DailyItemHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.hourly_item)
+        @BindView(R.id.constraint_layout_item_forecast)
         ConstraintLayout constraintLayoutDaily;
         @BindView(R.id.txt_time)
         TextView txtTime;
@@ -140,9 +140,10 @@ public class ForecastDailyAdapter
         String temperatureMax = String.valueOf(item.getTemperatureMax());
         String temperatureMaxTime = String.valueOf(item.getTemperatureMaxTime());
 
-        TextView txtSummary = (TextView) dialog.findViewById(R.id.txt_dialog_summary);
-        ImageView imgWeatherIcon = (ImageView) dialog.findViewById(R.id.img_dialog_weather_icon);
-        txtSummary.setText(time + "\n" +
+        TextView txtSummary = dialog.findViewById(R.id.txt_dialog_summary);
+        ImageView imgWeatherIcon = dialog.findViewById(R.id.img_dialog_weather_icon);
+        txtSummary.setText(
+                time + "\n" +
                 summary + "\n\n" +
                 "sunriseTime:\n " + sunriseTime + "\n\n" +
                 "sunsetTime:\n " + sunsetTime + "\n\n" +

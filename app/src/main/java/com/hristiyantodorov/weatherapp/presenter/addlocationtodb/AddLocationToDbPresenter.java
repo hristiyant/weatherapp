@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.presenter.locations;
+package com.hristiyantodorov.weatherapp.presenter.addlocationtodb;
 
 import android.util.Log;
 
@@ -34,12 +34,12 @@ public class AddLocationToDbPresenter extends BasePresenter
     }
 
     @Override
-    public void clearDisposables() {
-        super.clearDisposables();
+    protected void inject() {
+        provideAppComponent().inject(this);
     }
 
     @Override
-    protected void inject() {
-        provideAppComponent().inject(this);
+    public void clearDisposables() {
+        super.clearDisposables();
     }
 }

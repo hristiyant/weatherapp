@@ -21,6 +21,16 @@ public abstract class BasePresenter {
         inject();
     }
 
+    /*public void onViewAttached() {
+        disposableManager = new DisposableManager();
+    }
+
+    public void onViewDetached() {
+        if (disposableManager != null) {
+            disposableManager.dispose();
+        }
+    }*/
+
     protected <T> Disposable subscribeSingle(Single<T> singleObservable, Consumer<T> onSuccess, Consumer<Throwable> onError) {
         return disposableManager.subscribeSingle(singleObservable, onSuccess, onError);
     }

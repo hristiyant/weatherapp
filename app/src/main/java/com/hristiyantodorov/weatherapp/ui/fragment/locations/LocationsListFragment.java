@@ -21,7 +21,7 @@ import com.hristiyantodorov.weatherapp.adapter.locations.LocationsListDiffCallba
 import com.hristiyantodorov.weatherapp.model.database.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.presenter.locations.LocationsListContracts;
 import com.hristiyantodorov.weatherapp.presenter.locations.LocationsListPresenter;
-import com.hristiyantodorov.weatherapp.ui.activity.locations.AddLocationToDbActivity;
+import com.hristiyantodorov.weatherapp.ui.activity.addlocationtodb.AddLocationToDbActivity;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 import com.hristiyantodorov.weatherapp.util.Constants;
@@ -156,7 +156,7 @@ public class LocationsListFragment extends BaseFragment
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            // TODO: 2/27/2019 NOT USED
+            // Not used
         }
 
         @Override

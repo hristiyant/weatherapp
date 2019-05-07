@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.ui;
+package com.hristiyantodorov.weatherapp.util;
 
 import android.util.Log;
 

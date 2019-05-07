@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.model;
+package com.hristiyantodorov.weatherapp.persistence;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;

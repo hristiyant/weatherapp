@@ -4,22 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.locations.AddLocationToDbFragment">
+    tools:context=".ui.fragment.addlocationtodb.AddLocationToDbFragment">
 
-    <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/edt_location_name"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_location_name"
         android:layout_width="@dimen/no_dimens"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_between_elements_default"
-        android:hint="@string/add_location_to_db_fragment_location_name"
-        android:inputType="text"
-        app:backgroundTint="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@+id/edt_location_latitude"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_chainStyle="packed">
+
+        <EditText
+            android:id="@+id/edt_location_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_between_elements_default"
+            android:hint="@string/add_location_to_db_fragment_location_name"
+            android:inputType="text"
+            app:backgroundTint="@color/colorAccent" />
+
+    </android.support.design.widget.TextInputLayout>
 
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/edt_location_latitude"
@@ -33,7 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_location_name" />
+        app:layout_constraintTop_toBottomOf="@+id/til_location_name" />
 
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/edt_location_longitude"

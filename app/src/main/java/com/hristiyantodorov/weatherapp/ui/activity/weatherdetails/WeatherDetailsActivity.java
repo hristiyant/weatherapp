@@ -6,7 +6,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -18,8 +17,8 @@ import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.weatherdetails.WeatherDetailsPagerAdapter;
 import com.hristiyantodorov.weatherapp.model.response.ForecastCurrentlyResponse;
 import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.activity.WeatherDetailsActivityContracts;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.activity.WeatherDetailsActivityPresenter;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetailsactivity.WeatherDetailsActivityContracts;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetailsactivity.WeatherDetailsActivityPresenter;
 import com.hristiyantodorov.weatherapp.ui.activity.BaseActivity;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 import com.hristiyantodorov.weatherapp.util.WeatherIconPickerUtil;
@@ -78,7 +77,7 @@ public class WeatherDetailsActivity extends BaseActivity
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
-                // TODO: 19.3.2019 CURRENTLY NOT BEING USED
+                // Not used
             }
 
             @Override
@@ -88,7 +87,7 @@ public class WeatherDetailsActivity extends BaseActivity
 
             @Override
             public void onPageScrollStateChanged(int i) {
-                // TODO: 19.3.2019 CURRENTLY NOT BEING USED
+                // Not used
             }
         });
         tabLayout.setupWithViewPager(viewPager);
@@ -147,7 +146,6 @@ public class WeatherDetailsActivity extends BaseActivity
     public void updateView(ForecastFullResponse response) {
         refreshLastUpdated();
         showForecast(response.getCurrently(), response.getTimezone());
-        Log.d(TAG, "updateView: ACTIVITY UPDATED");
     }
 
     public void refreshLastUpdated() {

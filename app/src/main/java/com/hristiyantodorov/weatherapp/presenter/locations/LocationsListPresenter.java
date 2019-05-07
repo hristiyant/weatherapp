@@ -119,12 +119,12 @@ public class LocationsListPresenter extends BasePresenter
     }
 
     @Override
-    public void clearDisposables() {
-        super.clearDisposables();
+    protected void inject() {
+        provideAppComponent().inject(this);
     }
 
     @Override
-    protected void inject() {
-        provideAppComponent().inject(this);
+    public void clearDisposables() {
+        super.clearDisposables();
     }
 }

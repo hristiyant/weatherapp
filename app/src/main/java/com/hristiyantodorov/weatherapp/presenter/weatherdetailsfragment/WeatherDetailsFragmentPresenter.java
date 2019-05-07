@@ -1,6 +1,4 @@
-package com.hristiyantodorov.weatherapp.presenter.weatherdetails.fragment;
-
-import android.content.Context;
+package com.hristiyantodorov.weatherapp.presenter.weatherdetailsfragment;
 
 import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
 import com.hristiyantodorov.weatherapp.presenter.BasePresenter;
@@ -35,7 +33,7 @@ public class WeatherDetailsFragmentPresenter extends BasePresenter
     }
 
     @Override
-    public void requestDataFromApi(Context context) {
+    public void requestDataFromApi() {
         view.showLoader(true);
         subscribeSingle(
                 forecastApiService.getForecastFullResponse(
@@ -43,7 +41,7 @@ public class WeatherDetailsFragmentPresenter extends BasePresenter
                         SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null),
                         SharedPrefUtil.read(Constants.LANGUAGE_KEY, "en")
                 )
-                        .flatMap(fullResponse -> saveApiDataToDb(fullResponse, context)),
+                        .flatMap(this::saveApiDataToDb),
                 fullResponse -> {
                     hourlySummary = fullResponse.getHourly().getSummary();
                     dailySummary = fullResponse.getDaily().getSummary();
@@ -54,7 +52,7 @@ public class WeatherDetailsFragmentPresenter extends BasePresenter
     }
 
     @Override
-    public Single<ForecastFullResponse> saveApiDataToDb(ForecastFullResponse fullResponse, Context context) {
+    public Single<ForecastFullResponse> saveApiDataToDb(ForecastFullResponse fullResponse) {
         return Completable.fromRunnable(() -> forecastDbService
                 .updateDb(ForecastResponseToForecastDbModelConverterUtil.convertResponseToDbModel(fullResponse))
         ).toSingleDefault(fullResponse);
@@ -70,12 +68,12 @@ public class WeatherDetailsFragmentPresenter extends BasePresenter
     }
 
     @Override
-    public void clearDisposables() {
-        super.clearDisposables();
+    protected void inject() {
+        provideAppComponent().inject(this);
     }
 
     @Override
-    protected void inject() {
-        provideAppComponent().inject(this);
+    public void clearDisposables() {
+        super.clearDisposables();
     }
 }

@@ -11,6 +11,7 @@ import android.view.Gravity;
  * Custom TextView that puts a line on both sides of the text.
  */
 public class LineTextView extends AppCompatTextView {
+
     public LineTextView(Context context) {
         super(context);
     }

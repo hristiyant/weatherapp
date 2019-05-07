@@ -22,5 +22,4 @@ public class WeatherDataFormatterUtil {
     public static String convertDoubleToPercentage(double doubleValue) {
         return convertRoundedDoubleToString(doubleValue * 100);
     }
-
 }

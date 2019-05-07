@@ -130,22 +130,22 @@ public class MainFragment extends BaseFragment implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        // TODO: 2/28/2019 CURRENTLY NOT BEING USED
+        // Not used
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        // TODO: 2/28/2019 CURRENTLY NOT BEING USED
+        // Not used
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-        // TODO: 2/28/2019 CURRENTLY NOT BEING USED
+        // Not used
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        // TODO: 2/28/2019 CURRENTLY NOT BEING USED
+        // Not used
     }
 
     public void showSettingsAlert() {

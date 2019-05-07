@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/hourly_item"
+    android:id="@+id/constraint_layout_item_forecast"
     android:layout_margin="@dimen/margin_between_elements_default"
     android:background="@drawable/background_item_weather_details">
 
@@ -14,7 +14,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/margin_between_elements_default"
-        android:layout_marginLeft="@dimen/margin_between_elements_default"
         android:fontFamily="casual"
         android:gravity="start|center"
         android:textSize="@dimen/main_screen_labels_size"

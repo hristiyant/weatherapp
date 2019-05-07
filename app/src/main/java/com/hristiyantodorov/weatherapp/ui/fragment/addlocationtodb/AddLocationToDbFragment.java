@@ -1,20 +1,21 @@
-package com.hristiyantodorov.weatherapp.ui.fragment.locations;
+package com.hristiyantodorov.weatherapp.ui.fragment.addlocationtodb;
 
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.presenter.locations.AddLocationToDbContracts;
-import com.hristiyantodorov.weatherapp.presenter.locations.AddLocationToDbPresenter;
+import com.hristiyantodorov.weatherapp.presenter.addlocationtodb.AddLocationToDbContracts;
+import com.hristiyantodorov.weatherapp.presenter.addlocationtodb.AddLocationToDbPresenter;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
+import com.jakewharton.rxbinding.widget.RxTextView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -24,6 +25,8 @@ public class AddLocationToDbFragment extends BaseFragment
 
     private static final String TAG = "ALTDBFragment";
 
+    @BindView(R.id.til_location_name)
+    TextInputLayout tilLocationName;
     @BindView(R.id.edt_location_name)
     EditText edtLocationName;
     @BindView(R.id.edt_location_latitude)
@@ -40,8 +43,13 @@ public class AddLocationToDbFragment extends BaseFragment
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        tilLocationName.setError("Invalid location name");
+        RxTextView.textChanges(edtLocationName)
+                .map(charSequence -> (charSequence.length() == 0) || charSequence.toString().matches("^\\p{L}+[\\p{L}\\p{Z}\\p{P}]{0,}"))
+                .subscribe(aBoolean -> tilLocationName.setErrorEnabled(!aBoolean));
     }
 
     @Override

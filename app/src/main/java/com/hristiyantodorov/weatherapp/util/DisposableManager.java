@@ -11,7 +11,6 @@ public class DisposableManager {
 
     private CompositeDisposable compositeDisposable;
 
-
     public DisposableManager() {
         compositeDisposable = new CompositeDisposable();
     }

@@ -5,7 +5,7 @@
     style="@style/WeatherDetailsOverlayText"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.ForecastHourlyFragment">
+    tools:context="com.hristiyantodorov.weatherapp.ui.fragment.forecasthourly.ForecastHourlyFragment">
 
     <TextView
         android:id="@+id/txt_forecast_not_available"

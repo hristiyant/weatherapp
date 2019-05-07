@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails;
+package com.hristiyantodorov.weatherapp.ui.fragment.forecasthourly;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,8 +15,8 @@ import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.adapter.forecast.hourly.ForecastHourlyAdapter;
 import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastCurrentlyDbModel;
 import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly.ForecastHourlyContracts;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly.ForecastHourlyPresenter;
+import com.hristiyantodorov.weatherapp.presenter.forecasthourly.ForecastHourlyContracts;
+import com.hristiyantodorov.weatherapp.presenter.forecasthourly.ForecastHourlyPresenter;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 
@@ -59,12 +59,6 @@ public class ForecastHourlyFragment extends BaseFragment
 
         swipeRefreshLayout.setOnRefreshListener(this);
         presenter.loadDataFromDb(getContext());
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.subscribe(this);
     }
 
     @Override

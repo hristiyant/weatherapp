@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.presenter.locations;
+package com.hristiyantodorov.weatherapp.presenter.addlocationtodb;
 
 import com.hristiyantodorov.weatherapp.presenter.BaseView;
 

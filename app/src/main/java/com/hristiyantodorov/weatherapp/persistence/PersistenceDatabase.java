@@ -7,7 +7,6 @@ import android.arch.persistence.room.RoomDatabase;
 import android.support.annotation.NonNull;
 
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.model.AppDatabase;
 import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastFullDao;
 import com.hristiyantodorov.weatherapp.model.database.location.LocationDao;
 import com.hristiyantodorov.weatherapp.model.database.location.LocationDbModel;

@@ -1,10 +1,10 @@
-package com.hristiyantodorov.weatherapp.ui.activity.locations;
+package com.hristiyantodorov.weatherapp.ui.activity.addlocationtodb;
 
 import android.os.Bundle;
 
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.ui.activity.BaseActivity;
-import com.hristiyantodorov.weatherapp.ui.fragment.locations.AddLocationToDbFragment;
+import com.hristiyantodorov.weatherapp.ui.fragment.addlocationtodb.AddLocationToDbFragment;
 
 public class AddLocationToDbActivity extends BaseActivity {
 

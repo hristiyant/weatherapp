@@ -46,10 +46,10 @@ public class ForecastHourlyAdapter
         HourlyItemHolder viewHolder = new HourlyItemHolder(view);
 
         dialog = new Dialog(parent.getContext());
-        dialog.setContentView(R.layout.dialog_daily_item);
+        dialog.setContentView(R.layout.fragment_dialog_daily_item);
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        viewHolder.constraintLayoutDaily.setOnClickListener(v -> {
+        viewHolder.constraintLayoutHourly.setOnClickListener(v -> {
             setUpDialog(getItem(viewHolder.getAdapterPosition()));
             dialog.show();
         });
@@ -86,8 +86,8 @@ public class ForecastHourlyAdapter
 
     static class HourlyItemHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.hourly_item)
-        ConstraintLayout constraintLayoutDaily;
+        @BindView(R.id.constraint_layout_item_forecast)
+        ConstraintLayout constraintLayoutHourly;
         @BindView(R.id.txt_time)
         TextView txtTime;
         @BindView(R.id.txt_summary)
@@ -141,8 +141,8 @@ public class ForecastHourlyAdapter
         String pressure = String.valueOf(item.getPressure());
         String windSpeed = String.valueOf(item.getWindSpeed());
 
-        TextView txtSummary = (TextView) dialog.findViewById(R.id.txt_dialog_summary);
-        ImageView imgWeatherIcon = (ImageView) dialog.findViewById(R.id.img_dialog_weather_icon);
+        TextView txtSummary = dialog.findViewById(R.id.txt_dialog_summary);
+        ImageView imgWeatherIcon = dialog.findViewById(R.id.img_dialog_weather_icon);
         txtSummary.setText(time + "\n" +
                 summary + "\n\n" +
                 "temperature:\n " + temperature + "\n\n" +

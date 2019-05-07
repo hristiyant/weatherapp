@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastCurrentlyDbModel;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.fragment.WeatherDetailsFragmentContracts;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.fragment.WeatherDetailsFragmentPresenter;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetailsfragment.WeatherDetailsFragmentContracts;
+import com.hristiyantodorov.weatherapp.presenter.weatherdetailsfragment.WeatherDetailsFragmentPresenter;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
 

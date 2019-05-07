@@ -1,6 +1,4 @@
-package com.hristiyantodorov.weatherapp.presenter.weatherdetails.fragment;
-
-import android.content.Context;
+package com.hristiyantodorov.weatherapp.presenter.weatherdetailsfragment;
 
 import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastCurrentlyDbModel;
 import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
@@ -17,9 +15,9 @@ public interface WeatherDetailsFragmentContracts {
 
     interface Presenter {
 
-        void requestDataFromApi(Context context);
+        void requestDataFromApi();
 
-        Single<ForecastFullResponse> saveApiDataToDb(ForecastFullResponse fullResponse, Context context);
+        Single<ForecastFullResponse> saveApiDataToDb(ForecastFullResponse fullResponse);
 
         void clearDisposables();
     }
