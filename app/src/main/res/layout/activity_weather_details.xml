@@ -28,8 +28,7 @@
         android:textStyle="italic"
         android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edt_filter" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
