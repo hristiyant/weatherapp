@@ -60,6 +60,7 @@ ext {
     chuck_version = "1.1.0"
     rxandroid_version = "2.1.1"
     rxjava_version = "2.2.0"
+    rxbinding_version = "0.4.0"
     glide_version = "4.9.0"
     picasso_version = "2.71828"
     stream_version = "1.2.1"
@@ -129,9 +130,9 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
 
     //RxBinding
-    implementation 'com.jakewharton.rxbinding:rxbinding:0.4.0'
-    implementation 'com.jakewharton.rxbinding:rxbinding-support-v4:0.4.0'
-    implementation 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.4.0'
+    implementation "com.jakewharton.rxbinding:rxbinding:$rxbinding_version"
+    implementation "com.jakewharton.rxbinding:rxbinding-support-v4:$rxbinding_version"
+    implementation "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rxbinding_version"
 
     //StreamOf
     implementation "com.annimon:stream:$stream_version"
