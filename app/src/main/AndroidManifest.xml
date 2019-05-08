@@ -20,8 +20,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+
         <activity android:name=".ui.activity.addlocationtodb.AddLocationToDbActivity" />
+
         <activity
             android:name=".ui.activity.locations.LocationsListActivity"
             android:launchMode="singleTop"
@@ -31,6 +33,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.main.MainActivity" />
         </activity>
+
         <activity
             android:name=".ui.activity.main.MainActivity"
             android:launchMode="singleTop"
@@ -42,6 +45,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.activity.weatherdetails.WeatherDetailsActivity"
             android:launchMode="singleTop"
@@ -50,7 +54,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.main.MainActivity" />
         </activity>
+
         <activity android:name=".util.location.MyActivity" />
+
     </application>
 
 </manifest>

@@ -117,8 +117,7 @@ public class LocationsListFragment extends BaseFragment
     public void onClick(LocationDbModel location) {
         presenter.selectLocation(
                 String.valueOf(location.getLatitude()),
-                String.valueOf(location.getLongitude()),
-                getContext());
+                String.valueOf(location.getLongitude()));
     }
 
     @Override
@@ -148,7 +147,7 @@ public class LocationsListFragment extends BaseFragment
                 public void run() {
                     Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
                         String pattern = edtFilter.getText().toString().toLowerCase();
-                        presenter.filterLocations(pattern, getContext());
+                        presenter.filterLocations(pattern);
                     });
                 }
             }, Constants.DEBOUNCE_DELAY_MILLIS);

@@ -68,7 +68,7 @@ public class WeatherDetailsActivity extends BaseActivity
 
         showLoader(true);
         presenter = new WeatherDetailsActivityPresenter(this);
-        presenter.downloadForecastFromApi(this);
+        presenter.downloadForecastFromApi();
 
         WeatherDetailsPagerAdapter weatherDetailsPagerAdapter =
                 new WeatherDetailsPagerAdapter(getSupportFragmentManager());

@@ -58,7 +58,7 @@ public class ForecastHourlyFragment extends BaseFragment
         ));
 
         swipeRefreshLayout.setOnRefreshListener(this);
-        presenter.loadDataFromDb(getContext());
+        presenter.loadDataFromDb();
     }
 
     @Override
@@ -104,7 +104,7 @@ public class ForecastHourlyFragment extends BaseFragment
 
     @Override
     public void onRefresh() {
-        presenter.updateForecastHourlyDataFromApi(getContext());
+        presenter.updateForecastHourlyDataFromApi();
     }
 
     @Override

@@ -4,13 +4,11 @@ package com.hristiyantodorov.weatherapp.ui.fragment.addlocationtodb;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.presenter.addlocationtodb.AddLocationToDbContracts;
 import com.hristiyantodorov.weatherapp.presenter.addlocationtodb.AddLocationToDbPresenter;
@@ -19,16 +17,17 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
 
 public class AddLocationToDbFragment extends BaseFragment
         implements AddLocationToDbContracts.View {
 
     private static final String TAG = "ALTDBFragment";
 
-    @BindView(R.id.til_location_name)
-    TextInputLayout tilLocationName;
+    @BindView(R.id.input_layout_location_name)
+    TextInputLayout inputLayoutLocationName;
     @BindView(R.id.edt_location_name)
-    EditText edtLocationName;
+    TextInputEditText edtLocationName;
     @BindView(R.id.edt_location_latitude)
     EditText edtLocationLatitude;
     @BindView(R.id.edt_location_longitude)
@@ -46,10 +45,14 @@ public class AddLocationToDbFragment extends BaseFragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tilLocationName.setError("Invalid location name");
-        RxTextView.textChanges(edtLocationName)
-                .map(charSequence -> (charSequence.length() == 0) || charSequence.toString().matches("^\\p{L}+[\\p{L}\\p{Z}\\p{P}]{0,}"))
-                .subscribe(aBoolean -> tilLocationName.setErrorEnabled(!aBoolean));
+        inputLayoutLocationName.setError("Invalid location name");
+        inputLayoutLocationName.setErrorEnabled(true);
+
+        Observable<Boolean> locationNameObservable = RxTextView.textChanges(edtLocationName)
+                .map(charSequence -> presenter.validateInputString(charSequence))
+                .distinctUntilChanged();
+
+        locationNameObservable.subscribe(aBoolean -> inputLayoutLocationName.setErrorEnabled(!aBoolean));
     }
 
     @Override
@@ -59,9 +62,6 @@ public class AddLocationToDbFragment extends BaseFragment
 
     @OnClick(R.id.btn_save_location)
     public void onSaveLocationClick() {
-        Toast.makeText(App.getInstance().getApplicationContext(),
-                "sadasd", Toast.LENGTH_LONG).show();
-        Log.d(TAG, "Location Saved");
         presenter.saveLocationToDb(edtLocationName.getText().toString(),
                 Double.parseDouble(edtLocationLatitude.getText().toString()),
                 Double.parseDouble(edtLocationLongitude.getText().toString()));
@@ -74,16 +74,16 @@ public class AddLocationToDbFragment extends BaseFragment
 
     @Override
     public void showLoader(boolean isShowing) {
-
+        // TODO: 8.5.2019 Not implemented yet.
     }
 
     @Override
     public void showEmptyScreen(boolean isShowing) {
-
+        //Not used
     }
 
     @Override
     public void showError(Throwable e) {
-
+        showErrorDialog(getContext(), e);
     }
 }

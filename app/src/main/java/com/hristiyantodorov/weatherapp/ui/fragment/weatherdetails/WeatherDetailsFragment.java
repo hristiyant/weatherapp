@@ -55,7 +55,7 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        presenter.requestDataFromApi(getContext());
+        presenter.requestDataFromApi();
 
         return view;
     }

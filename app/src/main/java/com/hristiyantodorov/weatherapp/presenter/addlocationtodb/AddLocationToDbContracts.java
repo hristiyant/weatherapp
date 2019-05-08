@@ -13,6 +13,8 @@ public interface AddLocationToDbContracts {
 
         void saveLocationToDb(String name, Double latitude, Double longitude);
 
+        Boolean validateInputString(CharSequence input);
+
         void clearDisposables();
     }
 }

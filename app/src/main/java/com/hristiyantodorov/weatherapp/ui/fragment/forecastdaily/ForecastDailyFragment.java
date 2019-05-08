@@ -58,7 +58,7 @@ public class ForecastDailyFragment extends BaseFragment
         ));
 
         swipeRefreshLayout.setOnRefreshListener(this);
-        presenter.loadDataFromDb(getContext());
+        presenter.loadDataFromDb();
     }
 
     @Override
@@ -104,7 +104,7 @@ public class ForecastDailyFragment extends BaseFragment
 
     @Override
     public void onRefresh() {
-        presenter.updateForecastDailyDataFromApi(getContext());
+        presenter.updateForecastDailyDataFromApi();
     }
 
     @Override

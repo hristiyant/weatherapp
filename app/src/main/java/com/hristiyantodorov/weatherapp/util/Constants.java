@@ -52,4 +52,5 @@ public class Constants {
     public static final String TEMP_MAX = "temperatureMax";
     public static final String TEMP_MIN_TIME = "temperatureMinTime";
     public static final String TEMP_MAX_TIME = "temperatureMaxTime";
+    public static final String REGEX_LOCATION_NAME = "^\\p{L}+[\\p{L}\\p{Z}\\p{P}]{0,}";
 }

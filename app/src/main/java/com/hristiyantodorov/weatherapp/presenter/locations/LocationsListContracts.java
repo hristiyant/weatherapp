@@ -1,7 +1,5 @@
 package com.hristiyantodorov.weatherapp.presenter.locations;
 
-import android.content.Context;
-
 import com.hristiyantodorov.weatherapp.model.database.location.LocationDbModel;
 import com.hristiyantodorov.weatherapp.presenter.BaseView;
 
@@ -24,11 +22,11 @@ public interface LocationsListContracts {
 
         void fillDbFromApi(List<LocationDbModel> locationDbModels);
 
-        void filterLocations(String pattern, Context context);
+        void filterLocations(String pattern);
 
         void updateLocationDbInfo(LocationDbModel locationDbModel);
 
-        void selectLocation(String lat, String lon, Context context);
+        void selectLocation(String lat, String lon);
 
         void clearDisposables();
     }
