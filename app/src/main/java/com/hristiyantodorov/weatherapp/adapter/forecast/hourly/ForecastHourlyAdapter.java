@@ -143,13 +143,15 @@ public class ForecastHourlyAdapter
 
         TextView txtSummary = dialog.findViewById(R.id.txt_dialog_summary);
         ImageView imgWeatherIcon = dialog.findViewById(R.id.img_dialog_weather_icon);
-        txtSummary.setText(time + "\n" +
-                summary + "\n\n" +
-                "temperature:\n " + temperature + "\n\n" +
-                "apparent temperature:\n " + apparentTemperature + "\n\n" +
-                "humidity:\n " + humidity + "\n\n" +
-                "pressure:\n " + pressure + "\n\n" +
-                "windSpeed:\n " + windSpeed + "\n\n");
+        txtSummary.setText(String.format(
+                App.getRes().getString(R.string.dialog_hourly_summary),
+                time,
+                summary,
+                temperature,
+                apparentTemperature,
+                humidity,
+                pressure,
+                windSpeed));
         imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(item.getIcon()));
     }
 }

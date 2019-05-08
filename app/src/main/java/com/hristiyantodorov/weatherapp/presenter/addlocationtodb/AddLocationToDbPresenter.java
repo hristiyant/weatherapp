@@ -32,8 +32,13 @@ public class AddLocationToDbPresenter extends BasePresenter
     }
 
     @Override
-    public Boolean validateInputString(CharSequence input) {
-        return input.length() == 0 || input.toString().matches(Constants.REGEX_LOCATION_NAME);
+    public Boolean isInputValidName(CharSequence input) {
+        return input.length() != 0 && input.toString().matches(Constants.REGEX_LOCATION_NAME);
+    }
+
+    @Override
+    public Boolean isInputValidDouble(CharSequence input) {
+        return input.length() != 0 && input.toString().matches(Constants.REGEX_LOCATION_COORDINATES);
     }
 
     @Override

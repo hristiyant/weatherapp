@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastDailyDataDbModel;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
@@ -142,18 +143,19 @@ public class ForecastDailyAdapter
 
         TextView txtSummary = dialog.findViewById(R.id.txt_dialog_summary);
         ImageView imgWeatherIcon = dialog.findViewById(R.id.img_dialog_weather_icon);
-        txtSummary.setText(
-                time + "\n" +
-                summary + "\n\n" +
-                "sunriseTime:\n " + sunriseTime + "\n\n" +
-                "sunsetTime:\n " + sunsetTime + "\n\n" +
-                "humidity:\n " + humidity + "\n\n" +
-                "pressure:\n " + pressure + "\n\n" +
-                "windSpeed:\n " + windSpeed + "\n\n" +
-                "temperatureMin:\n " + temperatureMin + "\n\n" +
-                "temperatureMinTime:\n " + temperatureMinTime + "\n\n" +
-                "temperatureMax:\n " + temperatureMax + "\n\n" +
-                "temperatureMaxTime:\n " + temperatureMaxTime);
+        txtSummary.setText(String.format(
+                App.getRes().getString(R.string.dialog_daily_summary),
+                time,
+                summary,
+                sunriseTime,
+                sunsetTime,
+                humidity,
+                pressure,
+                windSpeed,
+                temperatureMin,
+                temperatureMinTime,
+                temperatureMax,
+                temperatureMaxTime));
         imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(item.getIcon()));
     }
 }

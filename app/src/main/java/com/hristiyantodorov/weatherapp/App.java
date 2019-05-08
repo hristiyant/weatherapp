@@ -1,6 +1,7 @@
 package com.hristiyantodorov.weatherapp;
 
 import android.app.Application;
+import android.content.res.Resources;
 
 import com.hristiyantodorov.weatherapp.di.AppComponent;
 import com.hristiyantodorov.weatherapp.di.DaggerAppComponent;
@@ -10,15 +11,21 @@ public class App extends Application {
 
     private static App instance;
     private AppComponent appComponent;
+    private static Resources res;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+        res = getResources();
     }
 
     public static App getInstance() {
         return instance;
+    }
+
+    public static Resources getRes() {
+        return res;
     }
 
     public AppComponent getAppComponent() {
