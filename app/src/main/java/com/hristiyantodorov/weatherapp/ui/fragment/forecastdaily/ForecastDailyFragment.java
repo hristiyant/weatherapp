@@ -84,7 +84,7 @@ public class ForecastDailyFragment extends BaseFragment
 
     @Override
     public void showError(Throwable e) {
-        showErrorDialog(getContext(), e);
+        showErrorDialog(e);
     }
 
     @Override

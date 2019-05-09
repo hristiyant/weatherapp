@@ -50,7 +50,7 @@ public class ForecastHourlyAdapter
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         viewHolder.constraintLayoutHourly.setOnClickListener(v -> {
-            setUpDialog(getItem(viewHolder.getAdapterPosition()));
+            setUpDialog(getItem(viewHolder.getAdapterPosition()), parent);
             dialog.show();
         });
 
@@ -132,7 +132,7 @@ public class ForecastHourlyAdapter
         void onClick(ForecastCurrentlyDbModel item);
     }
 
-    private void setUpDialog(ForecastCurrentlyDbModel item) {
+    private void setUpDialog(ForecastCurrentlyDbModel item, ViewGroup parent) {
         String time = String.valueOf(item.getTime());
         String summary = String.valueOf(item.getSummary());
         String temperature = String.valueOf(item.getTemperature());
@@ -144,7 +144,7 @@ public class ForecastHourlyAdapter
         TextView txtSummary = dialog.findViewById(R.id.txt_dialog_summary);
         ImageView imgWeatherIcon = dialog.findViewById(R.id.img_dialog_weather_icon);
         txtSummary.setText(String.format(
-                App.getRes().getString(R.string.dialog_hourly_summary),
+                parent.getResources().getString(R.string.dialog_hourly_summary),
                 time,
                 summary,
                 temperature,

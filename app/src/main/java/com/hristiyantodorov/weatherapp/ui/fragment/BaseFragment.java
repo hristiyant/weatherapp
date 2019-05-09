@@ -1,6 +1,5 @@
 package com.hristiyantodorov.weatherapp.ui.fragment;
 
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -30,12 +29,12 @@ public abstract class BaseFragment extends Fragment {
     @LayoutRes
     protected abstract int getLayoutResId();
 
-    public void showErrorDialog(Context context, Throwable e) {
+    public void showErrorDialog(Throwable e) {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+            builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Dialog_Alert);
         } else {
-            builder = new AlertDialog.Builder(context);
+            builder = new AlertDialog.Builder(getContext());
         }
         builder.setTitle(R.string.base_fragment_error_dialog_title)
                 .setMessage(e.getMessage())

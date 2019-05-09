@@ -42,8 +42,8 @@
             android:id="@+id/fab_add_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:backgroundTint="#00FFFFFF"
+            android:layout_margin="@dimen/margin_between_elements_default"
+            app:backgroundTint="@android:color/transparent"
             app:fabSize="mini"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -63,7 +63,7 @@
 
         <TextView
             android:id="@+id/txt_no_results_found"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/no_dimens"
             android:layout_height="wrap_content"
             android:fontFamily="casual"
             android:text="@string/text_no_results_found"
@@ -71,8 +71,8 @@
             android:textSize="@dimen/material_design_subheading_txt_size"
             android:textStyle="italic"
             android:visibility="gone"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edt_filter" />
 
     </android.support.constraint.ConstraintLayout>

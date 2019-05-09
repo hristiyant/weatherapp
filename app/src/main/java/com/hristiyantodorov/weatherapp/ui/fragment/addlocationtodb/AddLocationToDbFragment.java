@@ -105,8 +105,7 @@ public class AddLocationToDbFragment extends BaseFragment
                 nameObservable,
                 latitudeObservable,
                 longitudeObservable,
-                (isNameValid, isLatitudeValid, isLongitudeValid) -> isNameValid && isLatitudeValid && isLongitudeValid
-        )
+                (isNameValid, isLatitudeValid, isLongitudeValid) -> isNameValid && isLatitudeValid && isLongitudeValid)
                 .distinctUntilChanged()
                 .subscribe(isValid -> btnSaveLocation.setEnabled(isValid)));
     }
@@ -140,7 +139,7 @@ public class AddLocationToDbFragment extends BaseFragment
 
     @Override
     public void showError(Throwable e) {
-        showErrorDialog(getContext(), e);
+        showErrorDialog(e);
     }
 
     @Override

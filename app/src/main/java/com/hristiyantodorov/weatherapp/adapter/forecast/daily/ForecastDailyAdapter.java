@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastDailyDataDbModel;
 import com.hristiyantodorov.weatherapp.util.WeatherDataFormatterUtil;
@@ -50,7 +49,7 @@ public class ForecastDailyAdapter
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         viewHolder.constraintLayoutDaily.setOnClickListener(v -> {
-            setUpDialog(getItem(viewHolder.getAdapterPosition()));
+            setUpDialog(getItem(viewHolder.getAdapterPosition()), parent);
             dialog.show();
         });
 
@@ -128,7 +127,7 @@ public class ForecastDailyAdapter
         void onClick(ForecastDailyDataDbModel item);
     }
 
-    private void setUpDialog(ForecastDailyDataDbModel item) {
+    private void setUpDialog(ForecastDailyDataDbModel item, ViewGroup parent ) {
         String time = String.valueOf(item.getTime());
         String summary = String.valueOf(item.getSummary());
         String sunriseTime = String.valueOf(item.getSunriseTime());
@@ -144,7 +143,7 @@ public class ForecastDailyAdapter
         TextView txtSummary = dialog.findViewById(R.id.txt_dialog_summary);
         ImageView imgWeatherIcon = dialog.findViewById(R.id.img_dialog_weather_icon);
         txtSummary.setText(String.format(
-                App.getRes().getString(R.string.dialog_daily_summary),
+                parent.getResources().getString(R.string.dialog_daily_summary),
                 time,
                 summary,
                 sunriseTime,
