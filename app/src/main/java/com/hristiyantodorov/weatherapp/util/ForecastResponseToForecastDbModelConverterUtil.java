@@ -29,14 +29,17 @@ public class ForecastResponseToForecastDbModelConverterUtil {
         fullDbModel.setTimezone(fullResponse.getTimezone());
         fullDbModel.setLastUpdatedTimestamp(getCurrentTimestamp());
         fullDbModel.setCurrentlyDbModel(convertCurrentlyResponseToDbModel(fullResponse.getCurrently()));
+
         if (fullResponse.getHourly() != null) {
             fullDbModel.setHourlyDbModel(convertHourlyResponseToDbModel(fullResponse.getHourly()));
             fullDbModel.setHourlyDataDbModels(convertHourlyDataResponseListToDbModelList(fullResponse.getHourly().getData()));
         }
+
         if (fullResponse.getDaily() != null) {
             fullDbModel.setDailyDbModel(convertDailyResponseToDbModel(fullResponse.getDaily()));
             fullDbModel.setDailyDataDbModels(convertDailyDataResponseListToDbModelList(fullResponse.getDaily().getData()));
         }
+
         return fullDbModel;
     }
 

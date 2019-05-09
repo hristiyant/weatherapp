@@ -7,8 +7,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.ui.fragment.settings.SettingsFragment;
-import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.ForecastDailyFragment;
-import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.ForecastHourlyFragment;
+import com.hristiyantodorov.weatherapp.ui.fragment.forecastdaily.ForecastDailyFragment;
+import com.hristiyantodorov.weatherapp.ui.fragment.forecasthourly.ForecastHourlyFragment;
 import com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails.WeatherDetailsFragment;
 
 public class WeatherDetailsPagerAdapter extends FragmentPagerAdapter {

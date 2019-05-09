@@ -15,7 +15,6 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.hristiyantodorov.weatherapp.R;
@@ -46,8 +45,6 @@ public class MainFragment extends BaseFragment implements LocationListener {
 
     @BindView(R.id.btn_from_current_location)
     Button btnPickLocation;
-    @BindView(R.id.img_main_screen)
-    ImageView imgMainScreenImage;
 
     AppLocationService appLocationService;
 
@@ -87,7 +84,7 @@ public class MainFragment extends BaseFragment implements LocationListener {
         try {
             CurrentLocationPickerUtil.getCurrentLocation(getContext(), this);
         } catch (IOException e) {
-            showErrorDialog(getContext(), e);
+            showErrorDialog(e);
         }
         startActivity(new Intent(getActivity(), WeatherDetailsActivity.class));
     }
@@ -126,22 +123,22 @@ public class MainFragment extends BaseFragment implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        // TODO: 2/28/2019 CURRENTLY NOT BEING USED
+        // Not used
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        // TODO: 2/28/2019 CURRENTLY NOT BEING USED
+        // Not used
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-        // TODO: 2/28/2019 CURRENTLY NOT BEING USED
+        // Not used
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        // TODO: 2/28/2019 CURRENTLY NOT BEING USED
+        // Not used
     }
 
     public void showSettingsAlert() {

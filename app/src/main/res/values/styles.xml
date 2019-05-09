@@ -28,4 +28,5 @@
         <item name="android:shadowDy">@dimen/layout_shadow</item>
         <item name="android:shadowRadius">@dimen/layout_shadow</item>
     </style>
+
 </resources>

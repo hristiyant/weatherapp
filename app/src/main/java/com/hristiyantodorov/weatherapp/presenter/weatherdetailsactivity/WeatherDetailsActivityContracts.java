@@ -1,6 +1,4 @@
-package com.hristiyantodorov.weatherapp.presenter.weatherdetails.activity;
-
-import android.content.Context;
+package com.hristiyantodorov.weatherapp.presenter.weatherdetailsactivity;
 
 import com.hristiyantodorov.weatherapp.model.response.ForecastCurrentlyResponse;
 import com.hristiyantodorov.weatherapp.presenter.BaseView;
@@ -14,7 +12,7 @@ public interface WeatherDetailsActivityContracts {
 
     interface Presenter {
 
-        void downloadForecastFromApi(Context context);
+        void downloadForecastFromApi();
 
         String getTimestamp();
 

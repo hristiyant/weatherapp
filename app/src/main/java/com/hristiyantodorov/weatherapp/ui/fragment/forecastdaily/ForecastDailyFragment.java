@@ -1,4 +1,4 @@
-package com.hristiyantodorov.weatherapp.ui.fragment.weatherdetails;
+package com.hristiyantodorov.weatherapp.ui.fragment.forecastdaily;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,11 +12,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hristiyantodorov.weatherapp.R;
-import com.hristiyantodorov.weatherapp.adapter.forecast.hourly.ForecastHourlyAdapter;
-import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastCurrentlyDbModel;
+import com.hristiyantodorov.weatherapp.adapter.forecast.daily.ForecastDailyAdapter;
+import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastDailyDataDbModel;
 import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly.ForecastHourlyContracts;
-import com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly.ForecastHourlyPresenter;
+import com.hristiyantodorov.weatherapp.presenter.forecastdaily.ForecastDailyContracts;
+import com.hristiyantodorov.weatherapp.presenter.forecastdaily.ForecastDailyPresenter;
 import com.hristiyantodorov.weatherapp.ui.activity.weatherdetails.WeatherDetailsActivity;
 import com.hristiyantodorov.weatherapp.ui.fragment.BaseFragment;
 
@@ -25,8 +25,8 @@ import java.util.Objects;
 
 import butterknife.BindView;
 
-public class ForecastHourlyFragment extends BaseFragment
-        implements ForecastHourlyContracts.View, SwipeRefreshLayout.OnRefreshListener {
+public class ForecastDailyFragment extends BaseFragment
+        implements ForecastDailyContracts.View, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.txt_forecast_not_available)
     TextView txtForecastNotAvailable;
@@ -37,38 +37,32 @@ public class ForecastHourlyFragment extends BaseFragment
     @BindView(R.id.recycler_view_forecast)
     RecyclerView recyclerViewForecast;
 
-    private ForecastHourlyAdapter hourlyAdapter;
-    private ForecastHourlyContracts.Presenter presenter;
+    private ForecastDailyAdapter dailyAdapter;
+    private ForecastDailyContracts.Presenter presenter;
 
-    public static ForecastHourlyFragment newInstance() {
-        ForecastHourlyFragment fragment = new ForecastHourlyFragment();
-        new ForecastHourlyPresenter(fragment);
+    public static ForecastDailyFragment newInstance() {
+        ForecastDailyFragment fragment = new ForecastDailyFragment();
+        new ForecastDailyPresenter(fragment);
         return fragment;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        hourlyAdapter = new ForecastHourlyAdapter();
+        dailyAdapter = new ForecastDailyAdapter();
 
         recyclerViewForecast.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerViewForecast.setAdapter(hourlyAdapter);
+        recyclerViewForecast.setAdapter(dailyAdapter);
         recyclerViewForecast.addItemDecoration(new DividerItemDecoration(
                 Objects.requireNonNull(getContext()), DividerItemDecoration.VERTICAL
         ));
 
         swipeRefreshLayout.setOnRefreshListener(this);
-        presenter.loadDataFromDb(getContext());
+        presenter.loadDataFromDb();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        presenter.subscribe(this);
-    }
-
-    @Override
-    public void setPresenter(ForecastHourlyContracts.Presenter presenter) {
+    public void setPresenter(ForecastDailyContracts.Presenter presenter) {
         this.presenter = presenter;
     }
 
@@ -90,14 +84,14 @@ public class ForecastHourlyFragment extends BaseFragment
 
     @Override
     public void showError(Throwable e) {
-        showErrorDialog(getContext(), e);
+        showErrorDialog(e);
     }
 
     @Override
-    public void showForecast(List<ForecastCurrentlyDbModel> hourlyData) {
-        hourlyAdapter.clear();
-        hourlyAdapter.addAll(hourlyData);
-        hourlyAdapter.notifyDataSetChanged();
+    public void showForecast(List<ForecastDailyDataDbModel> dailyData) {
+        dailyAdapter.clear();
+        dailyAdapter.addAll(dailyData);
+        dailyAdapter.notifyDataSetChanged();
         showLoader(false);
         showEmptyScreen(false);
         swipeRefreshLayout.setRefreshing(false);
@@ -110,7 +104,7 @@ public class ForecastHourlyFragment extends BaseFragment
 
     @Override
     public void onRefresh() {
-        presenter.updateForecastHourlyDataFromApi(getContext());
+        presenter.updateForecastDailyDataFromApi();
     }
 
     @Override

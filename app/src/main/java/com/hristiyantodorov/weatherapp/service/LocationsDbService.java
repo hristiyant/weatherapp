@@ -36,4 +36,8 @@ public class LocationsDbService {
     public void update(LocationDbModel locationDbModel) {
         locationDao.update(locationDbModel);
     }
+
+    public void save(LocationDbModel locationDbModel) {
+        locationDao.insert(locationDbModel);
+    }
 }

@@ -45,11 +45,11 @@ public class ForecastDailyAdapter
         DailyItemHolder viewHolder = new DailyItemHolder(view);
 
         dialog = new Dialog(parent.getContext());
-        dialog.setContentView(R.layout.dialog_daily_item);
+        dialog.setContentView(R.layout.fragment_dialog_daily_item);
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         viewHolder.constraintLayoutDaily.setOnClickListener(v -> {
-            setUpDialog(getItem(viewHolder.getAdapterPosition()));
+            setUpDialog(getItem(viewHolder.getAdapterPosition()), parent);
             dialog.show();
         });
 
@@ -85,7 +85,7 @@ public class ForecastDailyAdapter
 
     static class DailyItemHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.hourly_item)
+        @BindView(R.id.constraint_layout_item_forecast)
         ConstraintLayout constraintLayoutDaily;
         @BindView(R.id.txt_time)
         TextView txtTime;
@@ -127,7 +127,7 @@ public class ForecastDailyAdapter
         void onClick(ForecastDailyDataDbModel item);
     }
 
-    private void setUpDialog(ForecastDailyDataDbModel item) {
+    private void setUpDialog(ForecastDailyDataDbModel item, ViewGroup parent ) {
         String time = String.valueOf(item.getTime());
         String summary = String.valueOf(item.getSummary());
         String sunriseTime = String.valueOf(item.getSunriseTime());
@@ -140,19 +140,21 @@ public class ForecastDailyAdapter
         String temperatureMax = String.valueOf(item.getTemperatureMax());
         String temperatureMaxTime = String.valueOf(item.getTemperatureMaxTime());
 
-        TextView txtSummary = (TextView) dialog.findViewById(R.id.txt_dialog_summary);
-        ImageView imgWeatherIcon = (ImageView) dialog.findViewById(R.id.img_dialog_weather_icon);
-        txtSummary.setText(time + "\n" +
-                summary + "\n\n" +
-                "sunriseTime:\n " + sunriseTime + "\n\n" +
-                "sunsetTime:\n " + sunsetTime + "\n\n" +
-                "humidity:\n " + humidity + "\n\n" +
-                "pressure:\n " + pressure + "\n\n" +
-                "windSpeed:\n " + windSpeed + "\n\n" +
-                "temperatureMin:\n " + temperatureMin + "\n\n" +
-                "temperatureMinTime:\n " + temperatureMinTime + "\n\n" +
-                "temperatureMax:\n " + temperatureMax + "\n\n" +
-                "temperatureMaxTime:\n " + temperatureMaxTime);
+        TextView txtSummary = dialog.findViewById(R.id.txt_dialog_summary);
+        ImageView imgWeatherIcon = dialog.findViewById(R.id.img_dialog_weather_icon);
+        txtSummary.setText(String.format(
+                parent.getResources().getString(R.string.dialog_daily_summary),
+                time,
+                summary,
+                sunriseTime,
+                sunsetTime,
+                humidity,
+                pressure,
+                windSpeed,
+                temperatureMin,
+                temperatureMinTime,
+                temperatureMax,
+                temperatureMaxTime));
         imgWeatherIcon.setImageResource(WeatherIconPickerUtil.pickWeatherIcon(item.getIcon()));
     }
 }

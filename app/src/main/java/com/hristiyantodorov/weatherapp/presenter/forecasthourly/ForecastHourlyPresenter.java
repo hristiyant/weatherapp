@@ -1,8 +1,6 @@
-package com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecastdaily;
+package com.hristiyantodorov.weatherapp.presenter.forecasthourly;
 
-import android.content.Context;
-
-import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastDailyDataDbModel;
+import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastCurrentlyDbModel;
 import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
 import com.hristiyantodorov.weatherapp.presenter.BasePresenter;
 import com.hristiyantodorov.weatherapp.service.ForecastApiService;
@@ -18,55 +16,49 @@ import javax.inject.Inject;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 
-public class ForecastDailyPresenter extends BasePresenter
-        implements ForecastDailyContracts.Presenter {
+public class ForecastHourlyPresenter extends BasePresenter
+        implements ForecastHourlyContracts.Presenter {
 
-    private static final String TAG = "FDPresenter";
+    private static final String TAG = "FHPresenter";
 
     @Inject
     ForecastApiService forecastApiService;
     @Inject
     ForecastDbService forecastDbService;
-    
-    private ForecastDailyContracts.View view;
 
-    public ForecastDailyPresenter(ForecastDailyContracts.View view) {
+    private ForecastHourlyContracts.View view;
+
+    public ForecastHourlyPresenter(ForecastHourlyContracts.View view) {
         this.view = view;
         view.setPresenter(this);
     }
 
     @Override
-    public void subscribe(ForecastDailyContracts.View view) {
-        this.view = view;
-    }
-
-    @Override
-    public void loadDataFromDb(Context context) {
+    public void loadDataFromDb() {
         subscribeSingle(
                 forecastDbService.getForecastFullRx()
-                        .flatMap(fullDbModel -> forecastDbService
-                                .getForecastDailyById(fullDbModel.getId()))
-                        .flatMap(forecastDailyDbModel -> forecastDbService
-                                .getForecastDailyDataByDailyId(forecastDailyDbModel.getDailyId())),
+                        .flatMap(fullDbModel -> forecastDbService.
+                                getForecastHourlyById(fullDbModel.getId()))
+                        .flatMap(forecastHourlyDbModel -> forecastDbService
+                                .getForecastHourlyDataByHourlyId(forecastHourlyDbModel.getHourlyId())),
                 this::presentForecastToView,
                 throwable -> view.showError(throwable)
         );
     }
 
     @Override
-    public void updateForecastDailyDataFromApi(Context context) {
+    public void updateForecastHourlyDataFromApi() {
         subscribeSingle(
                 forecastApiService.getForecastFullResponse(
                         SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LAT, null),
                         SharedPrefUtil.read(Constants.SHARED_PREF_LOCATION_LON, null),
                         SharedPrefUtil.read(Constants.LANGUAGE_KEY, "en")
-                )
-                        .flatMap(fullResponse -> saveForecastApiDataToDb(fullResponse, context)),
+                ).flatMap(this::saveForecastApiDataToDb),
                 fullResponse -> {
                     view.updateActivity(fullResponse);
                     presentForecastToView(ForecastResponseToForecastDbModelConverterUtil
-                            .convertDailyDataResponseListToDbModelList(fullResponse
-                                    .getDaily()
+                            .convertHourlyDataResponseListToDbModelList(fullResponse
+                                    .getHourly()
                                     .getData()));
                 },
                 throwable -> view.showError(throwable)
@@ -74,28 +66,28 @@ public class ForecastDailyPresenter extends BasePresenter
     }
 
     @Override
-    public Single<ForecastFullResponse> saveForecastApiDataToDb(ForecastFullResponse fullResponse, Context context) {
+    public Single<ForecastFullResponse> saveForecastApiDataToDb(ForecastFullResponse fullResponse) {
         return Completable.fromRunnable(() -> forecastDbService
                 .updateDb(ForecastResponseToForecastDbModelConverterUtil.convertResponseToDbModel(fullResponse)))
                 .toSingleDefault(fullResponse);
     }
 
     @Override
-    public void presentForecastToView(List<ForecastDailyDataDbModel> dailyData) {
-        if (dailyData.isEmpty()) {
+    public void presentForecastToView(List<ForecastCurrentlyDbModel> hourlyData) {
+        if (hourlyData.isEmpty()) {
             view.showEmptyScreen(true);
         } else {
-            view.showForecast(dailyData);
+            view.showForecast(hourlyData);
         }
-    }
-
-    @Override
-    public void clearDisposables() {
-        super.clearDisposables();
     }
 
     @Override
     protected void inject() {
         provideAppComponent().inject(this);
+    }
+
+    @Override
+    public void clearDisposables() {
+        super.clearDisposables();
     }
 }

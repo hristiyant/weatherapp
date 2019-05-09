@@ -1,6 +1,4 @@
-package com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecasthourly;
-
-import android.content.Context;
+package com.hristiyantodorov.weatherapp.presenter.forecasthourly;
 
 import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastCurrentlyDbModel;
 import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
@@ -21,13 +19,11 @@ public interface ForecastHourlyContracts {
 
     interface Presenter {
 
-        void subscribe(View view);
+        void loadDataFromDb();
 
-        void loadDataFromDb(Context context);
+        void updateForecastHourlyDataFromApi();
 
-        void updateForecastHourlyDataFromApi(Context context);
-
-        Single<ForecastFullResponse> saveForecastApiDataToDb(ForecastFullResponse fullResponse, Context context);
+        Single<ForecastFullResponse> saveForecastApiDataToDb(ForecastFullResponse fullResponse);
 
         void presentForecastToView(List<ForecastCurrentlyDbModel> hourlyData);
 

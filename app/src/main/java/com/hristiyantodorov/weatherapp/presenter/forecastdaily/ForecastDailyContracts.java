@@ -1,6 +1,4 @@
-package com.hristiyantodorov.weatherapp.presenter.weatherdetails.forecastdaily;
-
-import android.content.Context;
+package com.hristiyantodorov.weatherapp.presenter.forecastdaily;
 
 import com.hristiyantodorov.weatherapp.model.database.forecast.ForecastDailyDataDbModel;
 import com.hristiyantodorov.weatherapp.model.response.ForecastFullResponse;
@@ -21,13 +19,11 @@ public interface ForecastDailyContracts {
 
     interface Presenter {
 
-        void subscribe(View view);
+        void loadDataFromDb();
 
-        void loadDataFromDb(Context context);
+        void updateForecastDailyDataFromApi();
 
-        void updateForecastDailyDataFromApi(Context context);
-
-        Single<ForecastFullResponse> saveForecastApiDataToDb(ForecastFullResponse fullResponse, Context context);
+        Single<ForecastFullResponse> saveForecastApiDataToDb(ForecastFullResponse fullResponse);
 
         void presentForecastToView(List<ForecastDailyDataDbModel> dailyData);
 

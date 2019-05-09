@@ -6,8 +6,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.util.Log;
 
-import com.hristiyantodorov.weatherapp.ui.ExceptionHandlerUtil;
-
 import java.io.IOException;
 
 import static android.content.Context.LOCATION_SERVICE;

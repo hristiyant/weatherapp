@@ -1,7 +1,6 @@
 package com.hristiyantodorov.weatherapp.presenter.locations;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.util.Log;
 
 import com.hristiyantodorov.weatherapp.model.database.location.LocationDbModel;
@@ -87,7 +86,7 @@ public class LocationsListPresenter extends BasePresenter
     }
 
     @Override
-    public void filterLocations(String pattern, Context context) {
+    public void filterLocations(String pattern) {
         addToCompositeDisposable(Observable.create((ObservableOnSubscribe<List<LocationDbModel>>) emitter -> {
             List<LocationDbModel> locations = locationsDbService.getFilteredLocationsList(pattern);
             emitter.onNext(locations);
@@ -112,19 +111,19 @@ public class LocationsListPresenter extends BasePresenter
     }
 
     @Override
-    public void selectLocation(String lat, String lon, Context context) {
+    public void selectLocation(String lat, String lon) {
         SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_LAT, lat);
         SharedPrefUtil.write(Constants.SHARED_PREF_LOCATION_LON, lon);
         view.openWeatherDetailsActivity();
     }
 
     @Override
-    public void clearDisposables() {
-        super.clearDisposables();
+    protected void inject() {
+        provideAppComponent().inject(this);
     }
 
     @Override
-    protected void inject() {
-        provideAppComponent().inject(this);
+    public void clearDisposables() {
+        super.clearDisposables();
     }
 }

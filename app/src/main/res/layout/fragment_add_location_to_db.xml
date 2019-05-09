@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.addlocationtodb.AddLocationToDbFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:background="@color/forecastDialogSlightlyTransparentBackground">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_location_name"
+            android:layout_width="@dimen/no_dimens"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_between_elements_default"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/input_layout_location_latitude"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edt_location_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/fragment_add_location_to_db_location_name"
+                android:inputType="text"
+                app:backgroundTint="@color/colorAccent" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_location_latitude"
+            android:layout_width="@dimen/no_dimens"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_between_elements_default"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/input_layout_location_longitude"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_location_name">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edt_location_latitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/fragment_add_location_to_db_location_latitude"
+                android:inputType="text"
+                app:backgroundTint="@color/colorAccent" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_location_longitude"
+            android:layout_width="@dimen/no_dimens"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_between_elements_default"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/btn_save_location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_location_latitude">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edt_location_longitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/fragment_add_location_to_db_location_longitude"
+                android:inputType="text"
+                app:backgroundTint="@color/colorAccent" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_save_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_between_elements_default"
+            android:background="@android:color/transparent"
+            android:text="@string/fragment_add_location_to_db_btn_save_text"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/material_design_btn_txt_size"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_location_longitude" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>
