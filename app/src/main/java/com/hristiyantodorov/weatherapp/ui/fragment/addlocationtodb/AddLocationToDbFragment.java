@@ -9,7 +9,6 @@ import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.Button;
 
-import com.hristiyantodorov.weatherapp.App;
 import com.hristiyantodorov.weatherapp.R;
 import com.hristiyantodorov.weatherapp.presenter.addlocationtodb.AddLocationToDbContracts;
 import com.hristiyantodorov.weatherapp.presenter.addlocationtodb.AddLocationToDbPresenter;
@@ -68,7 +67,7 @@ public class AddLocationToDbFragment extends BaseFragment
                     if (isValid) {
                         inputLayoutLocationName.setError(null);
                     } else {
-                        inputLayoutLocationName.setError(App.getRes().getString(R.string.fragment_add_location_to_db_invalid_name_error));
+                        inputLayoutLocationName.setError(view.getResources().getString(R.string.fragment_add_location_to_db_invalid_name_error));
                         inputLayoutLocationName.setErrorEnabled(!isValid);
                     }
                 }));
@@ -82,7 +81,7 @@ public class AddLocationToDbFragment extends BaseFragment
                     if (isValid) {
                         inputLayoutLocationLatitude.setError(null);
                     } else {
-                        inputLayoutLocationLatitude.setError(App.getRes().getString(R.string.fragment_add_location_to_db_invalid_latitude_error));
+                        inputLayoutLocationLatitude.setError(view.getResources().getString(R.string.fragment_add_location_to_db_invalid_latitude_error));
                         inputLayoutLocationLatitude.setErrorEnabled(!isValid);
                     }
                 }));
@@ -96,7 +95,7 @@ public class AddLocationToDbFragment extends BaseFragment
                     if (isValid) {
                         inputLayoutLocationLongitude.setError(null);
                     } else {
-                        inputLayoutLocationLongitude.setError(App.getRes().getString(R.string.fragment_add_location_to_db_invalid_longitude_error));
+                        inputLayoutLocationLongitude.setError(view.getResources().getString(R.string.fragment_add_location_to_db_invalid_longitude_error));
                         inputLayoutLocationLongitude.setErrorEnabled(!isValid);
                     }
                 }));

@@ -90,7 +90,7 @@ public class WeatherDetailsFragment extends BaseFragment implements WeatherDetai
 
     @Override
     public void showError(Throwable e) {
-        showErrorDialog(getContext(), e);
+        showErrorDialog(e);
     }
 
     @Override

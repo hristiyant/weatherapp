@@ -84,7 +84,7 @@ public class MainFragment extends BaseFragment implements LocationListener {
         try {
             CurrentLocationPickerUtil.getCurrentLocation(getContext(), this);
         } catch (IOException e) {
-            showErrorDialog(getContext(), e);
+            showErrorDialog(e);
         }
         startActivity(new Intent(getActivity(), WeatherDetailsActivity.class));
     }
